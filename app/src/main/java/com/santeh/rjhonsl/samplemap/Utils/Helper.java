@@ -90,7 +90,9 @@ public class Helper {
         public static String URL_SELECT_PONDINFO_BY_CUSTOMER_ID ="http://mysanteh.site50.net/santehweb/selectPondByCustomerID.php";
         public static String URL_SELECT_ALL_PONDINFO_GROUPBY_CUSTINFO = "http://mysanteh.site50.net/santehweb/selectAllPondGroupBy.php";
         public static String URL_SELECT_ALL_PONDINFO = "http://mysanteh.site50.net/santehweb/selectAllPond.php";
+        public static String URL_SELECT_ALL_USERS_IN_AREA= "http://mysanteh.site50.net/santehweb/selectAlluserInAnArea.php";
         public static String URL_SELECT_ALL_USERS  = "http://mysanteh.site50.net/santehweb/selectAllUsers.php";
+        public static String URL_SELECT_ALL_AREA  = "http://mysanteh.site50.net/santehweb/selectAllArea.php";
         public static String URL_SELECT_USERS_ACTIVITY_BY_DATE_AND_ID  = "http://mysanteh.site50.net/santehweb/selectUserActivityByID.php";
         public static String URL_SELECT_ALL_USERS_ACTIVITY_BY_ID  = "http://mysanteh.site50.net/santehweb/selectAllUserActivityByID.php";
         public static String URL_SELECT_ALL_PONDINFO_BETWEEN_DATES = "http://mysanteh.site50.net/santehweb/selectAllPondBetweenDate.php";

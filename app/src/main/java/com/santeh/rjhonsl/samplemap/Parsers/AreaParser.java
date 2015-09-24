@@ -54,6 +54,7 @@ public class AreaParser {
                     custInfoObject.setMunicipality_province(obj.getInt("municipality_province"));
                 }
 
+                custInfoObjectList.add(custInfoObject);
             }
 
             return custInfoObjectList;

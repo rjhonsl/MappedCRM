@@ -21,6 +21,7 @@ import com.santeh.rjhonsl.samplemap.APIs.MyVolleyAPI;
 import com.santeh.rjhonsl.samplemap.Adapter.AdapterUserMonitoring_ViewByUser;
 import com.santeh.rjhonsl.samplemap.Obj.CustInfoObject;
 import com.santeh.rjhonsl.samplemap.Parsers.AccountsParser;
+import com.santeh.rjhonsl.samplemap.Parsers.AreaParser;
 import com.santeh.rjhonsl.samplemap.R;
 import com.santeh.rjhonsl.samplemap.Utils.Helper;
 
@@ -42,7 +43,9 @@ public class Activity_UserMonitoring_ViewByUser extends Activity {
     AdapterUserMonitoring_ViewByUser custInfoAdapter;
 
     List<CustInfoObject> userlist;
+    List<CustInfoObject> areaList;
     ImageButton btnsearch, btnfilterByArea;
+    String[] strAvailableArea;
     ProgressDialog PD;
 
     @Override
@@ -62,14 +65,15 @@ public class Activity_UserMonitoring_ViewByUser extends Activity {
         edt_searchbox = (EditText) findViewById(R.id.edt_viewUserActivity_search);
         btnfilterByArea = (ImageButton) findViewById(R.id.btn_filter);
 
-        getAllUsers(edt_searchbox.getText().toString());
+        getAllUsers(edt_searchbox.getText().toString(), Helper.variables.URL_SELECT_ALL_USERS);
+
 
 
         btnsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!edt_searchbox.getText().toString().equalsIgnoreCase("")) {
-                    getAllUsers(edt_searchbox.getText().toString());
+                    getAllUsers(edt_searchbox.getText().toString(),Helper.variables.URL_SELECT_ALL_USERS);
                 } else {
                     Helper.toastShort(activity, "You must enter a name or keyword.");
                 }
@@ -79,17 +83,7 @@ public class Activity_UserMonitoring_ViewByUser extends Activity {
         btnfilterByArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String[] provinces = getResources().getStringArray(R.array.province);
-                final Dialog d = Helper.createCustomThemedListDialog(activity, provinces , "Area", R.color.red);
-                d.show();
-                ListView lvprovince = (ListView) d.findViewById(R.id.dialog_list_listview);
-                lvprovince.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    }
-                });
+                getAllAreaAvailable();
             }
         });
 
@@ -130,7 +124,7 @@ public class Activity_UserMonitoring_ViewByUser extends Activity {
 
     }
 
-    private void getAllUsers(final String keyword) {
+    private void getAllUsers(final String keyword, String url) {
         PD.setMessage("Please wait...");
         PD.show();
 
@@ -139,7 +133,7 @@ public class Activity_UserMonitoring_ViewByUser extends Activity {
             PD.dismiss();
         }
         else{
-            StringRequest postRequest = new StringRequest(Request.Method.POST, Helper.variables.URL_SELECT_ALL_USERS,
+            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -154,7 +148,7 @@ public class Activity_UserMonitoring_ViewByUser extends Activity {
                             }else{
 
                                 PD.dismiss();
-                                userlist = new ArrayList<CustInfoObject>();
+                                userlist = new ArrayList<>();
                                 userlist = AccountsParser.parseFeed(response);
 
                                 if (userlist != null) {
@@ -195,8 +189,83 @@ public class Activity_UserMonitoring_ViewByUser extends Activity {
             // Adding request to request queue
             MyVolleyAPI api = new MyVolleyAPI();
             api.addToReqQueue(postRequest, context);
+        }
+    }
+
+
+
+
+    private void getAllAreaAvailable() {
+        PD.setMessage("Please wait...");
+        PD.show();
+
+        if(!Helper.isNetworkAvailable(activity)) {
+            Helper.toastShort(activity, "Internet Connection is not available. Please try again later.");
+            PD.dismiss();
+        }
+        else{
+            StringRequest postRequest = new StringRequest(Request.Method.POST, Helper.variables.URL_SELECT_ALL_AREA,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            areaList = new ArrayList<>();
+                            areaList = AreaParser.parseFeed(response);
+//                            Helper.toastShort(activity, response);
+                            PD.dismiss();
+                            if (areaList != null){
+                                if (areaList.size() > 0){
+                                    strAvailableArea = new String[areaList.size()];
+
+//                                    Helper.toastShort(activity, "not zero");
+
+                                    for (int i = 0; i < areaList.size(); i++) {
+                                        strAvailableArea[i] = areaList.get(i).getProvince();
+                                    }
+
+                                    final Dialog d = Helper.createCustomThemedListDialog(activity, strAvailableArea , "Select an Area", R.color.red);
+                                    d.show();
+                                    ListView lvprovince = (ListView) d.findViewById(R.id.dialog_list_listview);
+                                    lvprovince.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            getAllUsers(areaList.get(position).getProvince_id()+"", Helper.variables.URL_SELECT_ALL_USERS_IN_AREA);
+
+                                        }
+                                    });
+                                }else{
+//                                    Helper.toastShort(activity, "not null but zero");
+                                }
+                            }else{
+//                                Helper.toastShort(activity, "null");
+                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    PD.dismiss();
+                    Helper.toastShort(activity, error.toString());
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
+                    params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                    params.put("deviceid", Helper.getMacAddress(context));
+                    params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
+                    return params;
+                }
+            };
+
+            // Adding request to request queue
+            MyVolleyAPI api = new MyVolleyAPI();
+            api.addToReqQueue(postRequest, context);
 
         }
     }
+
+
 
 }

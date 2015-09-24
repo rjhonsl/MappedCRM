@@ -213,6 +213,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(final GoogleMap map) {
         map.getUiSettings().setMapToolbarEnabled(false);
+        map.getUiSettings().setZoomControlsEnabled(true);
         map.setMyLocationEnabled(true);
         maps = map;
         ((Var) this.getApplication()).setGoogleMap(map);
@@ -650,10 +651,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     public void onResponse(final String response) {
 
 ///                        Helper.toastLong(activity, response);
-
                         if (response.substring(1, 2).equalsIgnoreCase("0")) {
                             PD.dismiss();
-                            Helper.toastShort(activity, "Something Happened. Please try again later");
+                            updateDisplay();
                         } else {
                             PD.dismiss();
                             custInfoObjectList = CustAndPondParser.parseFeed(response);
@@ -737,45 +737,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                   Helper.toastShort(activity, "Location found :) ");
                   passedintent = null;
               }
-
-//              StringRequest postRequest = new StringRequest(Request.Method.POST, Helper.variables.URL_INSERT_LOGINLOCATION,
-//                      new Response.Listener<String>() {
-//                          @Override
-//                          public void onResponse(final String response) {
-//
-//                              if (response.substring(1, 2).equalsIgnoreCase("0")) {
-//                                  PD.dismiss();
-//                                  Helper.toastShort(activity, "Something Happened. Please try again later" + response);
-//                              } else {
-//                                  PD.dismiss();
-//                                  extrass = null;
-//                                  passedintent=null;
-//                                  Helper.toastShort(activity, "Location found :) ");
-//                              }
-//
-//                          }
-//                      },
-//                      new Response.ErrorListener() {
-//                          @Override
-//                          public void onErrorResponse(VolleyError error) {
-//                              PD.dismiss();
-//                              Helper.toastShort(MapsActivity.this, "Something happened. Please try again later");
-//                          }
-//                      }) {
-//                  @Override
-//                  protected Map<String, String> getParams() {
-//                      Map<String, String> params = new HashMap<String, String>();
-//                      params.put("userid", userid + "");
-//                      params.put("latitude", fusedLocation.getLastKnowLocation().latitude + "");
-//                      params.put("longitude", fusedLocation.getLastKnowLocation().longitude+ "");
-////
-//                      return params;
-//                  }
-//              };
-//
-//              // Adding request to request queue
-//              MyVolleyAPI api = new MyVolleyAPI();
-//              api.addToReqQueue(postRequest, MapsActivity.this);
           }
 
         }
@@ -802,7 +763,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             }
         }else {
-            final Dialog d = Helper.createCustomDialogOKOnly(activity, "MAP", "You have not added a farm. You can start by pressing the '+' on the upper right side.", "OK");
+            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "MAP", "You have not added a farm yet. You can start by pressing the  plus(' + ') on the upper right side of the screen.", "OK", R.color.skyblue_400);
             Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
             d.show();
 
@@ -820,7 +781,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onPause() {
         super.onPause();
-        fusedLocation.disconnectFromApiClient();
         Log.d("PROCESS","Onpause");
     }
 
