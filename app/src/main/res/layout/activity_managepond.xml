@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/ll_titlebar"
+        android:background="#009688"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+        <ImageButton
+            android:id="@+id/title"
+            android:background="@drawable/bg_material_transparent"
+            android:src="@drawable/ic_keyboard_arrow_left_white_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"/>
+        <LinearLayout
+
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:textStyle="bold"
+                android:text="POND INFORMATION"
+                android:textSize="19sp"
+                android:paddingTop="1dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/background_material_light"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:id="@+id/belowTitle"
+                  android:layout_below="@+id/ll_titlebar"
+                  android:padding="5dp">
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_weight="1"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/txt_managepond_pondcount"
+                  android:text="Pond Count: 4"/>
+
+
+    </LinearLayout>
+
+    <ListView android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/belowTitle"
+              android:id="@+id/listofponds"
+        android:entries="@array/province">
+
+    </ListView>
+
+    <FrameLayout android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_margin="15dp"
+                 android:layout_alignParentBottom="true"
+                 android:layout_alignParentRight="true">
+
+        <ImageButton android:layout_width="wrap_content"
+                     android:background="@drawable/bg_red_oval"
+                     android:padding="12dp"
+                     android:layout_height="wrap_content"
+                     android:src="@drawable/ic_add_white_24dp"
+                     android:id="@+id/btn_filter"
+            />
+    </FrameLayout>
+
+
+
+
+</RelativeLayout>
