@@ -54,9 +54,18 @@ public class CustInfoObject {
 	private String allSpecie;
 	private String currentfeedType;
 
+	private String province;
+	private String municipality;
+
+
+
+	int province_id;
+	int municipality_id;
+	int municipality_province;
+
+
+
 	private String actionDone;
-
-
 	private String recommendedConsumption;
 	private String actualConsumption;
 
@@ -448,5 +457,45 @@ public class CustInfoObject {
 
 	public void setActionType(String actionType) {
 		this.actionType = actionType;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String provice) {
+		this.province = provice;
+	}
+
+	public String getMunicipality() {
+		return municipality;
+	}
+
+	public void setMunicipality(String municipality) {
+		this.municipality = municipality;
+	}
+
+	public int getProvince_id() {
+		return province_id;
+	}
+
+	public void setProvince_id(int province_id) {
+		this.province_id = province_id;
+	}
+
+	public int getMunicipality_id() {
+		return municipality_id;
+	}
+
+	public void setMunicipality_id(int municipality_id) {
+		this.municipality_id = municipality_id;
+	}
+
+	public int getMunicipality_province() {
+		return municipality_province;
+	}
+
+	public void setMunicipality_province(int municipality_province) {
+		this.municipality_province = municipality_province;
 	}
 }

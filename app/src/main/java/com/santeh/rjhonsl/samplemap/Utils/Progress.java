@@ -102,7 +102,79 @@ public class Progress {
      *
      * ##9-22-2015
      * -converted phone's os to cm12.1 so started late
+     *
+     * ##9-23-2015
+     * -filter for view useractivity by user
+     * -view useractivity by user UI
+     * -bug fix on Accuracy of FusedLocationData
      * */
+
+
+
+//    INSERT INTO `a8616137_sample`.`tblarea_municipality` (`municipality_id`, `municipality_description`, `municipality_province`)
+//    VALUES
+//
+//            (NULL, 'Roxas', '22'),
+//
+//            (NULL, 'Tudela', '25')
+//
+//            ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

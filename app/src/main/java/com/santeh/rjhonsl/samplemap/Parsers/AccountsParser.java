@@ -28,17 +28,6 @@ public class AccountsParser {
                 JSONObject obj = ar.getJSONObject(i);
                 CustInfoObject custInfoObject = new CustInfoObject();
 
-//
-//                users_id
-//                users_userlvl
-//                users_firstname
-//                users_lastname
-//                users_username
-//                users_password
-//                users_device_id
-//                user_lvl_level
-//                dateAdded
-//
 
                 if (obj.has("users_id")){
                     custInfoObject.setUserid(obj.getInt("users_id"));
