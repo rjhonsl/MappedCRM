@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                  android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/accent_material_light">
+
+            <TextView
+                android:text=" User Monitoring"
+                android:layout_marginLeft="8dp"
+                android:textSize="20sp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:id="@+id/txt_title"
+                android:drawableLeft="@drawable/ic_keyboard_arrow_left_white_24dp"
+                android:textColor="@color/background_material_light"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="0dp"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal">
+                <EditText
+                    android:layout_weight="1"
+                    android:inputType="textCapWords"
+                    android:id="@+id/edt_viewUserActivity_search"
+                    android:padding="10dp"
+                    android:background="#00000000"
+                    android:hint="Enter a name..."
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+
+                <ImageButton android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:padding="5dp"
+                             android:id="@+id/btn_viewUserActivity_search"
+                             android:background="@drawable/bg_material_transparent"
+                             android:src="@drawable/ic_search_darkteal_24dp"/>
+
+                <!--android:drawableRight="@drawable/ic_search_darkteal_24dp"-->
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="#80328d90"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <ListView
+                android:id="@+id/listview_userMonitoring"
+                android:animateLayoutChanges="true"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+            </ListView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_margin="15dp"
+                 android:layout_alignParentBottom="true"
+                 android:layout_alignParentRight="true">
+        <ImageButton android:layout_width="wrap_content"
+                     android:background="@drawable/bg_red_oval"
+                     android:padding="12dp"
+                     android:layout_height="wrap_content"
+                     android:src="@drawable/ic_filter_white_24dp"
+                     android:id="@+id/btn_filter"
+            />
+    </FrameLayout>
+
+
+</RelativeLayout>

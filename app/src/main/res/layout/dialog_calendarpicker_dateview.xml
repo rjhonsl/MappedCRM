@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <DatePicker
+        android:paddingTop="2dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        style="?attr/actionBarPopupTheme"
+        android:id="@+id/dialog_datepicker"
+        android:calendarViewShown="false"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    </DatePicker>
+
+    <View
+        android:background="#009688"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"/>
+
+    <Button
+        android:background="@drawable/bg_material_transparent"
+        android:text="OK"
+        android:id="@+id/dialog_datepicker_btnok"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

@@ -1,0 +1,311 @@
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/map"
+              tools:context=".MapsActivity"
+              android:name="com.google.android.gms.maps.SupportMapFragment"
+              tools:layout="@layout/abc_screen_simple"/>
+
+    <FrameLayout
+        android:id="@+id/mainContent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layoutDirection="ltr"
+        android:animateLayoutChanges="true"
+        >
+
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:layout_alignParentTop="true"
+            android:id="@+id/latLong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/latLong"
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:padding="8dp"
+            android:layout_marginRight="11dp"
+            android:layout_marginTop="60dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/bg_white_box_shadowed"
+            android:src="@drawable/ic_add_black_24dp"
+            android:id="@+id/btnaddMarker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:background="#ede7db"
+        android:orientation="vertical"
+        android:id="@+id/navBar"
+        android:layout_width="280dp"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left"
+        android:padding="0dp">
+
+        <!-- layout for header-->
+        <RelativeLayout
+            android:padding="10dp"
+            android:background="#64B5F6"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="120dp">
+
+            <TextView
+
+                android:text="Current User"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="25dp"
+                android:textColor="#505050"
+                android:textSize="14sp"
+                android:layout_alignParentTop="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:src="@drawable/ic_perm_contact_calendar_grey_36dp"
+                android:textSize="18sp"
+                android:textColor="#FFFFFF"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_alignParentBottom="true"
+                android:padding="5dp"
+                android:layout_marginBottom="18dp"
+                android:lineSpacingExtra="2dp"
+                android:typeface="sans"
+                android:text="Juan Dela Cruz"
+                android:textSize="20sp"
+                android:textColor="#FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <!-- Menu -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="  FILTERS"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#7d7e7e"
+                    android:padding="3dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="      All Stockings"
+                    android:textSize="16sp"
+                    android:background="@drawable/bg_material_transparent"
+                    android:drawableLeft="@drawable/ic_place_grey_24dp"
+                    android:id="@+id/txt_Nav_displayAll"
+                    android:padding="13dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="      Fingerlings &amp; Hatchery"
+                    android:background="@drawable/bg_material_transparent"
+                    android:id="@+id/txt_Nav_fingerlings"
+                    android:drawableLeft="@drawable/ic_place_green_24dp"
+                    android:textSize="16sp"
+                    android:padding="13dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <TextView
+                    android:text="      Stockings"
+                    android:background="@drawable/bg_material_transparent"
+                    android:visibility="gone"
+                    android:textSize="16sp"
+                    android:drawableLeft="@drawable/ic_place_yellow_24dp"
+                    android:id="@+id/txt_Nav_stockings"
+                    android:padding="13dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="      Sperms"
+                    android:background="@drawable/bg_material_transparent"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    android:id="@+id/txt_Nav_sperms"
+                    android:drawableLeft="@drawable/ic_place_blue_24dp"
+                    android:padding="13dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <!-- under items, settings and what not -->
+                <View
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#aec8d5"
+                    android:padding="10dp"
+                    />
+
+                <TextView
+                    android:text="  REPORTS"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#7d7e7e"
+                    android:id="@+id/txt_Nav_CustomerUpdates"
+                    android:padding="3dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="      Grow Out Reports"
+                    android:background="@drawable/bg_material_transparent"
+                    android:textSize="16sp"
+                    android:id="@+id/txt_Nav_growOut"
+                    android:padding="13dp"
+                    android:drawableLeft="@drawable/ic_fish_darkteal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="      Hatchery Reports"
+                    android:background="@drawable/bg_material_transparent"
+                    android:textSize="16sp"
+                    android:id="@+id/txt_Nav_hatchery"
+                    android:padding="13dp"
+                    android:drawableLeft="@drawable/ic_egg_darkteal_24dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+
+
+
+
+
+                <!-- under items, settings and what not -->
+                <View
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#aec8d5"
+                    android:padding="10dp"
+                    />
+
+                <TextView
+                    android:text="  MANAGE"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#7d7e7e"
+                    android:padding="3dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <TextView
+                    android:text="     Settings"
+                    android:textSize="16sp"
+                    android:id="@+id/txt_Nav_settings"
+                    android:padding="13dp"
+                    android:background="@drawable/bg_material_transparent"
+                    android:drawableLeft="@drawable/ic_settings_black_24dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="     Change Map Type"
+                    android:textSize="16sp"
+                    android:id="@+id/txt_Nav_changeMapType"
+                    android:drawableLeft="@drawable/ic_map_darkteal_24dp"
+                    android:background="@drawable/bg_material_transparent"
+                    android:padding="13dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <TextView
+                    android:text="     User Monitoring"
+                    android:textSize="16sp"
+                    android:drawableLeft="@drawable/ic_chart_darkteal"
+                    android:background="@drawable/bg_material_transparent"
+                    android:id="@+id/txt_Nav_UserMonitoring"
+                    android:padding="13dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+
+
+
+                <TextView
+                    android:text="      Log Out"
+                    android:textSize="16sp"
+                    android:drawableLeft="@drawable/ic_exit_to_app_blue_24dp"
+                    android:id="@+id/txt_Nav_logout"
+                    android:background="@drawable/bg_material_transparent"
+                    android:padding="13dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+
+
+
+            </LinearLayout>
+        </ScrollView>
+
+
+
+    </LinearLayout>
+
+    <!--
+
+     <ListView android:id="@+id/listview1"
+              android:layout_width="240dp"
+              android:entries="@array/nav_items"
+              android:layout_height="match_parent"
+              android:layout_gravity="left">
+    </ListView>
+
+    -->
+
+
+</android.support.v4.widget.DrawerLayout>
+
+

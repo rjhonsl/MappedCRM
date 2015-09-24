@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="wrap_content"
+              android:background="@drawable/bg_white_box_shadowed"
+              android:layout_height="25dp">
+
+    <Button
+        android:layout_weight="1"
+        android:textSize="14sp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="POND INFO"
+        android:background="@drawable/bg_material_transparent"
+        android:id="@+id/btn_bottomMap1"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:textSize="14sp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_material_transparent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="CUST INFO"
+        android:id="@+id/btn_bottomMap2"
+        android:layout_gravity="center_horizontal"/>
+</LinearLayout>

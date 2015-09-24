@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="actionbarBackground">#42A5F5</color>
+    <color name="skyblue_500">#42A5F5</color>
+    <color name="skyblue_400">#ec42a5f5</color>
+    <color name="skyblue_300">#ce42a5f5</color>
+    <color name="skyblue_200">#af42a5f5</color>
+    <color name="yellow">#f5e042</color>
+    <color name="amber_600">#FF9800</color>
+    <color name="amber_500">#e9ff9800</color>
+    <color name="amber_400">#d2ff9800</color>
+    <color name="amber_300">#b4ff9800</color>
+    <color name="amber_200">#a6ff9800</color>
+    <color name="gray_200">#bfbfbf</color>
+    <color name="gray_300">#ababab</color>
+    <color name="gray_400">#969696</color>
+    <color name="gray_500">#808080</color>
+    <color name="gray_600">#606060</color>
+    <color name="red">#ff5c5c</color>
+    <color name="white_100">#ffffff</color>
+    <color name="white_200">#f8f8f8</color>
+    <color name="green_200">#80d47d</color>
+    <color name="green_300">#c980d47d</color>
+    <color name="green_400">#e480d47d</color>
+    <color name="green_500">#4CAF50</color>
+    <color name="deepteal_500">#ff009688</color>
+    <color name="deepteal_400">#c8009688</color>
+    <color name="deepteal_300">#a5009688</color>
+    <color name="deepteal_200">#71009688</color>
+    <color name="purple_600">#673ab7</color>
+    <color name="purple_500">#de673ab7</color>
+    <color name="purple_400">#be673ab7</color>
+    <color name="orange_400">#bfff5722</color>
+    <color name="orange_500">#d3ff5722</color>
+    <color name="orange_600">#edff5722</color>
+
+</resources>

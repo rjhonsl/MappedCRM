@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="MyTheme_Blue"  parent="@style/Theme.AppCompat.Light">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">#879cff</item>
+        <item name="background">@color/actionbarBackground</item>
+        <item name="titleTextStyle">@style/MyTitleTextStyle</item>
+    </style>
+
+    <style name="MyTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light">
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!--<style name="CustomToastAnimation" parent="@android:style/Theme.Dialog">-->
+        <!--<item name="android:windowAnimationStyle">@style/PauseDialogAnimation</item>-->
+    <!--</style>-->
+
+    <!--<style name="PauseDialogAnimation">-->
+        <!--<item name="android:windowEnterAnimation">@anim/bottom_up</item>-->
+        <!--<item name="android:windowExitAnimation">@anim/bottom_down</item>-->
+    <!--</style>-->
+    <!--<style name="MyTheme_Blue" parent="Theme.AppCompat.Light">-->
+        <!--<item name="android:actionBarStyle">@style/MyTheme.ActionBarStyle</item>-->
+        <!--<item name="android:homeAsUpIndicator">@drawable/ic_menu_white_24dp</item>-->
+        <!--<item name="android:actionMenuTextColor">#f7f7f7</item>-->
+
+    <!--</style>-->
+    <!--<style name="MyTheme.ActionBarStyle"  parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">-->
+        <!--<item name="android:background"  tools:ignore="NewApi">#4e91ff</item>-->
+        <!--<item name="background">@drawable/bg_material_transparent</item>-->
+    <!--</style>-->
+
+    <!--<style name="MyTheme.CustomActionBarTheme" parent="@style/Theme.AppCompat.Light">-->
+        <!--<item name="android:actionBarStyle"   tools:ignore="NewApi">@style/MyTheme_Blue</item>-->
+        <!--<item name="actionBarStyle">@style/MyTheme_Blue</item>-->
+    <!--</style>-->
+
+    <!--<style name="MyTheme.ActionBar.TitleTextStyle" parent="Widget.AppCompat.Light.ActionBar">-->
+        <!--<item name="android:textColor">#f7f7f7</item>-->
+        <!--<item name="android:textSize">19sp</item>-->
+    <!--</style>-->
+</resources>

@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_margin="15dp"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context=".Main.Activity_CustomerActivity">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="1"
+        android:text="Customer Activity"
+        android:textSize="19sp"
+        android:paddingTop="1dp"
+        android:paddingBottom="5dp"
+        android:textColor="@color/material_blue_grey_950"
+        android:labelFor="@+id/txt_addmarker_contactName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="FARM ID: SFC123"
+            android:textSize="15sp"
+            android:paddingTop="1dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/button_material_dark"
+            android:labelFor="@+id/txt_addmarker_contactName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="#328d90"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                >
+                <TextView
+                    android:text="Farm Name"
+                    android:labelFor="@+id/txt_custActivity_farmname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:padding="5dp"
+                    android:hint=""
+                    android:id="@+id/txt_custActivity_farmname"
+                    android:background="#00000000"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_down_darkgreen_24dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    />
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_marginRight="5dp"-->
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#80328d90"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:text="Specie"
+                    android:padding="10dp"
+                    android:labelFor="@+id/txt_custActivity_specie"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginEnd="10dp"
+                    android:background="#80328d90"/>
+
+                <EditText
+                    android:padding="5dp"
+                    android:hint=""
+                    android:id="@+id/txt_custActivity_specie"
+                    android:background="#00000000"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_down_darkgreen_24dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    />
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_marginRight="5dp"-->
+
+            </LinearLayout>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="#80328d90"/>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:padding="10dp"
+                    android:text="Pond ID"
+                    android:labelFor="@+id/txt_custActivity_pondID"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"/>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginEnd="10dp"
+                    android:background="#80328d90"/>
+
+                <EditText
+                    android:padding="5dp"
+                    android:hint=""
+                    android:id="@+id/txt_custActivity_pondID"
+                    android:background="#00000000"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_down_darkgreen_24dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    />
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_marginRight="5dp"-->
+
+            </LinearLayout>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:background="#80328d90"/>
+
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+
+                >
+                <TextView
+                    android:text="Date Of Stocking"
+                    android:labelFor="@+id/txt_custoActivity_dateOFStocking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <DatePicker
+                    android:datePickerMode="calendar"
+                    android:calendarViewShown="false"
+                    android:id="@+id/txt_custoActivity_dateOFStocking"
+                    android:background="#00000000"
+                    android:drawableEnd="@drawable/ic_event_darkteal_24dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    />
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_marginRight="5dp"-->
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#80328d90"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                >
+                <TextView
+                    android:text="Initial number of Stocks"
+                    android:labelFor="@+id/txt_custActivity_initialSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:padding="5dp"
+                    android:hint=""
+                    android:id="@+id/txt_custActivity_initialSize"
+                    android:background="#00000000"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    />
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_marginRight="5dp"-->
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#80328d90"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                >
+                <TextView
+                    android:text="Current number of Stocks"
+                    android:labelFor="@+id/txt_custActivity_numberofStocks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:padding="5dp"
+                    android:hint=""
+                    android:id="@+id/txt_custActivity_numberofStocks"
+                    android:background="#00000000"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    />
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_marginRight="5dp"-->
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#80328d90"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                >
+                <TextView
+                    android:text="Quality"
+                    android:labelFor="@+id/txt_custActivity_qualityOfStock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:padding="5dp"
+                    android:hint=""
+                    android:id="@+id/txt_custActivity_qualityOfStock"
+                    android:background="#00000000"
+                    android:drawableEnd="@drawable/ic_keyboard_arrow_down_darkgreen_24dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#80328d90"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                >
+                <TextView
+                    android:text="Remarks"
+                    android:labelFor="@+id/txt_custActivity_remarks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:padding="5dp"
+                    android:id="@+id/txt_custActivity_remarks"
+                    android:background="#00000000"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:lines="3"
+                    android:minLines="2"
+                    android:gravity="top|left"
+                    android:maxLines="10"
+                    android:scrollbars="vertical"
+                    />
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_marginRight="5dp"-->
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#80328d90"/>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_gravity="end"
+                >
+
+                <Button
+                    android:textColor="@color/material_deep_teal_500"
+                    android:textSize="15sp"
+                    android:layout_width="70dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/bg_material_transparent"
+                    android:text="OK"
+                    android:id="@+id/btn_custActivity_OK"/>
+                <Button
+                    android:textColor="@color/material_deep_teal_500"
+                    android:textSize="15sp"
+                    android:layout_width="70dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/bg_material_transparent"
+                    android:text="CANCEL"
+                    android:id="@+id/btn_custActivity_CANCEL"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

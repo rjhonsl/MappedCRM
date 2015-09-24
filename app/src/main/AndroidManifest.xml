@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.santeh.rjhonsl.samplemap" >
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!--
+ The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but are recommended.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.access_location_extra_commands" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!--Permission for sending SMS;-->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+
+
+
+
+
+    <application
+        android:name=".Obj.Var"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/MyTheme_Blue" >
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".Main.MapsActivity"
+            android:logo="@drawable/ic_menu_white_24dp"
+            android:label="@string/title_activity_maps" >
+
+        </activity>
+
+
+        <activity android:name=".Main.Activity_AddMarker_CustomerInfo"
+            android:label="Add Marker Details">
+        </activity>
+
+        <activity android:name="com.santeh.rjhonsl.samplemap.Main.Activity_Settings"
+            android:label="Settings"></activity>
+
+        <activity android:name="com.santeh.rjhonsl.samplemap.Main.Activity_ViewCustomerInfo"
+            android:label="Customer Information">
+
+        </activity>
+
+        <activity android:name=".Main.Activity_CustomerActivityTABBED"
+                  android:label="Customer Activity"> </activity>
+
+        <activity android:name=".Main.Activity_UpdatesGrowout"
+                  android:label="Grow Outs">
+        </activity>
+
+        <activity android:name=".Main.Activity_CustomerInfo_Edit"
+                  android:label="Edit Customer Info">
+        </activity>
+
+        <activity android:name=".Main.Activity_FarmViewOptions"
+                  android:label="Edit Customer Info">
+        </activity>
+
+        <activity android:name=".Main.Activity_ManagePonds"
+                  android:label="Pond Information">
+        </activity>
+
+        <activity android:name=".Main.Activity_WeeklyReports_Growout_FarmSummary"
+                  android:label="Weekly Reports">
+        </activity>
+
+        <activity android:name=".Main.Activity_WeeklyReports_Growout_FeedDemands"
+                  android:label="Grow Out Summary">
+        </activity>
+
+        <activity android:name=".Main.Activity_WeeklyReports_Growout_Option"
+                  android:label="Summary Options">
+        </activity>
+
+        <activity android:name=".Main.Activity_UserMonitoringOptions"
+                  android:label="Monitoring Options">
+        </activity>
+
+        <activity android:name=".Main.Activity_LoginScreen"
+                  android:label="Santeh CRM">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity android:name=".Main.MapsActivity_UserMonitoring"
+                  android:label="User Activities">
+
+        </activity>
+
+        <activity android:name=".Main.Activity_UserMonitoring_ViewByUser">
+        </activity>
+
+
+        <!--RECEIVERS-->
+        <!-- For Receiving SMS -->
+        <receiver
+            android:name="com.santeh.rjhonsl.samplemap.BroadcastReceiver.SMS_BroadcastReceiver"
+            android:permission="android.permission.BROADCAST_SMS"
+            >
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+                <action android:name="andr" />
+            </intent-filter>
+        </receiver>
+
+
+        <receiver android:name="com.santeh.rjhonsl.samplemap.BroadcastReceiver.ReceiverPositioningAlarm" >
+            <intent-filter>
+                <action android:name="locationReceiver" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

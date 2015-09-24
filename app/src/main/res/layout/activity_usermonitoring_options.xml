@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/accent_material_light">
+
+        <TextView
+            android:text=" Find TSR by: "
+            android:layout_marginLeft="0dp"
+            android:textSize="20sp"
+            android:padding="10dp"
+            android:id="@+id/txt_title"
+            android:drawableLeft="@drawable/ic_keyboard_arrow_left_white_24dp"
+            android:textColor="@color/background_material_light"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:background="#328d90"/>
+    </LinearLayout>
+
+
+
+    <TextView
+        android:padding="17dp"
+        android:textSize="18sp"
+        android:textColor="#a3002a24"
+        android:textStyle="normal"
+        android:id="@+id/txt_usrmonitoring_area"
+        android:background="@drawable/bg_white_box_noshadow"
+        android:drawableLeft="@drawable/ic_map_darkteal_24dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="    Area"
+        />
+
+    <View android:layout_width="fill_parent"
+          android:layout_height="1dp"
+          android:background="#eaeaea"
+        />
+
+    <TextView
+        android:padding="17dp"
+        android:textSize="18sp"
+        android:textColor="#a3002a24"
+        android:textStyle="normal"
+        android:id="@+id/txt_usrmonitoring_user"
+        android:background="@drawable/bg_white_box_noshadow"
+        android:drawableLeft="@drawable/ic_people_darkteal_24dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="    User"
+        />
+
+</LinearLayout>

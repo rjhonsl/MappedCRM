@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:padding="9dp"
+              android:id="@+id/ll_item_weekLyReportWrapper"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content">
+
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:gravity="center"
+
+        >
+
+        <LinearLayout android:layout_width="65dp"
+                      android:id="@+id/weeknoHOlder"
+                      android:background="@drawable/bg_darkteal_box_curvebottom"
+                      android:paddingBottom="1dp"
+                      android:layout_marginTop="5dp"
+                      android:layout_marginBottom="7dp"
+                      android:layout_marginLeft="4dp"
+                      android:layout_marginRight="4dp"
+                      android:layout_height="65dp"
+                      android:orientation="vertical"
+                      android:gravity="center"
+            >
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="12sp"
+                      android:paddingBottom="2dp"
+                      android:textColor="#FFFFFF"
+                      android:text="Week No"
+                />
+
+            <View android:layout_width="fill_parent" android:layout_height="2dp"
+                  android:layout_marginLeft="5dp"
+                  android:layout_marginRight="5dp"
+                  android:background="#FFFFFF"/>
+
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="#FFFFFF"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/itemlv_weeklyreport_pondsummary_weeknum"
+                      android:textSize="34sp"
+                      android:text="28"
+                      android:gravity="center"/>
+
+
+        </LinearLayout>
+
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:padding="5dp"
+                          android:layout_weight="1"
+                          android:layout_marginLeft="2dp"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:padding="0dp"
+                              android:layout_height="wrap_content"
+                              android:paddingBottom="1dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/itemlv_weeklyreport_pondsummary_feedtype"
+                        android:layout_weight="1"
+                        android:text="Fry Mash"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:textColor="#3a3a3a"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/itemlv_weeklyreport_pondsummary_recommended"
+                    android:textColor="@color/actionbarBackground"
+                    android:text="Recommended:  12.5 kg"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+                <TextView
+                    android:id="@+id/itemlv_weeklyreport_pondsummary_actual"
+                    android:text="Actual:  N/A"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/itemlv_weeklyreport_pondsummary_remarks"
+                    android:text="Remarks: None"
+                    android:paddingTop="3dp"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+
+
+        <CheckBox android:layout_width="wrap_content"
+                  android:button="@drawable/bg_material_checkbox_darkteal"
+                  android:id="@+id/chk_weeklyreport_pondsummary_isVisited"
+                  android:focusable="false"
+                  android:focusableInTouchMode="false"
+                  android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

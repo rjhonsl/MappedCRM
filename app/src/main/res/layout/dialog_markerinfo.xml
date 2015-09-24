@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:paddingRight="10dp"
+              android:paddingLeft="10dp"
+              android:paddingTop="10dp"
+              android:paddingBottom="0dp"
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent">
+
+    <TextView
+        android:text="BASIC INFO"
+        android:textStyle="bold"
+        android:textColor="@color/material_deep_teal_500"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="10dp"
+            android:text="Farm Name"
+            android:textColor="@color/switch_thumb_disabled_material_dark"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/infowindows_farmname"
+            android:textSize="14sp"
+            android:textColor="@color/material_blue_grey_950"
+            android:text="Sample Farm name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#e4e4e4"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"/>
+
+        <TextView
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/switch_thumb_disabled_material_dark"
+            android:textSize="12sp"
+            android:text="Contact Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/infowindows_contactName"
+            android:textColor="@color/material_blue_grey_950"
+            android:textSize="14sp"
+            android:text="Juan Dela Cruz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#e4e4e4"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"/>
+
+        <TextView
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/switch_thumb_disabled_material_dark"
+            android:textSize="12sp"
+            android:text="Address"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/infowindows_address"
+            android:textSize="14sp"
+            android:singleLine="false"
+            android:maxLines="4"
+            android:textColor="@color/material_blue_grey_950"
+            android:text="Balucluc, Calumpit, Bulacan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#e4e4e4"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"/>
+
+        <TextView
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/switch_thumb_disabled_material_dark"
+            android:textSize="12sp"
+            android:text="Specie(s)"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/infowindows_specie"
+            android:textSize="14sp"
+            android:textColor="@color/material_blue_grey_950"
+            android:text="Tilapia, Bangus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#e4e4e4"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"/>
+
+
+        <TextView
+            android:visibility="gone"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/switch_thumb_disabled_material_dark"
+            android:textSize="12sp"
+            android:text="Culture Level"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:visibility="gone"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/infowindows_culture_level"
+            android:inputType="textMultiLine"
+            android:textSize="14sp"
+            android:textColor="@color/material_blue_grey_950"
+            android:text="Semi-intensive"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/switch_thumb_disabled_material_dark"
+            android:textSize="12sp"
+            android:text="Current Stocks"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/infowindows_stocks"
+            android:textSize="14sp"
+            android:inputType="textMultiLine"
+            android:textColor="@color/material_blue_grey_950"
+            android:text="Tilapia (83 days/1500pcs)\nBangus (75 days/4000pcs)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <View
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#e4e4e4"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/dialog_markerinfo_btnPondinfo"
+            android:textColor="@color/material_deep_teal_500"
+            android:padding="0dp"
+            android:background="@drawable/bg_material_transparent"
+            android:textSize="12sp"
+            android:layout_weight="1"
+            android:text="VIEW PONDS"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/dialog_markerinfo_btnCustinfo"
+            android:textColor="@color/material_deep_teal_500"
+            android:padding="0dp"
+            android:background="@drawable/bg_material_transparent"
+            android:textSize="12sp"
+            android:layout_weight="1"
+            android:text="CUST INFO"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">Santeh CRM</string>
+    <string name="title_activity_maps">Santeh CRM</string>
+    <string name="openDrawer">Navigation Drawer Opened</string>
+    <string name="closeDrawer">Navigation Drawer Closed</string>
+    <string name="NA">N/A</string>
+    <string name="version_number">0.19a</string>
+    <string name="VolleyUnexpectedError">Something went wrong. Please try again later.</string>
+    <string name="error002">Cannot get device location</string>
+
+    <string-array name="nav_items">
+        <item>Home</item>
+        <item>Stockings</item>
+        <item>Fingerlings</item>
+        <item>Item 3</item>
+        <item>settings</item>
+    </string-array>
+
+    <string-array name="cultureType">
+        <item>Cage</item>
+        <item>Pen</item>
+        <item>Pond</item>
+    </string-array>
+
+    <string-array name="waterType">
+        <item>Fresh Water</item>
+        <item>Marine Water</item>
+        <item>Brackish Water</item>
+    </string-array>
+
+    <string-array name="company">
+        <item>PetOne</item>
+        <item>ProNatural</item>
+        <item>Santeh</item>
+        <item>Tateh</item>
+    </string-array>
+
+    <string-array name="cultureLevel">
+        <item>Extensive</item>
+        <item>Intensive</item>
+        <item>Semi-Intesive</item>
+        <item>Mono-Culture</item>
+        <item>Poly-Culture</item>
+    </string-array>
+
+
+
+    <string-array name="species">
+        <item>Bangus</item>
+        <item>Catfish</item>
+        <item>Crab</item>
+        <item>Grouper</item>
+        <item>Home</item>
+        <item>Pangasius</item>
+        <item>Pompano</item>
+        <item>Prawns</item>
+        <item>Home</item>
+        <item>Rabbit Fish</item>
+        <item>Seabass</item>
+        <item>Snapper</item>
+    </string-array>
+
+</resources>
