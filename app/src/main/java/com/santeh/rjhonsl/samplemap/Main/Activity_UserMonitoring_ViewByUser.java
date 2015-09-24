@@ -42,7 +42,7 @@ public class Activity_UserMonitoring_ViewByUser extends Activity {
     AdapterUserMonitoring_ViewByUser custInfoAdapter;
 
     List<CustInfoObject> userlist;
-    ImageButton btnsearch;
+    ImageButton btnsearch, btnfilterByArea;
     ProgressDialog PD;
 
     @Override
@@ -60,6 +60,7 @@ public class Activity_UserMonitoring_ViewByUser extends Activity {
         lvUsers = (ListView) findViewById(R.id.listview_userMonitoring);
         btnsearch = (ImageButton) findViewById(R.id.btn_viewUserActivity_search);
         edt_searchbox = (EditText) findViewById(R.id.edt_viewUserActivity_search);
+        btnfilterByArea = (ImageButton) findViewById(R.id.btn_filter);
 
         getAllUsers(edt_searchbox.getText().toString());
 
@@ -72,6 +73,23 @@ public class Activity_UserMonitoring_ViewByUser extends Activity {
                 } else {
                     Helper.toastShort(activity, "You must enter a name or keyword.");
                 }
+            }
+        });
+
+        btnfilterByArea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String[] provinces = getResources().getStringArray(R.array.province);
+                final Dialog d = Helper.createCustomThemedListDialog(activity, provinces , "Area", R.color.red);
+                d.show();
+                ListView lvprovince = (ListView) d.findViewById(R.id.dialog_list_listview);
+                lvprovince.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                });
             }
         });
 

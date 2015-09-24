@@ -563,6 +563,29 @@ public class Helper {
         return d;
     }
 
+
+    public static Dialog createCustomThemedColorDialogOKOnly(Activity activity, String title, String prompt, String button, int resIdColor){
+        final Dialog d = new Dialog(activity);//
+        d.requestWindowFeature(Window.FEATURE_NO_TITLE); //notitle
+        d.setContentView(R.layout.dialog_material_themed_okonly);//Set the xml view of the dialog
+        TextView txttitle = (TextView) d.findViewById(R.id.dialog_okonly_title);
+        TextView txtprompt = (TextView) d.findViewById(R.id.dialog_okonly_prompt);
+        Button txtok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
+        txtok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                d.hide();
+            }
+        });
+        txttitle.setBackground(activity.getResources().getDrawable(resIdColor));
+        txtprompt.setText(prompt);
+        txttitle.setText(title);
+        txtok.setText(button);
+        d.show();
+
+        return d;
+    }
+
     public static Dialog createCustomListDialog(Activity activity, String[] options, String title){
         final Dialog d = new Dialog(activity);//
         d.requestWindowFeature(Window.FEATURE_NO_TITLE); //notitle
@@ -574,6 +597,23 @@ public class Helper {
         listview.setAdapter(listViewAdapter);
 
         TextView txtTitle = (TextView) d.findViewById(R.id.dialog_okonly_title);
+        txtTitle.setText(title);
+        d.show();
+        return d;
+    }
+
+    public static Dialog createCustomThemedListDialog(Activity activity, String[] options, String title, int resIdColor){
+        final Dialog d = new Dialog(activity);//
+        d.requestWindowFeature(Window.FEATURE_NO_TITLE); //notitle
+        d.setContentView(R.layout.dialog_material_themed_list);//Set the xml view of the dialog
+
+        ListView listview = (ListView) d.findViewById(R.id.dialog_list_listview);
+        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(activity, R.layout.select_dialog_item_material, options); //selected item will look like a spinner set from XML
+        listViewAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        listview.setAdapter(listViewAdapter);
+
+        TextView txtTitle = (TextView) d.findViewById(R.id.dialog_okonly_title);
+        txtTitle.setBackground(activity.getResources().getDrawable(resIdColor));
         txtTitle.setText(title);
         d.show();
         return d;
