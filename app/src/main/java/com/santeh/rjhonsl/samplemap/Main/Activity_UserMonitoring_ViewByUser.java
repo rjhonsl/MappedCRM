@@ -160,8 +160,8 @@ public class Activity_UserMonitoring_ViewByUser extends Activity {
                                     lvUsers.setAdapter(custInfoAdapter);
                                 }else{
 //                                    Helper.toastLong(activity, "novalue on userlist " + response);
-                                    Dialog d = Helper.createCustomDialogOKOnly(activity, "", response, "");
-                                    d.show();
+//                                    Dialog d = Helper.createCustomDialogOKOnly(activity, "", response, "");
+//                                    d.show();
 
                                 }
                             }

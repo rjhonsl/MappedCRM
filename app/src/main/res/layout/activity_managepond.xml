@@ -56,18 +56,37 @@
                   android:textSize="15sp"
                   android:textColor="@color/gray_600"
                   android:layout_height="wrap_content"
-                  android:id="@+id/txt_managepond_pondcount"
+                  android:id="@+id/farmname"
                   android:text="Constancia's Farm"/>
 
 
     </LinearLayout>
 
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="fill_parent"
+                  android:layout_centerInParent="true"
+                  android:orientation="vertical"
+                  android:layout_below="@+id/belowTitle"
+                  android:gravity="center"
+                  android:id="@+id/ll_nopond"
+        >
+
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:src="@drawable/fish"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="There are no ponds yet!"
+                  android:textColor="@color/gray_200"
+            />
+
+    </LinearLayout>
 
     <ListView android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:layout_below="@+id/belowTitle"
+              android:visibility="gone"
               android:id="@+id/listofponds"
-        android:entries="@array/province">
+        >
 
     </ListView>
 
@@ -82,7 +101,8 @@
                      android:padding="12dp"
                      android:layout_height="wrap_content"
                      android:src="@drawable/ic_add_white_24dp"
-                     android:id="@+id/btn_filter"
+                     android:contentDescription="Add a pond"
+                     android:id="@+id/btn_addpond"
             />
     </FrameLayout>
 

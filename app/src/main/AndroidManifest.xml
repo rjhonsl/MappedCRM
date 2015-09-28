@@ -113,6 +113,9 @@
         <activity android:name=".Main.Activity_UserMonitoring_ViewByUser">
         </activity>
 
+        <activity android:name=".Main.Activity_AddPond">
+        </activity>
+
 
         <!--RECEIVERS-->
         <!-- For Receiving SMS -->

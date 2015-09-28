@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:padding="9dp"
+              android:paddingLeft="12dp"
+              android:paddingRight="12dp"
+              android:paddingTop="9dp"
+              android:paddingBottom="9dp"
               android:id="@+id/ll_item_weekLyReportWrapper"
               android:orientation="vertical"
               android:layout_width="fill_parent"
+
               android:layout_height="wrap_content">
 
     <LinearLayout android:layout_width="fill_parent"
@@ -22,12 +26,12 @@
             >
 
         <TextView android:layout_width="wrap_content"
-                                                       android:textColor="#FFFFFF"
-                                                       android:layout_height="wrap_content"
-                                                       android:id="@+id/itemlv_managepond_initials"
-                                                       android:textSize="30sp"
-                                                       android:text="1"
-                                                       android:gravity="center"/>
+               android:textColor="#FFFFFF"
+               android:layout_height="wrap_content"
+               android:id="@+id/itemlv_managepond_initials"
+               android:textSize="30sp"
+               android:text="1"
+               android:gravity="center"/>
 
 
         </LinearLayout>

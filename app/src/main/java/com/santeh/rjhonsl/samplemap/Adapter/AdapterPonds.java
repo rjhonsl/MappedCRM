@@ -31,28 +31,25 @@ public class AdapterPonds extends ArrayAdapter<CustInfoObject> {
 		this.context = context;
 		this.ItemList = items;
 		inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		Log.d(tag, "Adapter Context");
 	}
 
 	private class ViewHolder {
-		TextView name;
-		TextView address;
+		TextView species, quantity, datestocked, pondid;
 	}
 
 	public View getView(int position, View view, ViewGroup parent) {
 		final ViewHolder holder;
 		positions = position;
 
-		Log.d(tag, "Adapter Getview");
 		if (view == null) {
-
-			Log.d(tag, "if null");
 			holder = new ViewHolder();
 
-			view = inflater.inflate(R.layout.item_lv_viewcustomerinfo, null);
+			view = inflater.inflate(R.layout.item_lv_manageponds, null);
+			holder.species = (TextView) view.findViewById(R.id.itemlv_managepond_Species);
+			holder.quantity = (TextView) view.findViewById(R.id.itemlv_managepond_quantity);
+			holder.datestocked = (TextView) view.findViewById(R.id.itemlv_managepond_datestocked);
+			holder.pondid = (TextView) view.findViewById(R.id.itemlv_managepond_initials);
 
-			holder.address = (TextView) view.findViewById(R.id.item_lv_vcnf_address);
-			holder.name = (TextView) view.findViewById(R.id.item_lv_vcnf_custname);
 			view.setTag(holder);
 		}
 		else
@@ -61,11 +58,10 @@ public class AdapterPonds extends ArrayAdapter<CustInfoObject> {
 			holder = (ViewHolder) view.getTag();
 		}
 
-//		 Capture position and set to the TextViews
-		holder.address.setText(ItemList.get(position).getAddress());//reversed this//
-		holder.name.setText(ItemList.get(position).getContact_name());
-
-
+		holder.species.setText(ItemList.get(position).getSpecie()+"");//reversed this//
+		holder.quantity.setText("Quantity: "+ItemList.get(position).getQuantity()+"");
+		holder.datestocked.setText("Date Stocked: "+ItemList.get(position).getDateStocked()+"");
+		holder.pondid.setText(ItemList.get(position).getPondID()+"");
 		return view;
 	}
 
