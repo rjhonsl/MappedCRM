@@ -94,7 +94,7 @@
                 <EditText android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:focusable="false"
-                          android:id="@+id/idtspecie"
+                          android:id="@+id/edtSpecie"
                           android:drawableRight="@drawable/ic_keyboard_arrow_down_darkgreen_24dp"
                     />
 
@@ -110,11 +110,11 @@
                           android:layout_height="wrap_content"
                           android:textSize="14sp"
                           android:textColor="@color/gray_600"
-                          android:text="ABW"
+                          android:text="ABW(g)"
                     />
 
                 <EditText android:layout_width="fill_parent"
-                          android:id="@+id/edtabw"
+                          android:id="@+id/edtAbw"
                           android:inputType="number"
                           android:layout_height="wrap_content"/>
 
@@ -130,7 +130,7 @@
                           android:textSize="14sp"
                           android:textColor="@color/gray_600"
 
-                          android:text="Survival Rate"
+                          android:text="Survival Rate(%)"
                     />
 
                 <EditText android:layout_width="fill_parent"
@@ -156,6 +156,7 @@
                 <EditText android:layout_width="fill_parent"
                           android:focusable="false"
                           android:id="@+id/edtDateStocked"
+                          android:drawableRight="@drawable/ic_event_darkteal_24dp"
                           android:layout_height="wrap_content"/>
 
             </LinearLayout>
@@ -191,7 +192,7 @@
                           android:textSize="14sp"
                           android:textColor="@color/gray_600"
 
-                          android:text="Area"
+                          android:text="Area(m²)"
                     />
 
 
@@ -218,6 +219,7 @@
 
                 <EditText android:layout_width="fill_parent"
                           android:id="@+id/edtCultureSystem"
+                          android:drawableRight="@drawable/ic_keyboard_arrow_down_darkgreen_24dp"
                           android:focusable="false"
                           android:layout_height="wrap_content"/>
 
