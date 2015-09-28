@@ -13,7 +13,7 @@
 
         >
 
-        <LinearLayout android:layout_width="60"
+        <LinearLayout android:layout_width="60dp"
                       android:id="@+id/weeknoHOlder"
                       android:background="@drawable/bg_amber_oval"
                       android:layout_height="60dp"
@@ -21,13 +21,13 @@
                       android:gravity="center"
             >
 
-            <TextView android:layout_width="wrap_content"
-                      android:textColor="#FFFFFF"
-                      android:layout_height="wrap_content"
-                      android:id="@+id/itemlv_managempond_initials"
-                      android:textSize="30sp"
-                      android:text="T"
-                      android:gravity="center"/>
+        <TextView android:layout_width="wrap_content"
+                                                       android:textColor="#FFFFFF"
+                                                       android:layout_height="wrap_content"
+                                                       android:id="@+id/itemlv_managepond_initials"
+                                                       android:textSize="30sp"
+                                                       android:text="1"
+                                                       android:gravity="center"/>
 
 
         </LinearLayout>
@@ -46,8 +46,8 @@
                               android:paddingBottom="1dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/itemlv_managempond_Species"
+                     <TextView
+                        android:id="@+id/itemlv_managepond_Species"
                         android:layout_weight="1"
                         android:text="Tilapia, Bangus"
                         android:textStyle="bold"
@@ -60,16 +60,16 @@
 
 
                 <TextView
-                    android:id="@+id/itemlv_weeklyreport_pondsummary_recommended"
-                    android:text="Recommended:  12.5 kg"
+                    android:id="@+id/itemlv_managepond_quantity"
+                    android:text="Quantity: 10000"
                     android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
 <!--a-->
                 <TextView
-                    android:id="@+id/itemlv_weeklyreport_pondsummary_actual"
-                    android:text="Actual:  N/A"
+                    android:id="@+id/itemlv_managepond_datestocked"
+                    android:text="Stocked: Sepetember 28, 2015"
                     android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

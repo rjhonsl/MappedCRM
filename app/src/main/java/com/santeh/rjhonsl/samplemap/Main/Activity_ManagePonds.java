@@ -57,7 +57,7 @@ public class Activity_ManagePonds extends Activity {
         Bundle extras = getIntent().getExtras();
         if (extras !=null){
             id = extras.getInt("id");
-//            Helper.toastShort(activity, "ID: " + id);
+            Helper.toastShort(activity, "ID: " + id);
             getdataByID(id);
         }else{
 //            Helper.toastShort(activity, "ID has not been received.");
@@ -526,16 +526,15 @@ public class Activity_ManagePonds extends Activity {
                         @Override
                         public void onResponse(String response) {
                             PD.dismiss();
-
+                            Helper.toastLong(activity, response);
 
                             if(!response.substring(1,2).equalsIgnoreCase("0")){
                                 pondInfoList = PondInfoJsonParser.parseFeed(response);
-
                             }
                             else{
-                                Helper.toastShort(activity, "Something unexpected happened. Please try again");
+                                Helper.toastShort(activity, "Something unexpected happened. Please try again ");
                             }
-//                            Helper.toastLong(activity, response);
+
 //                            if(pondInfoList !=null ){
 //                                totalponds = 0; totalstock=0;
 //                                for (int i = 0; i < pondInfoList.size() ; i++) {
