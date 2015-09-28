@@ -134,7 +134,7 @@ public class Activity_AddPond extends FragmentActivity  implements DatePickerDia
                         || edtCultureSystem.getText().toString().equalsIgnoreCase("")
                         || edtRemarks.getText().toString().equalsIgnoreCase("")
                         ) {
-                    final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Message","You have to complete all the following fields to continue.", "OK", R.color.red);
+                    final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Oops","You have to complete all the following fields to continue.", "OK", R.color.red);
                     d.show();
                     Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
                     ok.setOnClickListener(new View.OnClickListener() {
@@ -162,8 +162,27 @@ public class Activity_AddPond extends FragmentActivity  implements DatePickerDia
                         }
 
                     });
-                }else{
-                    updateCustomerInfoDB(custid, Helper.variables.URL_INSERT_PONDINFO);
+                }else {
+                    final Dialog x = Helper.createCustomDialogThemedYesNO(activity, "Save all information on database?", "Save", "NO", "YES",
+                            R.color.green_400);
+                    x.show();
+                    Button no = (Button) x.findViewById(R.id.btn_dialog_yesno_opt1);
+                    Button yes = (Button) x.findViewById(R.id.btn_dialog_yesno_opt2);
+                    no.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            x.hide();
+                        }
+                    });
+
+                    yes.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            x.hide();
+                            updateCustomerInfoDB(custid, Helper.variables.URL_INSERT_PONDINFO);
+                        }
+                    });
+
                 }
             }
         });
@@ -281,7 +300,6 @@ public class Activity_AddPond extends FragmentActivity  implements DatePickerDia
             // Adding request to request queue
             MyVolleyAPI api = new MyVolleyAPI();
             api.addToReqQueue(postRequest, context);
-        }
-
+    }
 
 }
