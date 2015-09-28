@@ -244,7 +244,7 @@ public class Activity_AddMarker_CustomerInfo extends Activity {
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog d = Helper.createCustomDialoYesNO(activity, R.layout.dialog_material_yesno,
+                final Dialog d = Helper.createCustomDialogYesNO(activity, R.layout.dialog_material_yesno,
                         "Are you sure you want to save this information to our database?",
                         "SAVE", "YES", "NO");
                 Button yes = (Button) d.findViewById(R.id.btn_dialog_yesno_opt1);

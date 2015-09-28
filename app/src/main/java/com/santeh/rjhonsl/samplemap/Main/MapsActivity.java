@@ -383,7 +383,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                final Dialog d = Helper.createCustomDialoYesNO(MapsActivity.this, R.layout.dialog_material_yesno,
+                                final Dialog d = Helper.createCustomDialogYesNO(MapsActivity.this, R.layout.dialog_material_yesno,
                                         "Do you wish to add customer information here at your current location?\n\n" +
                                                 "Latitude  : " + curlat + "\n" +
                                                 "Longtitude: " + curLong, "ADD MARKER", "YES", "NO");
@@ -855,7 +855,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void exitApp() {
-        final Dialog d = Helper.createCustomDialoYesNO(activity, R.layout.dialog_material_yesno, "Do you wish to wish to exit the app? You will have to login next time.", "EXIT", "YES", "NO");
+        final Dialog d = Helper.createCustomDialogYesNO(activity, R.layout.dialog_material_yesno, "Do you wish to wish to exit the app? You will have to login next time.", "EXIT", "YES", "NO");
         d.show();
         Button yes = (Button) d.findViewById(R.id.btn_dialog_yesno_opt1);
         Button no = (Button) d.findViewById(R.id.btn_dialog_yesno_opt2);
@@ -882,7 +882,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     private void logout() {
-        final Dialog d = Helper.createCustomDialoYesNO(activity, R.layout.dialog_material_yesno, "Do you wish to wish to return to Login Screen?", "Log Out", "YES", "NO");
+        final Dialog d = Helper.createCustomDialogYesNO(activity, R.layout.dialog_material_yesno, "Do you wish to wish to return to Login Screen?", "Log Out", "YES", "NO");
         d.show();
         Button yes = (Button) d.findViewById(R.id.btn_dialog_yesno_opt1);
         Button no = (Button) d.findViewById(R.id.btn_dialog_yesno_opt2);

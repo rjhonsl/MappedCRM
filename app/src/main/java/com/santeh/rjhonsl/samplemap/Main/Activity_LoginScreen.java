@@ -362,7 +362,7 @@ public class Activity_LoginScreen extends Activity{
     }
 
     private void exitApp() {
-        final Dialog d = Helper.createCustomDialoYesNO(activity, R.layout.dialog_material_yesno, "Do you wish to wish to exit the app?", "EXIT", "YES", "NO");
+        final Dialog d = Helper.createCustomDialogYesNO(activity, R.layout.dialog_material_yesno, "Do you wish to wish to exit the app?", "EXIT", "YES", "NO");
         d.show();
         Button yes = (Button) d.findViewById(R.id.btn_dialog_yesno_opt1);
         Button no = (Button) d.findViewById(R.id.btn_dialog_yesno_opt2);

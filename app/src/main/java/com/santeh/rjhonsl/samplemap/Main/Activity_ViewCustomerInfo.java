@@ -123,9 +123,9 @@ public class Activity_ViewCustomerInfo extends Activity {
                             intent.putExtra("fromActivity", "viewCustinfo");
                             startActivity(intent);
                         }else if(index ==2) {
-                            final Dialog yn = Helper.createCustomDialoYesNO(Activity_ViewCustomerInfo.this, R.layout.dialog_material_yesno,
+                            final Dialog yn = Helper.createCustomDialogYesNO(Activity_ViewCustomerInfo.this, R.layout.dialog_material_yesno,
                                     "Changes you are going to do is permanent and irreversible. \n\nAre you sure you want to delete *"
-                                            +searchedList.get(position).getContact_name()+"* from list?",
+                                            + searchedList.get(position).getContact_name() + "* from list?",
                                     "DELETE", "YES", "NO");
                             Button yes = (Button) yn.findViewById(R.id.btn_dialog_yesno_opt1);
                             Button no = (Button) yn.findViewById(R.id.btn_dialog_yesno_opt2);

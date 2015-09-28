@@ -512,7 +512,7 @@ public class Helper {
 
 
 
-    public static Dialog createCustomDialoYesNO(Activity activity, int dialogResID, String prompt, String title, String strButton1, String strButton2){
+    public static Dialog createCustomDialogYesNO(Activity activity, int dialogResID, String prompt, String title, String strButton1, String strButton2){
         final Dialog d = new Dialog(activity);//
         d.requestWindowFeature(Window.FEATURE_NO_TITLE);
         d.setContentView(dialogResID);//Set the xml view of the dialog
@@ -528,19 +528,24 @@ public class Helper {
         return d;
     }
 
-    public static Dialog createCustomDialog(Activity activity, int dialogResID){
+
+    public static Dialog createCustomDialogThemedYesNO(Activity activity, String prompt, String title, String strButton1, String strButton2, int resIdColor){
         final Dialog d = new Dialog(activity);//
-        d.requestWindowFeature(Window.FEATURE_NO_TITLE); //notitle
-        d.setContentView(dialogResID);//Set the xml view of the dialog
+        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        d.setContentView(R.layout.dialog_material_themed_yesno);//Set the xml view of the dialog
+        Button btn1 = (Button) d.findViewById(R.id.btn_dialog_yesno_opt1);
+        Button btn2 = (Button) d.findViewById(R.id.btn_dialog_yesno_opt2);
+        TextView txttitle = (TextView) d.findViewById(R.id.dialog_yesno_title);
+        TextView txtprompt = (TextView) d.findViewById(R.id.dialog_yesno_prompt);
+
+        txtprompt.setText(prompt);
+        txttitle.setText(title);
+        txttitle.setBackground(activity.getResources().getDrawable(resIdColor));
+        btn1.setText(strButton1);
+        btn2.setText(strButton2);
         return d;
     }
 
-    public static Dialog createCustomDatePicker(Activity activity){
-        final Dialog d = new Dialog(activity);//
-        d.requestWindowFeature(Window.FEATURE_NO_TITLE); //notitle
-        d.setContentView(R.layout.dialog_calendarpicker_dateview);//Set the xml view of the dialog
-        return d;
-    }
 
 
 
@@ -787,7 +792,7 @@ public class Helper {
         } catch(Exception ex) {}
 
         if(!gps_enabled) {
-            final Dialog d = createCustomDialoYesNO(activity, R.layout.dialog_material_yesno,"Location services is needed to use this application. Please turn on Location in settings","GPS Service","OK","No");
+            final Dialog d = createCustomDialogYesNO(activity, R.layout.dialog_material_yesno, "Location services is needed to use this application. Please turn on Location in settings", "GPS Service", "OK", "No");
             Button b1 = (Button) d.findViewById(R.id.btn_dialog_yesno_opt1);
             Button b2 = (Button) d.findViewById(R.id.btn_dialog_yesno_opt2);
 

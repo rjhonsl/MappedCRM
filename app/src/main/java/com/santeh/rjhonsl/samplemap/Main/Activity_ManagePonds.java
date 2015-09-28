@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -78,7 +80,7 @@ public class Activity_ManagePonds extends Activity {
         llnoPond = (LinearLayout) findViewById(R.id.ll_nopond);
         btnaddpond = (ImageButton) findViewById(R.id.btn_addpond);
         TextView txtfarmname = (TextView) findViewById(R.id.farmname);
-        txtfarmname.setText(farmname+"");
+        txtfarmname.setText(farmname + "");
 
 
         btnaddpond.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +93,50 @@ public class Activity_ManagePonds extends Activity {
             }
         });
 
+        lvPonds.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position1, long id) {
+                String[] options = {"View and Edit Details", "View Weekly Reports", "Delete"};
+                final Dialog d = Helper.createCustomThemedListDialog(activity, options, "Systems", R.color.deepteal_500);
+                d.show();
+
+                ListView lv = (ListView) d.findViewById(R.id.dialog_list_listview);
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                        d.hide();
+                        if (position == 0){
+
+                        }else if (position == 1){
+
+                        }else if (position == 2) {
+                            final Dialog dd = Helper.createCustomDialogThemedYesNO(activity, "Changes cannot be undone once implemented. \n\nAre you sure you want to delete this pond?"
+                                    , "Delete", "NO", "YES", R.color.red);
+                            dd.show();
+                            Button yes = (Button) dd.findViewById(R.id.btn_dialog_yesno_opt2);
+                            Button no = (Button) dd.findViewById(R.id.btn_dialog_yesno_opt1);
+
+                            yes.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dd.hide();
+                                    deletePondByID(pondInfoList.get(position1).getId());
+                                }
+                            });
+
+                            no.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dd.hide();
+                                }
+                            });
+
+                        }
+                    }
+                });
+                return false;
+            }
+        });
     }
 
 
@@ -142,8 +188,64 @@ public class Activity_ManagePonds extends Activity {
             }) {
                 @Override
                 protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
+                    Map<String, String> params = new HashMap<>();
                     params.put("customerId", String.valueOf(custID));
+                    return params;
+                }
+            };
+
+            // Adding request to request queue
+            MyVolleyAPI api = new MyVolleyAPI();
+            api.addToReqQueue(postRequest, Activity_ManagePonds.this);
+
+        }
+
+    }
+
+
+    public void deletePondByID(final int pondIndexID) {
+
+        if(!Helper.isNetworkAvailable(activity)) {
+            Helper.toastShort(activity, "Internet Connection is not available. Please try again later.");
+        }
+        else{
+            PD.setMessage("Getting information from server...");
+            PD.show();
+
+            StringRequest postRequest = new StringRequest(Request.Method.POST, Helper.variables.URL_DELETE_POND_BY_ID,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            PD.dismiss();
+
+                            if(!response.substring(1,2).equalsIgnoreCase("0")){
+                                getdataByID(id);
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    final Dialog d = Helper.createCustomDialogOKOnly(Activity_ManagePonds.this, "OOPS",
+                            "Something went wrong. Please try again later.", "OK");
+                    TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
+                    d.setCancelable(false);
+                    d.show();
+                    ok.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            d.hide();
+                        }
+                    });
+                    PD.dismiss();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("id", String.valueOf(pondIndexID));
+                    params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                    params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
+                    params.put("deviceid", Helper.getMacAddress(activity));
                     return params;
                 }
             };
