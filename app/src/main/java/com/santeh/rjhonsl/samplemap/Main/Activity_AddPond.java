@@ -236,6 +236,7 @@ public class Activity_AddPond extends FragmentActivity  implements DatePickerDia
                             }
                             else {
                                 oopsprompt();
+                                //sample upload
                             }
 
                         }
