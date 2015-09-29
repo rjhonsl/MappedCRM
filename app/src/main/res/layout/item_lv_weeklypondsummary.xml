@@ -105,15 +105,6 @@
 
 
 
-
-        <CheckBox android:layout_width="wrap_content"
-                  android:button="@drawable/bg_material_checkbox_darkteal"
-                  android:id="@+id/chk_weeklyreport_pondsummary_isVisited"
-                  android:focusable="false"
-                  android:focusableInTouchMode="false"
-                  android:layout_height="wrap_content"/>
-
-
     </LinearLayout>
 
 

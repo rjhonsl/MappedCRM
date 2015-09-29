@@ -88,6 +88,7 @@ public class Helper {
         public static String URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO    = "http://mysanteh.site50.net/santehweb/selectCustinfoLeftJoinPondinf.php";
         public static String URL_SELECT_CUSTINFO_BY_ID  = "http://mysanteh.site50.net/santehweb/selectByID.php";
         public static String URL_SELECT_PONDINFO_BY_CUSTOMER_ID ="http://mysanteh.site50.net/santehweb/selectPondByCustomerID.php";
+        public static String URL_SELECT_PONDINFO_BY_CUSTOMERID_AND_PONDID ="http://mysanteh.site50.net/santehweb/selectPondByCustomerIDandPondID.php";
         public static String URL_SELECT_ALL_PONDINFO_GROUPBY_CUSTINFO = "http://mysanteh.site50.net/santehweb/selectAllPondGroupBy.php";
         public static String URL_SELECT_ALL_PONDINFO = "http://mysanteh.site50.net/santehweb/selectAllPond.php";
         public static String URL_SELECT_ALL_USERS_IN_AREA= "http://mysanteh.site50.net/santehweb/selectAlluserInAnArea.php";

@@ -79,7 +79,7 @@
                   android:label="Pond Information">
         </activity>
 
-        <activity android:name=".Main.Activity_WeeklyReports_Growout_FarmSummary"
+        <activity android:name=".Main.Activity_WeeklyReports_Growout_FarmPondReports"
                   android:label="Weekly Reports">
         </activity>
 
@@ -118,6 +118,7 @@
 
         <activity android:name=".Main.Activity_EditPonds">
         </activity>
+
 
 
         <!--RECEIVERS-->

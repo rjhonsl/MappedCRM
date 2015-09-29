@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -18,11 +20,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.maps.model.LatLng;
 import com.santeh.rjhonsl.samplemap.APIs.MyVolleyAPI;
 import com.santeh.rjhonsl.samplemap.Adapter.AdapterPonds;
 import com.santeh.rjhonsl.samplemap.Obj.CustInfoObject;
 import com.santeh.rjhonsl.samplemap.Parsers.PondInfoJsonParser;
 import com.santeh.rjhonsl.samplemap.R;
+import com.santeh.rjhonsl.samplemap.Utils.FusedLocation;
 import com.santeh.rjhonsl.samplemap.Utils.Helper;
 
 import java.util.HashMap;
@@ -40,11 +44,13 @@ public class Activity_ManagePonds extends Activity {
     List<CustInfoObject> pondInfoList;
     AdapterPonds pondadapter;
 
-    String farmname = "";
+    String farmname = "", latitude = "",  longitude ="";
     ImageButton btnaddpond;
 
     ListView lvPonds;
     LinearLayout llnoPond;
+
+    FusedLocation fusedLocation;
 
     int id=1;
 
@@ -55,6 +61,8 @@ public class Activity_ManagePonds extends Activity {
         activity = Activity_ManagePonds.this;
         context  = Activity_ManagePonds.this;
 
+        fusedLocation = new FusedLocation(context, activity);
+        fusedLocation.connectToApiClient();
 
         PD = new ProgressDialog(this);
         PD.setMessage("Updating database. Please wait....");
@@ -62,17 +70,17 @@ public class Activity_ManagePonds extends Activity {
 
 
         Bundle extras = getIntent().getExtras();
-        if (extras !=null){
-            id = extras.getInt("id");
-            getdataByID(id);
-        }else{
-            id=42;
-            getdataByID(42);
-        }
         if (getIntent() != null) {
             if (getIntent().hasExtra("farmname")) {
                 farmname = getIntent().getStringExtra("farmname");
+                latitude = getIntent().getStringExtra("latitude");
+                longitude = getIntent().getStringExtra("longitude");
             }
+
+            if (getIntent().hasExtra("id")) {
+                id = getIntent().getIntExtra("id", 0);
+            }
+//            Helper.toastShort(activity, id+"");
         }
 
 
@@ -86,26 +94,81 @@ public class Activity_ManagePonds extends Activity {
         btnaddpond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Activity_ManagePonds.this, Activity_AddPond.class);
-                intent.putExtra("custid", id);
-                intent.putExtra("farmname", farmname);
-                startActivity(intent);
+
+                fusedLocation.connectToApiClient();
+
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        LatLng currentloc = fusedLocation.getLastKnowLocation();
+                        LatLng farmlocat = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+
+                        float[] results = new float[1];
+                        Location.distanceBetween(farmlocat.latitude, farmlocat.longitude,
+                                currentloc.latitude, currentloc.longitude, results);
+                        Helper.toastLong(activity, results[0]+"");
+
+                        if (results[0] > 1000) {
+                            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Out of range", "You must be near the farm to Add a new pond.", "OK", R.color.red);
+                            d.show();
+
+                            Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
+                            ok.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    d.hide();
+                                }
+                            });
+                        }else{
+                            Intent intent = new Intent(Activity_ManagePonds.this, Activity_AddPond.class);
+                            intent.putExtra("custid", id);
+                            intent.putExtra("farmname", farmname);
+                            startActivity(intent);
+                        }
+                    }
+                }, 280);
+
+//
+            }
+        });
+
+        lvPonds.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Helper.toastShort(activity,pondInfoList.get(position).getSurvivalrate_per_pond() );
             }
         });
 
         lvPonds.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position1, long id) {
-                String[] options = {"View and Edit Details", "View Weekly Reports", "Delete"};
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position1, long id1) {
+                String[] options = {"View and Edit Pond Details", "View Weekly Reports", "Delete Pond"};
                 final Dialog d = Helper.createCustomThemedListDialog(activity, options, "Systems", R.color.deepteal_500);
                 d.show();
 
                 ListView lv = (ListView) d.findViewById(R.id.dialog_list_listview);
                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                    public void onItemClick(AdapterView<?> parent, View view, final int position, long id2) {
                         d.hide();
                         if (position == 1){
+
+                            int converted = id;
+                            Intent intent = new Intent(activity, Activity_WeeklyReports_Growout_FarmPondReports.class);
+                            intent.putExtra("farmname", farmname);
+                            intent.putExtra("pondid", pondInfoList.get(position1).getPondID());
+                            intent.putExtra("id", pondInfoList.get(position1).getId());
+                            intent.putExtra("specie", pondInfoList.get(position1).getSpecie());
+                            intent.putExtra("abw", pondInfoList.get(position1).getSizeofStock());
+                            intent.putExtra("survivalrate", pondInfoList.get(position1).getSurvivalrate_per_pond());
+                            intent.putExtra("datestocked", pondInfoList.get(position1).getDateStocked());
+                            intent.putExtra("quantity", pondInfoList.get(position1).getQuantity());
+                            intent.putExtra("area", pondInfoList.get(position1).getArea());
+                            intent.putExtra("culturesystem", pondInfoList.get(position1).getCulturesystem());
+                            intent.putExtra("remarks", pondInfoList.get(position1).getRemarks());
+                            startActivity(intent);
 
                         }else if (position == 0) {
                             Intent intent = new Intent(activity, Activity_EditPonds.class);
@@ -119,6 +182,9 @@ public class Activity_ManagePonds extends Activity {
                             intent.putExtra("area", pondInfoList.get(position1).getArea());
                             intent.putExtra("culturesystem", pondInfoList.get(position1).getCulturesystem());
                             intent.putExtra("remarks", pondInfoList.get(position1).getRemarks());
+                            intent.putExtra("latitude", latitude);
+                            intent.putExtra("longitude", longitude);
+
                             startActivity(intent);
 
                         }else if (position == 2) {

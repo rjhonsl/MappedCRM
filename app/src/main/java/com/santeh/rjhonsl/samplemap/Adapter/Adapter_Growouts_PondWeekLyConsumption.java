@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -49,7 +47,7 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 
 	private class ViewHolder {
 		TextView txtweekno, txtfeedtype, txtactual, txtrecommended, txtremarks;
-		CheckBox chkisVisited;
+//		CheckBox chkisVisited;
 		LinearLayout weeknoHOlder, wrapper;
 	}
 
@@ -72,7 +70,7 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 
 			holder.wrapper = (LinearLayout) view.findViewById(R.id.ll_item_weekLyReportWrapper);
 
-			holder.chkisVisited = (CheckBox) view.findViewById(R.id.chk_weeklyreport_pondsummary_isVisited);
+//			holder.chkisVisited = (CheckBox) view.findViewById(R.id.chk_weeklyreport_pondsummary_isVisited);
 
 			holder.weeknoHOlder = (LinearLayout) view.findViewById(R.id.weeknoHOlder);
 
@@ -83,29 +81,29 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 			Log.d(tag, "if not null");
 
 			holder = (ViewHolder) view.getTag();
-			holder.chkisVisited.setOnCheckedChangeListener(null);
+//			holder.chkisVisited.setOnCheckedChangeListener(null);
 
 		}
 
 		visiblePosArray[position] = objArrayList.get(position).getIsVisited();
 
-		if(objArrayList.get(position).getIsVisited() == 0){
-			holder.chkisVisited.setChecked(false);
-		}else{
-			holder.chkisVisited.setChecked(true);
-		}
+//		if(objArrayList.get(position).getIsVisited() == 0){
+//			holder.chkisVisited.setChecked(false);
+//		}else{
+//			holder.chkisVisited.setChecked(true);
+//		}
 
 
-		holder.chkisVisited.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				//					holder.chkisVisited.setChecked(false);
-//					holder.chkisVisited.setChecked(true);
-				checked[position] = isChecked;
-			}
-		});
+//		holder.chkisVisited.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//			@Override
+//			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//				//					holder.chkisVisited.setChecked(false);
+////					holder.chkisVisited.setChecked(true);
+//				checked[position] = isChecked;
+//			}
+//		});
 
-		holder.chkisVisited.setChecked(checked[position]);
+//		holder.chkisVisited.setChecked(checked[position]);
 
 
 		holder.txtweekno.setText("" + objArrayList.get(position).getCurrentweekofStock());
@@ -117,16 +115,7 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 
 
 
-		if (position + 1 < objArrayList.get(position).getWeek()) {
-			holder.wrapper.setBackgroundColor(Color.parseColor("#bfbfbf"));
-			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_darkgray_box_curvebottom));
-			holder.txtrecommended.setTextColor(Color.parseColor("#000000"));
 
-		}else{
-			holder.wrapper.setBackgroundColor(Color.parseColor("#00000000"));
-			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_darkteal_box_curvebottom));
-			holder.txtrecommended.setTextColor(Color.parseColor("#42A5F5"));
-		}
 
 
 		if ( (position + 1) == objArrayList.get(position).getStartweekofStock() ){
@@ -140,6 +129,19 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 		}
 		else{
 			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_darkteal_box_curvebottom));
+		}
+
+
+
+		if (position + 1 < objArrayList.get(position).getWeek()) {
+			holder.wrapper.setBackgroundColor(Color.parseColor("#bfbfbf"));
+			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_darkgray_box_curvebottom));
+			holder.txtrecommended.setTextColor(Color.parseColor("#000000"));
+
+		}else{
+			holder.wrapper.setBackgroundColor(Color.parseColor("#00000000"));
+			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_darkteal_box_curvebottom));
+			holder.txtrecommended.setTextColor(Color.parseColor("#42A5F5"));
 		}
 
 

@@ -56,8 +56,9 @@ public class Activity_FarmViewOptions extends Activity{
         txtWeeklyReports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 int converted = Integer.parseInt(customerID.trim());
-                Intent intent = new Intent(Activity_FarmViewOptions.this, Activity_WeeklyReports_Growout_FarmSummary.class);
+                Intent intent = new Intent(Activity_FarmViewOptions.this, Activity_WeeklyReports_Growout_FarmPondReports.class);
                 intent.putExtra("id", converted );
                 intent.putExtra("farmname", farmname);
                 startActivity(intent);

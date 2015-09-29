@@ -230,7 +230,7 @@ public class Activity_UserMonitoring_ViewByUser extends Activity {
                                         @Override
                                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                             getAllUsers(areaList.get(position).getProvince_id()+"", Helper.variables.URL_SELECT_ALL_USERS_IN_AREA);
-
+                                            d.hide();
                                         }
                                     });
                                 }else{

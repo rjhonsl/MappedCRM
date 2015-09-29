@@ -445,9 +445,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 String[] details = marker.getTitle().split("-");
 
-                Intent intent = new Intent(MapsActivity.this, Activity_FarmViewOptions.class);
-                intent.putExtra("customerID", "" + curId.trim());
+//                Helper.toastShort(activity, "."+marker.getTitle()+"."+details[0]);
+                LatLng location = marker.getPosition();
+
+                Intent intent = new Intent(MapsActivity.this, Activity_ManagePonds.class);
+                intent.putExtra("id", Integer.parseInt(details[0]));
                 intent.putExtra("farmname", "" + details[1]);
+                intent.putExtra("latitude", location.latitude +"");
+                intent.putExtra("longitude", location.longitude+ "");
+
                 startActivity(intent);
 
 //                Dialog d = Helper.createCustomDialog(MapsActivity.this, R.layout.dialogbottomofmap);

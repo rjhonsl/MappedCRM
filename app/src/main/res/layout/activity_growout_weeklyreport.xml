@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
@@ -8,6 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:id="@+id/ll_titlebar"
         android:background="@color/accent_material_light">
 
         <ImageButton android:layout_width="wrap_content"
@@ -39,70 +40,34 @@
                      android:layout_height="wrap_content"
                      android:background="@drawable/bg_material_transparent"
                      android:layout_alignParentRight="true"
-            android:src="@drawable/ic_save_white_24dp"/>
+            android:src="@drawable/ic_filler24dp"/>
 
 
     </RelativeLayout>
 
     <LinearLayout android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
-                  android:padding="8dp"
+                  android:padding="5dp"
+                  android:id="@+id/pondinfoHolder"
+                  android:layout_below="@+id/ll_titlebar"
         android:orientation="vertical">
 
         <TextView
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:textSize="18sp"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
             android:id="@+id/lbl_weeklyreports_farmName"
-            android:textColor="@color/material_blue_grey_900"
-            android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-            android:text="Farm Name2"/>
+            android:textColor="@color/gray_600"
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="Case 1 - Tilapia "/>
 
         <View  android:layout_marginBottom="3dp"
             android:layout_width="fill_parent" android:layout_height="1dp"
               android:background="#97a7a7"/>
 
 
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_marginBottom="0dp"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
-                      android:layout_height="wrap_content">
-            <TextView
-                android:textStyle="bold"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
-                android:textColor="@color/material_blue_grey_900"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ponds: "/>
-
-            <TextView
-                android:focusable="true" android:focusableInTouchMode="true"
-                android:gravity="center_vertical"
-                android:layout_gravity="center_vertical"
-                android:drawableRight="@drawable/ic_keyboard_arrow_down_darkgreen_24dp"
-                android:paddingLeft="5dp"
-                android:paddingTop="3dp"
-
-                android:id="@+id/txt_weeklyreports_Specie"
-                android:textColor="@color/material_blue_grey_900"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="1 - Bangus"/>
-
-
-        </LinearLayout>
-
-
-        <View      android:layout_marginBottom="3dp"
-            android:layout_width="fill_parent" android:layout_height="1dp"
-              android:background="#97a7a7"/>
 
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
@@ -116,7 +81,7 @@
                 android:paddingBottom="3dp"
                 android:layout_weight="1"
                 android:id="@+id/txt_weeklyreports_DateStocked"
-                android:textColor="@color/material_blue_grey_900"
+                android:textColor="@color/gray_600"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Date Stocked: "/>
@@ -127,7 +92,7 @@
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
                 android:id="@+id/txt_weeklyreports_quantity"
-                android:textColor="@color/material_blue_grey_900"
+                android:textColor="@color/gray_600"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quantity: "/>
@@ -143,10 +108,27 @@
 
 
     <ListView android:layout_width="fill_parent"
+              android:layout_below="@id/pondinfoHolder"
               android:layout_height="wrap_content"
               android:id="@+id/lv_pond_weeklyReports"
               android:animateLayoutChanges="true"/>
 
 
 
-</LinearLayout>
+
+    <ImageButton android:layout_width="wrap_content"
+                 android:background="@drawable/bg_skyblue_oval"
+                 android:padding="12dp"
+                 android:layout_alignParentBottom="true"
+                 android:layout_alignParentRight="true"
+                 android:layout_marginRight="15dp"
+                 android:layout_marginBottom="15dp"
+                 android:layout_height="wrap_content"
+                 android:src="@drawable/ic_menu_white_24dp"
+                 android:id="@+id/btn_details"
+        />
+
+
+
+
+</RelativeLayout>
