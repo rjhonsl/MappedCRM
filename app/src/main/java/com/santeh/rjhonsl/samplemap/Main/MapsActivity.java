@@ -415,7 +415,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 } else {
                     dialogLocationNotAvailableOkOnly();
                 }
-
             }
         });
 
@@ -453,21 +452,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intent.putExtra("farmname", "" + details[1]);
                 intent.putExtra("latitude", location.latitude +"");
                 intent.putExtra("longitude", location.longitude+ "");
-
                 startActivity(intent);
-
-//                Dialog d = Helper.createCustomDialog(MapsActivity.this, R.layout.dialogbottomofmap);
-//                d.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-//                WindowManager.LayoutParams wmlp = d.getWindow().getAttributes();
-//                wmlp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
-//                wmlp.y = 20;
-//
-////                Button pondinfo
-//
-//                d.show();
-
-
-//                getinfoByID(curId);
             }
 
         });
