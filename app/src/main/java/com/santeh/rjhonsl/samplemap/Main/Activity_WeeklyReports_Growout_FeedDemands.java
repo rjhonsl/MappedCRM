@@ -135,8 +135,8 @@ public class Activity_WeeklyReports_Growout_FeedDemands extends Activity {
 
 
                                             String[] datesplitter = pondInfoObj.get(i).getDateStocked().split("/");
-                                            int weekStocked = Helper.get_StartWeekOf_Tilapia_ByABW(pondInfoObj.get(i).getSizeofStock());
-                                            int weeknoStarted = Helper.get_StartWeekOf_Tilapia_ByABW(pondInfoObj.get(i).getQuantity());
+                                            int weekStocked = Helper.get_Tilapia_WeekNum_byABW(pondInfoObj.get(i).getSizeofStock());
+                                            int weeknoStarted = Helper.get_Tilapia_WeekNum_byABW(pondInfoObj.get(i).getQuantity());
                                             long currendate = System.currentTimeMillis();
                                             long stockeddate = Helper.convertDateToLong(Integer.parseInt(datesplitter[1]), Integer.parseInt(datesplitter[0]), Integer.parseInt(datesplitter[2]));
 
@@ -166,16 +166,16 @@ public class Activity_WeeklyReports_Growout_FeedDemands extends Activity {
                                                 currentABW = Helper.get_ABW_BY_WEEK_NO(currentWeekOfStock);
 
                                                 if (Double.parseDouble(Helper.computeWeeklyFeedConsumption(currentABW, pondInfoObj.get(i).getQuantity(),
-                                                        Helper.get_FeedingRate_by_WeekNum(currentWeekOfStock), 0.7)) > 0) {
-                                                    str_currentConsumption = "" + (currentABW * pondInfoObj.get(i).getQuantity() * Helper.get_FeedingRate_by_WeekNum(currentWeekOfStock) * 0.7 * 7);
+                                                        Helper.get_TilapiaFeedingRate_by_WeekNum(currentWeekOfStock), 0.7)) > 0) {
+                                                    str_currentConsumption = "" + (currentABW * pondInfoObj.get(i).getQuantity() * Helper.get_TilapiaFeedingRate_by_WeekNum(currentWeekOfStock) * 0.7 * 7);
                                                 }
                                                 tempOBJ.setQuantity(pondInfoObj.get(i).getQuantity());
                                                 tempOBJ.setFarmname(pondInfoObj.get(i).getFarmname());
                                                 tempOBJ.setCurrentweekofStock(currentWeekOfStock);
                                                 tempOBJ.setSpecie(pondInfoObj.get(i).getSpecie());
-                                                tempOBJ.setCurrentfeedType(Helper.getFeedTypeByNumberOfWeeks(currentWeekOfStock));
+                                                tempOBJ.setCurrentFeedType(Helper.getFeedTypeByNumberOfWeeks(currentWeekOfStock));
                                                 tempOBJ.setWeeklyConsumptionInGrams(Double.parseDouble(Helper.computeWeeklyFeedConsumption(currentABW, pondInfoObj.get(i).getQuantity(),
-                                                        Helper.get_FeedingRate_by_WeekNum(currentWeekOfStock), 0.7)));
+                                                        Helper.get_TilapiaFeedingRate_by_WeekNum(currentWeekOfStock), 0.7)));
                                                 currentDemandList.add(tempOBJ);
 //                                                txtheader.setText(txtheader.getText() + "\nCurrent Feed Consumption: " + str_currentConsumption);
                                               

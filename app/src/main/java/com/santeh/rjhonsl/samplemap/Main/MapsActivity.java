@@ -453,6 +453,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intent.putExtra("latitude", location.latitude +"");
                 intent.putExtra("longitude", location.longitude+ "");
                 startActivity(intent);
+                startActivity(intent);
             }
 
         });

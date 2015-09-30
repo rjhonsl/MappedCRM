@@ -69,7 +69,7 @@ public class Adapter_Growouts_AllFarmDemands extends ArrayAdapter<CustInfoObject
 //		 Capture position and set to the TextViews
 		holder.txtinitial.setText(objArrayList.get(position).getFarmname().substring(0,1));
 		holder.txtFamrname.setText(objArrayList.get(position).getFarmname());
-		holder.txtcurrentWeekAndFeedtype.setText("Week "+objArrayList.get(position).getCurrentweekofStock() + " - " +objArrayList.get(position).getCurrentfeedType());
+		holder.txtcurrentWeekAndFeedtype.setText("Week "+objArrayList.get(position).getCurrentweekofStock() + " - " +objArrayList.get(position).getCurrentFeedType());
 		holder.txtspecie.setText(objArrayList.get(position).getSpecie() + " - " + objArrayList.get(position).getQuantity() + "(qty)");
 		DecimalFormat df = new DecimalFormat("#.##");
 		holder.txtconsumption.setText("Consumption: "+(df.format(objArrayList.get(position).getWeeklyConsumptionInGrams() / 1000))+" kg");

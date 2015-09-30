@@ -1,7 +1,6 @@
 package com.santeh.rjhonsl.samplemap.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -46,7 +45,7 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 	}
 
 	private class ViewHolder {
-		TextView txtweekno, txtfeedtype, txtactual, txtrecommended, txtremarks;
+		TextView txtweekno, txtfeedtype, txtabw, txtrecommended, txtremarks;
 		LinearLayout weeknoHOlder, wrapper;
 	}
 
@@ -63,7 +62,7 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 
 			holder.txtweekno = (TextView) view.findViewById(R.id.itemlv_weeklyreport_pondsummary_weeknum);
 			holder.txtfeedtype = (TextView) view.findViewById(R.id.itemlv_weeklyreport_pondsummary_feedtype);
-			holder.txtactual = (TextView) view.findViewById(R.id.itemlv_weeklyreport_pondsummary_abw);
+			holder.txtabw = (TextView) view.findViewById(R.id.itemlv_weeklyreport_pondsummary_abw);
 			holder.txtrecommended = (TextView) view.findViewById(R.id.itemlv_weeklyreport_pondsummary_recommended);
 			holder.txtremarks = (TextView) view.findViewById(R.id.itemlv_weeklyreport_pondsummary_remarks);
 
@@ -78,13 +77,26 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 		else
 		{
 			Log.d(tag, "if not null");
-
 			holder = (ViewHolder) view.getTag();
+
+			holder.txtremarks.setText(objArrayList.get(position).getRemarks()+"");
+			holder.txtabw.setText(objArrayList.get(position).getSizeofStock()+"");
+			holder.txtweekno.setText(objArrayList.get(position).getWeek()+"");
+			holder.txtrecommended.setText(objArrayList.get(position).getRecommendedConsumption()+"");
+			holder.txtfeedtype.setText(objArrayList.get(position).getCurrentFeedType()+"");
+
+//			weekinfo.setRemarks(strRemarks);
+//			weekinfo.setSizeofStock(strabw);
+//			weekinfo.setWeek(Helper.get_Tilapia_WeekNum_byABW(strweeknum));
+//			weekinfo.setRecommendedConsumption(strrecommended);
+//			weekinfo.setCurrentFeedType(strFeedtype);
+
+
 //			holder.chkisVisited.setOnCheckedChangeListener(null);
 
 		}
 
-		visiblePosArray[position] = objArrayList.get(position).getIsVisited();
+//		visiblePosArray[position] = objArrayList.get(position).getIsVisited();
 
 //		if(objArrayList.get(position).getIsVisited() == 0){
 //			holder.chkisVisited.setChecked(false);
@@ -103,62 +115,62 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 //		});
 
 //		holder.chkisVisited.setChecked(checked[position]);
-
-
-		holder.txtweekno.setText("" + objArrayList.get(position).getCurrentweekofStock());
-		holder.txtfeedtype.setText("Feed Type: "+objArrayList.get(position).getCurrentfeedType());
-		holder.txtremarks.setText("Remarks: "+objArrayList.get(position).getRemarks());
-
-
-
-
-
-
-		if(position + 1 == objArrayList.get(position).getStartweekofStock() ) {
-			holder.wrapper.setBackgroundColor(context.getResources().getColor(R.color.red_200));
-			holder.txtrecommended.setTextColor(Color.parseColor("#000000"));
-		}else if((position+1) == objArrayList.get(position).getWeek()) {
-			holder.wrapper.setBackgroundColor(context.getResources().getColor(R.color.skyblue_100));
-			holder.txtrecommended.setTextColor(Color.parseColor("#000000"));
-		}
-		else if ( position + 1 < objArrayList.get(position).getWeek() ) {
-			holder.wrapper.setBackgroundColor(context.getResources().getColor(R.color.gray_200));
-			holder.txtrecommended.setTextColor(Color.parseColor("#000000"));
-		}
-		else{
-			holder.wrapper.setBackgroundColor(Color.parseColor("#00000000"));
-			holder.txtrecommended.setTextColor(Color.parseColor("#42A5F5"));
-		}
-
-
-
-		if ( (position + 1) == objArrayList.get(position).getStartweekofStock()) {
-			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_lightred_box_curvebottom));
-		}else if( (position+1) == objArrayList.get(position).getWeek() ){
-			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_blue_box_curvebottom));
-		}else if( (position+1) == objArrayList.get(position).getWeek() && (position + 1) == objArrayList.get(position).getStartweekofStock()) {
-			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_blue_box_curvebottom));
-		}else  if(position + 1 < objArrayList.get(position).getWeek()){
-			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_darkgray_box_curvebottom));
-		}else{
-			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_darkteal_box_curvebottom));
-		}
-
-
-
-
-
-		if (Double.parseDouble(objArrayList.get(position).getRecommendedConsumption()) > 0){
-			holder.txtrecommended.setText("Recommended: "+ (objArrayList.get(position).getRecommendedConsumption())+"kg");
-		}else{
-			holder.txtrecommended.setText("Recommended: Blind Feeding");
-		}
-
-		if (objArrayList.get(position).getActualConsumption().equalsIgnoreCase("n/a")){
-			holder.txtactual.setText("Actual: "+ (objArrayList.get(position).getActualConsumption())+"");
-		}else{
-			holder.txtactual.setText("Actual: " +objArrayList.get(position).getActualConsumption ()+ "kg");
-		}
+//
+//
+//		holder.txtweekno.setText("" + objArrayList.get(position).getCurrentweekofStock());
+//		holder.txtfeedtype.setText("Feed Type: "+objArrayList.get(position).getCurrentFeedType());
+//		holder.txtremarks.setText("Remarks: "+objArrayList.get(position).getRemarks());
+//
+//
+//
+//
+//
+//
+//		if(position + 1 == objArrayList.get(position).getStartweekofStock() ) {
+//			holder.wrapper.setBackgroundColor(context.getResources().getColor(R.color.red_200));
+//			holder.txtrecommended.setTextColor(Color.parseColor("#000000"));
+//		}else if((position+1) == objArrayList.get(position).getWeek()) {
+//			holder.wrapper.setBackgroundColor(context.getResources().getColor(R.color.skyblue_100));
+//			holder.txtrecommended.setTextColor(Color.parseColor("#000000"));
+//		}
+//		else if ( position + 1 < objArrayList.get(position).getWeek() ) {
+//			holder.wrapper.setBackgroundColor(context.getResources().getColor(R.color.gray_200));
+//			holder.txtrecommended.setTextColor(Color.parseColor("#000000"));
+//		}
+//		else{
+//			holder.wrapper.setBackgroundColor(Color.parseColor("#00000000"));
+//			holder.txtrecommended.setTextColor(Color.parseColor("#42A5F5"));
+//		}
+//
+//
+//
+//		if ( (position + 1) == objArrayList.get(position).getStartweekofStock()) {
+//			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_lightred_box_curvebottom));
+//		}else if( (position+1) == objArrayList.get(position).getWeek() ){
+//			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_blue_box_curvebottom));
+//		}else if( (position+1) == objArrayList.get(position).getWeek() && (position + 1) == objArrayList.get(position).getStartweekofStock()) {
+//			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_blue_box_curvebottom));
+//		}else  if(position + 1 < objArrayList.get(position).getWeek()){
+//			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_darkgray_box_curvebottom));
+//		}else{
+//			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_darkteal_box_curvebottom));
+//		}
+//
+//
+//
+//
+//
+//		if (Double.parseDouble(objArrayList.get(position).getRecommendedConsumption()) > 0){
+//			holder.txtrecommended.setText("Recommended: "+ (objArrayList.get(position).getRecommendedConsumption())+"kg");
+//		}else{
+//			holder.txtrecommended.setText("Recommended: Blind Feeding");
+//		}
+//
+//		if (objArrayList.get(position).getActualConsumption().equalsIgnoreCase("n/a")){
+//			holder.txtabw.setText("Actual: "+ (objArrayList.get(position).getActualConsumption())+"");
+//		}else{
+//			holder.txtabw.setText("Actual: " +objArrayList.get(position).getActualConsumption ()+ "kg");
+//		}
 
 
 		return view;

@@ -95,6 +95,7 @@ public class Helper {
         public static String URL_SELECT_ALL_USERS  = "http://mysanteh.site50.net/santehweb/selectAllUsers.php";
         public static String URL_SELECT_ALL_AREA  = "http://mysanteh.site50.net/santehweb/selectAllArea.php";
         public static String URL_SELECT_USERS_ACTIVITY_BY_DATE_AND_ID  = "http://mysanteh.site50.net/santehweb/selectUserActivityByID.php";
+        public static String URL_SELECT_POND_WEEKLY_UPDATES_BY_ID  = "http://mysanteh.site50.net/santehweb/selectPondWeeklyUpdateByPondID.php";
         public static String URL_SELECT_ALL_USERS_ACTIVITY_BY_ID  = "http://mysanteh.site50.net/santehweb/selectAllUserActivityByID.php";
         public static String URL_SELECT_ALL_PONDINFO_BETWEEN_DATES = "http://mysanteh.site50.net/santehweb/selectAllPondBetweenDate.php";
         public static String URL_SELECT_ALL_PONDINFO_LEFTJOIN_CUSTINFO = "http://mysanteh.site50.net/santehweb/selectAllPondInfoLeftJoinCustInfo.php";
@@ -335,7 +336,7 @@ public class Helper {
     }
 
 
-    public static double get_FeedingRate_by_WeekNum(int weeknum){
+    public static double get_TilapiaFeedingRate_by_WeekNum(int weeknum){
         if (weeknum > 18){
             return Helper.variables.ARRAY_FEEDING_RATE_PER_WEEK[17];
         }else{
@@ -352,7 +353,7 @@ public class Helper {
 
 
         String[] datesplitter = stockedDate.split("/");
-        int weekStocked = Helper.get_StartWeekOf_Tilapia_ByABW(abw);
+        int weekStocked = Helper.get_Tilapia_WeekNum_byABW(abw);
         long currendate = System.currentTimeMillis();
         long stockeddate = Helper.convertDateToLong(Integer.parseInt(datesplitter[1]), Integer.parseInt(datesplitter[0]), Integer.parseInt(datesplitter[2]));
 
@@ -380,7 +381,7 @@ public class Helper {
 
 
 
-    public static int get_StartWeekOf_Tilapia_ByABW(int abw){
+    public static int get_Tilapia_WeekNum_byABW(int abw){
 
 
         if (abw >= variables.ARRAY_ABW_WEEKLY[17]){
@@ -586,6 +587,12 @@ public class Helper {
             }
         });
         txttitle.setBackground(activity.getResources().getDrawable(resIdColor));
+        txtok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                d.hide();
+            }
+        });
         txtprompt.setText(prompt);
         txttitle.setText(title);
         txtok.setText(button);
@@ -901,8 +908,6 @@ public class Helper {
         iconGenerator.setTextAppearance(R.style.IconGeneratorTextView);
         return  iconGenerator.makeIcon(str);
     }
-
-
 
 
 

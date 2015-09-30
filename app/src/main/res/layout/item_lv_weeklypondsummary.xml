@@ -58,24 +58,23 @@
                           android:layout_height="wrap_content"
                           android:orientation="vertical">
 
-                <LinearLayout android:layout_width="fill_parent"
-                              android:padding="0dp"
-                              android:layout_height="wrap_content"
-                              android:paddingBottom="1dp"
-                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/itemlv_weeklyreport_pondsummary_feedtype"
-                        android:layout_weight="1"
-                        android:text="Fry Mash"
-                        android:textStyle="bold"
-                        android:textSize="15sp"
-                        android:textColor="#3a3a3a"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textColor="#3a3a3a"
+                    android:text="Current ABW: N/A"
+                    android:id="@+id/itemlv_weeklyreport_pondsummary_abw"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"/>
 
-                </LinearLayout>
 
+                <TextView
+                    android:id="@+id/itemlv_weeklyreport_pondsummary_feedtype"
+                    android:text="FT: Fry Mash"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:id="@+id/itemlv_weeklyreport_pondsummary_recommended"
@@ -85,13 +84,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
-
-                <TextView
-                    android:id="@+id/itemlv_weeklyreport_pondsummary_abw"
-                    android:text="Current ABW: N/A"
-                    android:textSize="14sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:id="@+id/itemlv_weeklyreport_pondsummary_remarks"

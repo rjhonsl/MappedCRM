@@ -52,7 +52,7 @@ public class CustInfoObject {
 	private String dateStocked;
 	private String remarks;
 	private String allSpecie;
-	private String currentfeedType;
+	private String currentFeedType;
 
 	private String province;
 	private String municipality;
@@ -198,12 +198,12 @@ public class CustInfoObject {
 
 
 
-	public String getCurrentfeedType() {
-		return currentfeedType;
+	public String getCurrentFeedType() {
+		return currentFeedType;
 	}
 
-	public void setCurrentfeedType(String currentfeedType) {
-		this.currentfeedType = currentfeedType;
+	public void setCurrentFeedType(String currentFeedType) {
+		this.currentFeedType = currentFeedType;
 	}
 
 	public int getCurrentweekofStock() {
