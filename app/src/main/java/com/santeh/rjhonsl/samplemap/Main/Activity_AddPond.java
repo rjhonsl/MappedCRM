@@ -191,9 +191,9 @@ public class Activity_AddPond extends FragmentActivity  implements DatePickerDia
 
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-        edtDateStocked.setText(month + "/" + day + "/"+year);
+        edtDateStocked.setText( (month + 1) + "/" + day + "/"+year);
         y = year;
-        m = month;
+        m = month + 1;
         d = day;
     }
 

@@ -53,6 +53,7 @@ public class Activity_WeeklyReports_Growout_FarmPondReports extends Activity {
     private String datestocked;
     private String culturesystem;
     private String remarks;
+    int startWeek, currentweek;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,8 +101,10 @@ public class Activity_WeeklyReports_Growout_FarmPondReports extends Activity {
                                 "ABW when stocked: " + abw + "g\n\n" +
                                 "Suvival Rate: " + survivalrate + "%\n\n" +
                                 "Date Stocked: " + datestocked + "\n\n" +
-                                "Case Area: " + area + " m²\n\n" +
-                                "CultureSystem: " + culturesystem + "",
+                                "Case Area: " + area + "m²\n\n" +
+                                "CultureSystem: " + culturesystem + "\n" +
+                                "currentweek: " + currentweek + "startweek: " + startWeek
+                        ,
                         "OK",
                         R.color.skyblue_500);
                 d.show();
@@ -181,9 +184,9 @@ public class Activity_WeeklyReports_Growout_FarmPondReports extends Activity {
     }
 
     private void populate_rows(int position) {
-        int startWeek = Helper.get_StartWeekOf_Tilapia_ByABW(pondInfoList.get(position).getSizeofStock());
+        startWeek = Helper.get_StartWeekOf_Tilapia_ByABW(pondInfoList.get(position).getSizeofStock());
         int quantity = pondInfoList.get(position).getQuantity();
-        int currentweek =  Helper.get_currentWeek_by_stockedDate(pondInfoList.get(position).getDateStocked(), pondInfoList.get(position).getSizeofStock());
+        currentweek =  Helper.get_currentWeek_by_stockedDate(pondInfoList.get(position).getDateStocked(), pondInfoList.get(position).getSizeofStock());
 
         pondconsumptionList = new ArrayList<>();
         for (int i = 0; i < 18; i++) {
@@ -194,12 +197,15 @@ public class Activity_WeeklyReports_Growout_FarmPondReports extends Activity {
             obj.setStartweekofStock(startWeek);
             obj.setCurrentfeedType(Helper.getFeedTypeByNumberOfWeeks(i + 1));
             obj.setCurrentweekofStock(i + 1);
+            obj.setSurvivalrate_per_pond(survivalrate);
             obj.setWeek(currentweek);
             obj.setIsVisited(0);
             obj.setRemarks("N/A");
 
-            double abw = Helper.get_ABW_BY_WEEK_NO(i + 1), quantity1 = quantity , survivalrate = 0.7, feedingrate = Helper.get_FeedingRate_by_WeekNum(i+1);
-            double recommended = (abw * quantity1 * survivalrate * feedingrate * 7) / 1000;
+            double abw = Helper.get_ABW_BY_WEEK_NO(i + 1),
+                    quantity1 = quantity ,
+                    feedingrate = Helper.get_FeedingRate_by_WeekNum(i+1);
+            double recommended = (abw * quantity1 * Double.parseDouble(survivalrate) * feedingrate * 7) / 1000;
 //            + " abw: "+ abw+ " quatity: " + quantity1 + " survival: " + survivalrate + " feedingrate: " +feedingrate
             DecimalFormat df = new DecimalFormat("#.##");
             obj.setRecommendedConsumption("" + df.format(recommended));

@@ -108,7 +108,7 @@ public class Activity_ManagePonds extends Activity {
                         float[] results = new float[1];
                         Location.distanceBetween(farmlocat.latitude, farmlocat.longitude,
                                 currentloc.latitude, currentloc.longitude, results);
-                        Helper.toastLong(activity, results[0]+"");
+//                        Helper.toastLong(activity, results[0]+"");
 
                         if (results[0] > 1000) {
                             final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Out of range", "You must be near the farm to Add a new pond.", "OK", R.color.red);
@@ -137,7 +137,7 @@ public class Activity_ManagePonds extends Activity {
         lvPonds.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Helper.toastShort(activity,pondInfoList.get(position).getSurvivalrate_per_pond() );
+//                Helper.toastShort(activity,pondInfoList.get(position).getSurvivalrate_per_pond() );
             }
         });
 

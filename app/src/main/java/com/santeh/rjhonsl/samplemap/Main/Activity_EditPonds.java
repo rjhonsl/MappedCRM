@@ -168,7 +168,7 @@ public class Activity_EditPonds extends FragmentActivity  implements DatePickerD
                         float[] results = new float[1];
                         Location.distanceBetween(farmlocat.latitude, farmlocat.longitude,
                                 currentloc.latitude, currentloc.longitude, results);
-                        Helper.toastLong(activity, results[0]+"");
+//                        Helper.toastLong(activity, results[0]+"");
 
                         if (results[0] > 1000) {
                             final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Out of range", "You must be near the farm to EDIT a new farm.", "OK", R.color.red);
@@ -362,9 +362,9 @@ public class Activity_EditPonds extends FragmentActivity  implements DatePickerD
 
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-        edtDateStocked.setText(month + "/" + day + "/"+year);
+        edtDateStocked.setText((month + 1) + "/" + day + "/"+year);
         y = year;
-        m = month;
+        m = month + 1;
         d = day;
     }
 }
