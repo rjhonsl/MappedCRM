@@ -37,11 +37,11 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 		mSelectedItemsIds = new SparseBooleanArray();
 		this.context = context;
 		this.objArrayList = items;
-		visiblePosArray = new int[objArrayList.size()];
-		checked = new boolean[objArrayList.size()];
+//		visiblePosArray = new int[objArrayList.size()];
+//		checked = new boolean[objArrayList.size()];
 		inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		positionArray = new ArrayList<Boolean>(objArrayList.size());
+//		positionArray = new ArrayList<Boolean>(objArrayList.size());
 	}
 
 	private class ViewHolder {
@@ -79,12 +79,6 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 			Log.d(tag, "if not null");
 			holder = (ViewHolder) view.getTag();
 
-			holder.txtremarks.setText(objArrayList.get(position).getRemarks()+"");
-			holder.txtabw.setText(objArrayList.get(position).getSizeofStock()+"");
-			holder.txtweekno.setText(objArrayList.get(position).getWeek()+"");
-			holder.txtrecommended.setText(objArrayList.get(position).getRecommendedConsumption()+"");
-			holder.txtfeedtype.setText(objArrayList.get(position).getCurrentFeedType()+"");
-
 //			weekinfo.setRemarks(strRemarks);
 //			weekinfo.setSizeofStock(strabw);
 //			weekinfo.setWeek(Helper.get_Tilapia_WeekNum_byABW(strweeknum));
@@ -95,6 +89,12 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 //			holder.chkisVisited.setOnCheckedChangeListener(null);
 
 		}
+
+		holder.txtremarks.setText("Remarks: " + objArrayList.get(positions).getRemarks()+"");
+		holder.txtabw.setText("ABW: " + objArrayList.get(positions).getSizeofStock()+"");
+		holder.txtweekno.setText( objArrayList.get(positions).getWeek()+"");
+		holder.txtrecommended.setText("Recommended: " + objArrayList.get(positions).getRecommendedConsumption()+"g");
+		holder.txtfeedtype.setText("Feed Type: " + objArrayList.get(positions).getCurrentFeedType()+"");
 
 //		visiblePosArray[position] = objArrayList.get(position).getIsVisited();
 

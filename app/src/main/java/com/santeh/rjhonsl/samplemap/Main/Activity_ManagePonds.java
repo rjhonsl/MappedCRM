@@ -137,7 +137,7 @@ public class Activity_ManagePonds extends Activity {
         lvPonds.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               startViewPondReports(position);
+                startPondReports(position);
             }
         });
 
@@ -155,23 +155,10 @@ public class Activity_ManagePonds extends Activity {
                         d.hide();
                         if (position == 1){
 
-                            int converted = id;
-                            Intent intent = new Intent(activity, Activity_PondWeeklyConsumption.class);
-                            intent.putExtra("farmname", farmname);
-                            intent.putExtra("pondid", pondInfoList.get(position1).getPondID());
-                            intent.putExtra("id", pondInfoList.get(position1).getId());
-                            intent.putExtra("specie", pondInfoList.get(position1).getSpecie());
-                            intent.putExtra("abw", pondInfoList.get(position1).getSizeofStock());
-                            intent.putExtra("survivalrate", pondInfoList.get(position1).getSurvivalrate_per_pond());
-                            intent.putExtra("datestocked", pondInfoList.get(position1).getDateStocked());
-                            intent.putExtra("quantity", pondInfoList.get(position1).getQuantity());
-                            intent.putExtra("area", pondInfoList.get(position1).getArea());
-                            intent.putExtra("culturesystem", pondInfoList.get(position1).getCulturesystem());
-                            intent.putExtra("remarks", pondInfoList.get(position1).getRemarks());
-                            startActivity(intent);
+                            startPondReports(position1);
 
                         }else if (position == 0) {
-                            startViewPondReports(position1);
+                            startViewPond(position1);
 
                         }else if (position == 2) {
                             final Dialog dd = Helper.createCustomDialogThemedYesNO(activity, "Changes cannot be undone once implemented. \n\nAre you sure you want to delete this pond?"
@@ -203,7 +190,24 @@ public class Activity_ManagePonds extends Activity {
         });
     }
 
-    private void startViewPondReports(int position1) {
+    private void startPondReports(int position1) {
+        int converted = id;
+        Intent intent = new Intent(activity, Activity_PondWeeklyConsumption.class);
+        intent.putExtra("farmname", farmname);
+        intent.putExtra("pondid", pondInfoList.get(position1).getPondID());
+        intent.putExtra("id", pondInfoList.get(position1).getId());
+        intent.putExtra("specie", pondInfoList.get(position1).getSpecie());
+        intent.putExtra("abw", pondInfoList.get(position1).getSizeofStock());
+        intent.putExtra("survivalrate", pondInfoList.get(position1).getSurvivalrate_per_pond());
+        intent.putExtra("datestocked", pondInfoList.get(position1).getDateStocked());
+        intent.putExtra("quantity", pondInfoList.get(position1).getQuantity());
+        intent.putExtra("area", pondInfoList.get(position1).getArea());
+        intent.putExtra("culturesystem", pondInfoList.get(position1).getCulturesystem());
+        intent.putExtra("remarks", pondInfoList.get(position1).getRemarks());
+        startActivity(intent);
+    }
+
+    private void startViewPond(int position1) {
         Intent intent = new Intent(activity, Activity_EditPonds.class);
         intent.putExtra("pondid", pondInfoList.get(position1).getPondID());
         intent.putExtra("id", pondInfoList.get(position1).getId());

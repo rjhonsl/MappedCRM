@@ -115,6 +115,18 @@
 
 
 
+    <ImageButton android:layout_width="wrap_content"
+                 android:background="@drawable/bg_red_oval"
+                 android:padding="12dp"
+                 android:layout_above="@+id/btn_details"
+                 android:layout_alignParentRight="true"
+                 android:layout_marginRight="15dp"
+                 android:layout_marginBottom="5dp"
+                 android:layout_height="wrap_content"
+                 android:src="@drawable/ic_addreport_white_24dp"
+                 android:id="@+id/btn_addreport"
+        />
+
 
     <ImageButton android:layout_width="wrap_content"
                  android:background="@drawable/bg_skyblue_oval"

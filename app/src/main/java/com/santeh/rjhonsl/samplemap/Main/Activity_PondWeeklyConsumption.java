@@ -7,8 +7,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -50,7 +52,7 @@ public class Activity_PondWeeklyConsumption extends Activity {
     List<CustInfoObject> pondInfoList;
     List<CustInfoObject> pondweeklyList;
 
-    ImageButton btn_details;
+    ImageButton btn_details, btn_addreport;
 
     ListView lvPonds;
     String [] pondListArray;
@@ -107,13 +109,14 @@ public class Activity_PondWeeklyConsumption extends Activity {
             @Override
             public void onClick(View v) {
                 final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Pond Details",
-                        "Pond No.: " + pondid + "\n\n" +
-                                "Specie: " + specie + "\n\n" +
-                                "ABW when stocked: " + abw + "g\n\n" +
-                                "Suvival Rate: " + survivalrate + "%\n\n" +
-                                "Date Stocked: " + datestocked + "\n\n" +
-                                "Case Area: " + area + "m²\n\n" +
-                                "CultureSystem: " + culturesystem + "\n"
+                        "Pond No.: " + pondid + "\n" +
+                                "Specie:            " + specie + "\n" +
+                                "Quantity:          " + quantity + "\n" +
+                                "ABW when stocked:  " + abw + "g\n" +
+                                "Suvival Rate:      " + survivalrate + "%\n" +
+                                "Date Stocked:      " + datestocked + "\n" +
+                                "Case Area:         " + area + "m²\n" +
+                                "CultureSystem:     " + culturesystem + "\n"
 //                                + "currentweek: " + currentweek + "startweek: " + startWeek
                         ,
                         "OK",
@@ -122,6 +125,40 @@ public class Activity_PondWeeklyConsumption extends Activity {
 
                 Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
                 ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        d.hide();
+                    }
+                });
+            }
+        });
+
+        btn_addreport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog d = new Dialog(activity);//
+                d.requestWindowFeature(Window.FEATURE_NO_TITLE); //notitle
+                d.setContentView(R.layout.dialog_material_themed_addpondreport);//Set the xml view of the dialog
+                Button add = (Button) d.findViewById(R.id.btnAdd);
+                Button cancel = (Button) d.findViewById(R.id.btnCancel);
+                final EditText edtAbw = (EditText) d.findViewById(R.id.edtAbw);
+                final EditText edtRemarks = (EditText) d.findViewById(R.id.edtRemarks);
+                d.show();
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (!edtAbw.getText().toString().equalsIgnoreCase("") || !edtRemarks.getText().toString().equalsIgnoreCase("")) {
+                            d.hide();
+                            AddReport(edtAbw.getText().toString(), Helper.variables.URL_INSERT_POND_REPORT, edtRemarks.getText().toString());
+                        } else {
+                            Helper.toastLong(activity, "You have to complete all fields to continue");
+                        }
+
+                    }
+                });
+
+                cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         d.hide();
@@ -168,7 +205,7 @@ public class Activity_PondWeeklyConsumption extends Activity {
         txtQuantity = (TextView) findViewById(R.id.txt_weeklyreports_quantity);
         lvPonds = (ListView) findViewById(R.id.lv_pond_weeklyReports);
         btn_details = (ImageButton) findViewById(R.id.btn_details);
-
+        btn_addreport = (ImageButton) findViewById(R.id.btn_addreport);
     }
 
 
@@ -184,62 +221,60 @@ public class Activity_PondWeeklyConsumption extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+                        pondweeklyList = new ArrayList<>();
                         PD.dismiss();
+
                         if (!response.substring(1,2).equalsIgnoreCase("0")) {
                             pondInfoList = PondWeeklyUpdateParser.parseFeed(response);
-
                             if (pondInfoList!=null) {
                                 if (pondInfoList.size() > 0){
                                     Log.d("null", "before for");
-                                    pondweeklyList = new ArrayList<>();
-                                    for (int i = 0; i < pondInfoList.size() + 1; i++) {
+                                    CustInfoObject weekinfo = new CustInfoObject();
+                                    weekinfo.setRemarks(remarks);
+                                    weekinfo.setSizeofStock(abw);
+                                    weekinfo.setWeek(Helper.get_Tilapia_WeekNum_byABW(abw));
+                                    weekinfo.setRecommendedConsumption(Helper.computeWeeklyFeedConsumption(Double.parseDouble(abw + ""), quantity,
+                                            Helper.get_TilapiaFeedingRate_by_WeekNum(Helper.get_Tilapia_WeekNum_byABW(abw)),
+                                            (Double.parseDouble(survivalrate) / 100)));
+                                    weekinfo.setCurrentFeedType(Helper.getFeedTypeByNumberOfWeeks(Helper.get_Tilapia_WeekNum_byABW(abw)));
+                                    pondweeklyList.add(weekinfo);
+
+                                    for (int i = 0; i < pondInfoList.size(); i++) {
                                         String strrecommended = "", strRemarks = "", strFeedtype="";
                                         int strweeknum, strabw;
-                                        CustInfoObject weekinfo = new CustInfoObject();
+                                        CustInfoObject weekinfo1 = new CustInfoObject();
 
-                                        if (i == pondInfoList.size() ){
+                                        strRemarks = pondInfoList.get(i).getRemarks();
+                                        strabw = pondInfoList.get(i).getSizeofStock();
+                                        strweeknum = Helper.get_Tilapia_WeekNum_byABW(strabw);
+                                        strrecommended = Helper.computeWeeklyFeedConsumption(Double.parseDouble(strabw + ""), quantity,
+                                                Helper.get_TilapiaFeedingRate_by_WeekNum(Helper.get_Tilapia_WeekNum_byABW(strabw)),
+                                                (Double.parseDouble(survivalrate) / 100));
+                                        strFeedtype = Helper.getFeedTypeByNumberOfWeeks(Helper.get_Tilapia_WeekNum_byABW(strabw));
 
-                                            strRemarks = remarks;
-                                            strabw = abw;
-                                            strweeknum = Helper.get_Tilapia_WeekNum_byABW(abw);
-                                            strrecommended = Helper.computeWeeklyFeedConsumption(Double.parseDouble(abw + ""), quantity,
-                                                    Helper.get_TilapiaFeedingRate_by_WeekNum(Helper.get_Tilapia_WeekNum_byABW(abw)),
-                                                    Double.parseDouble(survivalrate));
-                                            strFeedtype = Helper.getFeedTypeByNumberOfWeeks(Helper.get_Tilapia_WeekNum_byABW(abw));
-                                            Log.d("null", strRemarks + " x " + strabw + " x " + strweeknum + " x " + strrecommended + " x " + strFeedtype + " ");
-                                        }else {
-                                            Log.d("null", "if 1");
-                                            strRemarks = pondInfoList.get(i).getRemarks();
-                                            strabw = pondInfoList.get(i).getSizeofStock();
-                                            strweeknum = Helper.get_Tilapia_WeekNum_byABW(strabw);
-                                            strrecommended = Helper.computeWeeklyFeedConsumption(Double.parseDouble(strabw + ""), quantity,
-                                                    Helper.get_TilapiaFeedingRate_by_WeekNum(Helper.get_Tilapia_WeekNum_byABW(strabw)),
-                                                    Double.parseDouble(survivalrate));
-                                            strFeedtype = Helper.getFeedTypeByNumberOfWeeks(Helper.get_Tilapia_WeekNum_byABW(strabw));
+                                        weekinfo1.setRemarks(strRemarks);
+                                        weekinfo1.setSizeofStock(strabw);
+                                        weekinfo1.setWeek(strweeknum);
+                                        weekinfo1.setRecommendedConsumption(strrecommended);
+                                        weekinfo1.setCurrentFeedType(strFeedtype);
 
-                                        }
+//                                        Log.d("null", strRemarks + " x " + strabw + " x " + strweeknum + " x " + strrecommended + " x " + strFeedtype);
 
-                                        weekinfo.setRemarks(strRemarks);
-                                        weekinfo.setSizeofStock(strabw);
-                                        weekinfo.setWeek(strweeknum);
-                                        weekinfo.setRecommendedConsumption(strrecommended);
-                                        weekinfo.setCurrentFeedType(strFeedtype);
-                                        Log.d("null", "before add weekinfo");
-                                        pondweeklyList.add(weekinfo);
+                                        pondweeklyList.add(weekinfo1);
+                                        Log.d("null", "end of loop");
                                     }//end of loop
 
                                     adapterPondWeeklyReport = new Adapter_Growouts_PondWeekLyConsumption(Activity_PondWeeklyConsumption.this,
                                             R.layout.item_lv_weeklypondsummary, pondweeklyList);
                                     lvPonds.setAdapter(adapterPondWeeklyReport);
 
-//                                    scrollMyListViewToBottom(lvPonds, adapterPondWeeklyReport, currentweek);
+                                    scrollMyListViewToBottom(lvPonds, adapterPondWeeklyReport, pondweeklyList.size());
                                 }
 
 
                             }
 
-                        }else { Helper.toastShort(activity, "No recods"); }
+                        }else { Helper.toastShort(activity, "No records"); }
                     }
 
                 }, new Response.ErrorListener() {
@@ -257,7 +292,7 @@ public class Activity_PondWeeklyConsumption extends Activity {
                 params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
                 params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
                 params.put("deviceid", Helper.getMacAddress(context));
-                params.put("pondindex", pondid+"");
+                params.put("pondindex", id+"");
                 return params;
             }
         };
@@ -332,6 +367,50 @@ public class Activity_PondWeeklyConsumption extends Activity {
 //    }
 
 
+
+    private void AddReport(final String abw2, String url, final String remarks2){
+        PD.setMessage("Retrieving Data. Please wait... ");
+        PD.show();
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        pondweeklyList = new ArrayList<>();
+                        PD.dismiss();
+
+//                        Helper.createCustomThemedColorDialogOKOnly(activity, "Responze", response, "OK", R.color.red);
+                        if (!response.substring(1,2).equalsIgnoreCase("0")) {
+                            Helper.toastShort(activity, "Report Added Successfully!" + response);
+                            getpondData(id, Helper.variables.URL_SELECT_POND_WEEKLY_UPDATES_BY_ID);
+                        }else { Helper.toastShort(activity, "No records" + response); }
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                PD.dismiss();
+                Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Error", "Something unexpected happened: " + error.toString(), "OK", R.color.red);
+                d.show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
+                params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                params.put("deviceid", Helper.getMacAddress(context));
+                params.put("abw", abw2);
+                params.put("remarks", remarks2);
+                params.put("pondindex", id+"");
+                return params;
+            }
+        };
+
+        MyVolleyAPI api = new MyVolleyAPI();
+        api.addToReqQueue(postRequest, context);
+    }
 
     @Override
     protected void onResume() {
