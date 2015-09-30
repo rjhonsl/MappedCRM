@@ -47,7 +47,6 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 
 	private class ViewHolder {
 		TextView txtweekno, txtfeedtype, txtactual, txtrecommended, txtremarks;
-//		CheckBox chkisVisited;
 		LinearLayout weeknoHOlder, wrapper;
 	}
 
@@ -64,7 +63,7 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 
 			holder.txtweekno = (TextView) view.findViewById(R.id.itemlv_weeklyreport_pondsummary_weeknum);
 			holder.txtfeedtype = (TextView) view.findViewById(R.id.itemlv_weeklyreport_pondsummary_feedtype);
-			holder.txtactual = (TextView) view.findViewById(R.id.itemlv_weeklyreport_pondsummary_actual);
+			holder.txtactual = (TextView) view.findViewById(R.id.itemlv_weeklyreport_pondsummary_abw);
 			holder.txtrecommended = (TextView) view.findViewById(R.id.itemlv_weeklyreport_pondsummary_recommended);
 			holder.txtremarks = (TextView) view.findViewById(R.id.itemlv_weeklyreport_pondsummary_remarks);
 
@@ -115,34 +114,36 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 
 
 
-
-
-
-		if ( (position + 1) == objArrayList.get(position).getStartweekofStock() ){
-			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_lightred_box_curvebottom));
-
+		if(position + 1 == objArrayList.get(position).getStartweekofStock() ) {
+			holder.wrapper.setBackgroundColor(context.getResources().getColor(R.color.red_200));
+			holder.txtrecommended.setTextColor(Color.parseColor("#000000"));
+		}else if((position+1) == objArrayList.get(position).getWeek()) {
+			holder.wrapper.setBackgroundColor(context.getResources().getColor(R.color.skyblue_100));
+			holder.txtrecommended.setTextColor(Color.parseColor("#000000"));
 		}
-		else if( (position+1) == objArrayList.get(position).getWeek() ){
+		else if ( position + 1 < objArrayList.get(position).getWeek() ) {
+			holder.wrapper.setBackgroundColor(context.getResources().getColor(R.color.gray_200));
+			holder.txtrecommended.setTextColor(Color.parseColor("#000000"));
+		}
+		else{
+			holder.wrapper.setBackgroundColor(Color.parseColor("#00000000"));
+			holder.txtrecommended.setTextColor(Color.parseColor("#42A5F5"));
+		}
+
+
+
+		if ( (position + 1) == objArrayList.get(position).getStartweekofStock()) {
+			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_lightred_box_curvebottom));
+		}else if( (position+1) == objArrayList.get(position).getWeek() ){
 			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_blue_box_curvebottom));
 		}else if( (position+1) == objArrayList.get(position).getWeek() && (position + 1) == objArrayList.get(position).getStartweekofStock()) {
 			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_blue_box_curvebottom));
-		}
-		else{
-			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_darkteal_box_curvebottom));
-		}
-
-
-
-		if (position + 1 < objArrayList.get(position).getWeek()) {
-			holder.wrapper.setBackgroundColor(Color.parseColor("#bfbfbf"));
+		}else  if(position + 1 < objArrayList.get(position).getWeek()){
 			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_darkgray_box_curvebottom));
-			holder.txtrecommended.setTextColor(Color.parseColor("#000000"));
-
 		}else{
-			holder.wrapper.setBackgroundColor(Color.parseColor("#00000000"));
 			holder.weeknoHOlder.setBackground(context.getResources().getDrawable(R.drawable.bg_darkteal_box_curvebottom));
-			holder.txtrecommended.setTextColor(Color.parseColor("#42A5F5"));
 		}
+
 
 
 
@@ -160,11 +161,10 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 		}
 
 
-//		holder.txtactual.setText("Weekly Consumption: "+(df.format(objArrayList.get(position).getWeeklyConsumptionInGrams() / 1000))+" kg");
-
-
 		return view;
+
 	}
+
 
 	@Override
 	public void remove(CustInfoObject object) {

@@ -87,8 +87,8 @@
 
 
                 <TextView
-                    android:id="@+id/itemlv_weeklyreport_pondsummary_actual"
-                    android:text="Actual:  N/A"
+                    android:id="@+id/itemlv_weeklyreport_pondsummary_abw"
+                    android:text="Current ABW: N/A"
                     android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -96,7 +96,6 @@
                 <TextView
                     android:id="@+id/itemlv_weeklyreport_pondsummary_remarks"
                     android:text="Remarks: None"
-                    android:paddingTop="3dp"
                     android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

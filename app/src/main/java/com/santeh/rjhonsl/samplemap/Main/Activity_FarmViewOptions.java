@@ -58,7 +58,7 @@ public class Activity_FarmViewOptions extends Activity{
             public void onClick(View v) {
 
                 int converted = Integer.parseInt(customerID.trim());
-                Intent intent = new Intent(Activity_FarmViewOptions.this, Activity_WeeklyReports_Growout_FarmPondReports.class);
+                Intent intent = new Intent(Activity_FarmViewOptions.this, Activity_PondWeeklyConsumption.class);
                 intent.putExtra("id", converted );
                 intent.putExtra("farmname", farmname);
                 startActivity(intent);

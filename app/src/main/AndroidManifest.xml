@@ -79,7 +79,7 @@
                   android:label="Pond Information">
         </activity>
 
-        <activity android:name=".Main.Activity_WeeklyReports_Growout_FarmPondReports"
+        <activity android:name=".Main.Activity_PondWeeklyConsumption"
                   android:label="Weekly Reports">
         </activity>
 
@@ -117,6 +117,9 @@
         </activity>
 
         <activity android:name=".Main.Activity_EditPonds">
+        </activity>
+
+        <activity android:name=".Main.Activity_Pond_WeekDetails">
         </activity>
 
 

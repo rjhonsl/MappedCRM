@@ -5,6 +5,7 @@
     <color name="skyblue_400">#ec42a5f5</color>
     <color name="skyblue_300">#ce42a5f5</color>
     <color name="skyblue_200">#af42a5f5</color>
+    <color name="skyblue_100">#7942a5f5</color>
     <color name="yellow">#f5e042</color>
     <color name="amber_600">#FF9800</color>
     <color name="amber_500">#e9ff9800</color>
@@ -43,5 +44,6 @@
     <color name="orange_400">#bfff5722</color>
     <color name="orange_500">#d3ff5722</color>
     <color name="orange_600">#edff5722</color>
+    <color name="transparent">#00ffffff</color>
 
 </resources>

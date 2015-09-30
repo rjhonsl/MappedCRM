@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * Created by rjhonsl on 8/25/2015.
  */
-public class Activity_WeeklyReports_Growout_FarmPondReports extends Activity {
+public class Activity_PondWeeklyConsumption extends Activity {
 
 
     Adapter_Growouts_PondWeekLyConsumption adapterPondWeeklyReport;
@@ -96,14 +97,14 @@ public class Activity_WeeklyReports_Growout_FarmPondReports extends Activity {
             @Override
             public void onClick(View v) {
                 final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Pond Details",
-                        "Case No. : " + pondid + "\n\n" +
+                        "Pond No.: " + pondid + "\n\n" +
                                 "Specie: " + specie + "\n\n" +
                                 "ABW when stocked: " + abw + "g\n\n" +
                                 "Suvival Rate: " + survivalrate + "%\n\n" +
                                 "Date Stocked: " + datestocked + "\n\n" +
                                 "Case Area: " + area + "m²\n\n" +
-                                "CultureSystem: " + culturesystem + "\n" +
-                                "currentweek: " + currentweek + "startweek: " + startWeek
+                                "CultureSystem: " + culturesystem + "\n"
+//                                + "currentweek: " + currentweek + "startweek: " + startWeek
                         ,
                         "OK",
                         R.color.skyblue_500);
@@ -120,8 +121,23 @@ public class Activity_WeeklyReports_Growout_FarmPondReports extends Activity {
         });
 
 
-    }
+        lvPonds.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+////                Object o = adapterPondWeeklyReport.getItem(position);
+//////                prestationEco str=(prestationEco)o;//As you are using Default String Adapter
+//////                Toast.makeText(getBaseContext(),str.getTitle(),Toast.LENGTH_SHORT).show();
+//
+//                Intent intent = new Intent(activity, Activity_Pond_WeekDetails.class);
+//                intent.putExtra("pondindex", id);
+//                intent.putExtra("")
+//                startActivity(intent);
+//
 
+            }
+        });
+
+    }
 
 
     private void scrollMyListViewToBottom(final ListView myListView, final Adapter_Growouts_PondWeekLyConsumption myListAdapter, final int position ) {
@@ -213,18 +229,11 @@ public class Activity_WeeklyReports_Growout_FarmPondReports extends Activity {
             pondconsumptionList.add(obj);
         }
 
-
-
-
-
-
-        adapterPondWeeklyReport = new Adapter_Growouts_PondWeekLyConsumption(Activity_WeeklyReports_Growout_FarmPondReports.this,
+        adapterPondWeeklyReport = new Adapter_Growouts_PondWeekLyConsumption(Activity_PondWeeklyConsumption.this,
                 R.layout.item_lv_weeklypondsummary, pondconsumptionList);
         lvPonds.setAdapter(adapterPondWeeklyReport);
 
         scrollMyListViewToBottom(lvPonds, adapterPondWeeklyReport, currentweek);
-
-
     }
 
 

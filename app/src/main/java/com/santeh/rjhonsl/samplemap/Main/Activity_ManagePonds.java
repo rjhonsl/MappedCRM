@@ -137,7 +137,7 @@ public class Activity_ManagePonds extends Activity {
         lvPonds.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Helper.toastShort(activity,pondInfoList.get(position).getSurvivalrate_per_pond() );
+               startViewPondReports(position);
             }
         });
 
@@ -156,7 +156,7 @@ public class Activity_ManagePonds extends Activity {
                         if (position == 1){
 
                             int converted = id;
-                            Intent intent = new Intent(activity, Activity_WeeklyReports_Growout_FarmPondReports.class);
+                            Intent intent = new Intent(activity, Activity_PondWeeklyConsumption.class);
                             intent.putExtra("farmname", farmname);
                             intent.putExtra("pondid", pondInfoList.get(position1).getPondID());
                             intent.putExtra("id", pondInfoList.get(position1).getId());
@@ -171,21 +171,7 @@ public class Activity_ManagePonds extends Activity {
                             startActivity(intent);
 
                         }else if (position == 0) {
-                            Intent intent = new Intent(activity, Activity_EditPonds.class);
-                            intent.putExtra("pondid", pondInfoList.get(position1).getPondID());
-                            intent.putExtra("id", pondInfoList.get(position1).getId());
-                            intent.putExtra("specie", pondInfoList.get(position1).getSpecie());
-                            intent.putExtra("abw", pondInfoList.get(position1).getSizeofStock());
-                            intent.putExtra("survivalrate", pondInfoList.get(position1).getSurvivalrate_per_pond());
-                            intent.putExtra("datestocked", pondInfoList.get(position1).getDateStocked());
-                            intent.putExtra("quantity", pondInfoList.get(position1).getQuantity());
-                            intent.putExtra("area", pondInfoList.get(position1).getArea());
-                            intent.putExtra("culturesystem", pondInfoList.get(position1).getCulturesystem());
-                            intent.putExtra("remarks", pondInfoList.get(position1).getRemarks());
-                            intent.putExtra("latitude", latitude);
-                            intent.putExtra("longitude", longitude);
-
-                            startActivity(intent);
+                            startViewPondReports(position1);
 
                         }else if (position == 2) {
                             final Dialog dd = Helper.createCustomDialogThemedYesNO(activity, "Changes cannot be undone once implemented. \n\nAre you sure you want to delete this pond?"
@@ -212,9 +198,27 @@ public class Activity_ManagePonds extends Activity {
                         }
                     }
                 });
-                return false;
+                return true;
             }
         });
+    }
+
+    private void startViewPondReports(int position1) {
+        Intent intent = new Intent(activity, Activity_EditPonds.class);
+        intent.putExtra("pondid", pondInfoList.get(position1).getPondID());
+        intent.putExtra("id", pondInfoList.get(position1).getId());
+        intent.putExtra("specie", pondInfoList.get(position1).getSpecie());
+        intent.putExtra("abw", pondInfoList.get(position1).getSizeofStock());
+        intent.putExtra("survivalrate", pondInfoList.get(position1).getSurvivalrate_per_pond());
+        intent.putExtra("datestocked", pondInfoList.get(position1).getDateStocked());
+        intent.putExtra("quantity", pondInfoList.get(position1).getQuantity());
+        intent.putExtra("area", pondInfoList.get(position1).getArea());
+        intent.putExtra("culturesystem", pondInfoList.get(position1).getCulturesystem());
+        intent.putExtra("remarks", pondInfoList.get(position1).getRemarks());
+        intent.putExtra("latitude", latitude);
+        intent.putExtra("longitude", longitude);
+
+        startActivity(intent);
     }
 
 
