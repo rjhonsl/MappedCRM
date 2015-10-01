@@ -41,7 +41,7 @@
 
             <TextView
                 android:gravity="center"
-                android:textColor="@color/primary_material_dark"
+                android:textColor="#000000"
                 android:text="3006 Santo Nino, Calumpit, Bulacan PH"
                 android:id="@+id/addres"
                 android:layout_width="wrap_content"

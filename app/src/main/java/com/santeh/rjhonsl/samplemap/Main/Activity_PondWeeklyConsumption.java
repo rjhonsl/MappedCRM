@@ -330,16 +330,16 @@ public class Activity_PondWeeklyConsumption extends Activity {
                         PD.dismiss();
 
 
-                        CustInfoObject weekinfo = new CustInfoObject();
-                        weekinfo.setId(0);
-                        weekinfo.setRemarks(remarks);
-                        weekinfo.setSizeofStock(abw);
-                        weekinfo.setWeek(Helper.get_Tilapia_WeekNum_byABW(abw));
-                        weekinfo.setRecommendedConsumption(Helper.computeWeeklyFeedConsumption(Double.parseDouble(abw + ""), quantity,
-                                Helper.get_TilapiaFeedingRate_by_WeekNum(Helper.get_Tilapia_WeekNum_byABW(abw)),
-                                (Double.parseDouble(survivalrate) / 100)));
-                        weekinfo.setCurrentFeedType(Helper.getFeedTypeByNumberOfWeeks(Helper.get_Tilapia_WeekNum_byABW(abw)));
-                        pondweeklyList.add(weekinfo);
+//                        CustInfoObject weekinfo = new CustInfoObject();
+//                        weekinfo.setId(0);
+//                        weekinfo.setRemarks(remarks);
+//                        weekinfo.setSizeofStock(abw);
+//                        weekinfo.setWeek(Helper.get_Tilapia_WeekNum_byABW(abw));
+//                        weekinfo.setRecommendedConsumption(Helper.computeWeeklyFeedConsumption(Double.parseDouble(abw + ""), quantity,
+//                                Helper.get_TilapiaFeedingRate_by_WeekNum(Helper.get_Tilapia_WeekNum_byABW(abw)),
+//                                (Double.parseDouble(survivalrate) / 100)));
+//                        weekinfo.setCurrentFeedType(Helper.getFeedTypeByNumberOfWeeks(Helper.get_Tilapia_WeekNum_byABW(abw)));
+//                        pondweeklyList.add(weekinfo);
 
                         if (!response.substring(1,2).equalsIgnoreCase("0")) {
                             pondInfoList = PondWeeklyUpdateParser.parseFeed(response);
@@ -410,71 +410,8 @@ public class Activity_PondWeeklyConsumption extends Activity {
         MyVolleyAPI api = new MyVolleyAPI();
         api.addToReqQueue(postRequest, context);
 
-
-//
-//        CustInfoObject pondobj = new CustInfoObject();
-//        pondobj.setPondID(pondid);
-//        pondobj.setId(id);
-//        pondobj.setSizeofStock(abw);
-//        pondobj.setSurvivalrate_per_pond(survivalrate);
-//        pondobj.setArea(area);
-//        pondobj.setQuantity(quantity);
-//        pondobj.setSpecie(specie);
-//        pondobj.setDateStocked(datestocked);
-//        pondobj.setCulturesystem(culturesystem);
-//        pondobj.setRemarks(remarks);
-//        pondInfoList.add(pondobj);
-//
-//        assert pondInfoList != null;
-//        if (pondInfoList != null){
-//            pondListArray = new String[pondInfoList.size()];
-//            for (int i = 0; i < pondInfoList.size(); i++) {
-//
-//                pondListArray[i] = pondInfoList.get(i).getPondID() + " - " + pondInfoList.get(i).getSpecie();
-//            }
-//
-//            populate_rows(0);
-//        }
-
-
     }
 
-//    private void populate_rows(int position, List<CustInfoObject> obj2 ) {
-//        startWeek = Helper.get_Tilapia_WeekNum_byABW(pondInfoList.get(position).getSizeofStock());
-//        int quantity = pondInfoList.get(position).getQuantity();
-//        currentweek =  Helper.get_currentWeek_by_stockedDate(pondInfoList.get(position).getDateStocked(), pondInfoList.get(position).getSizeofStock());
-//
-//        pondweeklyList = obj2;
-//        for (int i = 0; i < 18; i++) {
-//
-//            CustInfoObject obj = new CustInfoObject();
-////            Log.d("REPORT", "" + i);
-//
-//            obj.setStartweekofStock(startWeek);
-//            obj.setCurrentFeedType(Helper.getFeedTypeByNumberOfWeeks(i + 1));
-//            obj.setCurrentweekofStock(i + 1);
-//            obj.setSurvivalrate_per_pond(survivalrate);
-//            obj.setWeek(currentweek);
-//            obj.setIsVisited(0);
-//            obj.setRemarks("N/A");
-//
-//            double abw = Helper.get_ABW_BY_WEEK_NO(i + 1),
-//                    quantity1 = quantity ,
-//                    feedingrate = Helper.get_TilapiaFeedingRate_by_WeekNum(i+1);
-//            double recommended = (abw * quantity1 * Double.parseDouble(survivalrate) * feedingrate * 7) / 1000;
-////            + " abw: "+ abw+ " quatity: " + quantity1 + " survival: " + survivalrate + " feedingrate: " +feedingrate
-//            DecimalFormat df = new DecimalFormat("#.##");
-//            obj.setRecommendedConsumption("" + df.format(recommended));
-//            obj.setActualConsumption("N/A");
-//            pondweeklyList.add(obj);
-//        }
-//
-//        adapterPondWeeklyReport = new Adapter_Growouts_PondWeekLyConsumption(Activity_PondWeeklyConsumption.this,
-//                R.layout.item_lv_weeklypondsummary, pondweeklyList);
-//        lvPonds.setAdapter(adapterPondWeeklyReport);
-//
-//        scrollMyListViewToBottom(lvPonds, adapterPondWeeklyReport, currentweek);
-//    }
 
 
 

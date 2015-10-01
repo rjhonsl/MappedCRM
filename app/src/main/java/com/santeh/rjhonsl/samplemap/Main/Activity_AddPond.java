@@ -211,7 +211,8 @@ public class Activity_AddPond extends FragmentActivity  implements DatePickerDia
 
                             String responseCode = Helper.extractResponseCode(response);
                             String title, prompt;
-
+                            PD.dismiss();
+//                            Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "inserted id", response, "ok", R.color.red);
 
                             if (responseCode.equalsIgnoreCase("0")){
                                 oopsprompt();
@@ -220,7 +221,7 @@ public class Activity_AddPond extends FragmentActivity  implements DatePickerDia
                                 Logging.loguserAction(activity, activity.getBaseContext(), Helper.userActions.TSR.Edit_POND, Helper.variables.ACTIVITY_LOG_TYPE_TSR_MONITORING);
                                 title = "SUCCESS";
                                 prompt = "You have successfully updated database.";
-                                PD.dismiss();
+
 
                                 final Dialog d = Helper.createCustomThemedColorDialogOKOnly(Activity_AddPond.this, title,
                                         prompt, "OK", R.color.skyblue_500);
