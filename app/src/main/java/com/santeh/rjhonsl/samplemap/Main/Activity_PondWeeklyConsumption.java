@@ -54,6 +54,9 @@ public class Activity_PondWeeklyConsumption extends Activity {
 
     ImageButton btn_details, btn_addreport;
 
+    String strrecommended = "", strRemarks = "", strFeedtype="";
+    int strweeknum, strabw;
+
     ListView lvPonds;
     String [] pondListArray;
     private int pondid;
@@ -108,28 +111,44 @@ public class Activity_PondWeeklyConsumption extends Activity {
         btn_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Pond Details",
-                        "Pond No.: " + pondid + "\n" +
-                                "Specie:            " + specie + "\n" +
-                                "Quantity:          " + quantity + "\n" +
-                                "ABW when stocked:  " + abw + "g\n" +
-                                "Suvival Rate:      " + survivalrate + "%\n" +
-                                "Date Stocked:      " + datestocked + "\n" +
-                                "Case Area:         " + area + "m²\n" +
-                                "CultureSystem:     " + culturesystem + "\n"
-//                                + "currentweek: " + currentweek + "startweek: " + startWeek
-                        ,
-                        "OK",
-                        R.color.skyblue_500);
-                d.show();
 
-                Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
-                ok.setOnClickListener(new View.OnClickListener() {
+
+                final Dialog d = new Dialog(activity);//
+                d.requestWindowFeature(Window.FEATURE_NO_TITLE); //notitle
+                d.setContentView(R.layout.dialog_material_themed_ponddetails);//Set the xml view of the dialog
+                Button btnOK1 = (Button) d.findViewById(R.id.btnOK);
+                TextView txtpondNum = (TextView) d.findViewById(R.id.txtPondNum);
+                TextView txtSpecie = (TextView) d.findViewById(R.id.txtSpecies);
+                TextView txtqty = (TextView) d.findViewById(R.id.txtQuantity);
+                TextView txtabw = (TextView) d.findViewById(R.id.txtABW);
+                TextView txtSurvivalRate = (TextView) d.findViewById(R.id.txtSurvivalRate);
+                TextView txtDateStocked = (TextView) d.findViewById(R.id.txtDateStocked);
+                TextView txtArea = (TextView) d.findViewById(R.id.txtArea);
+                TextView txtCultureSystem = (TextView) d.findViewById(R.id.txtCultureSystem);
+
+                txtpondNum.setText(pondid+"");
+                txtSpecie.setText(specie+"");
+                txtqty.setText(quantity+"");
+                txtabw.setText(abw+"");
+                txtSurvivalRate.setText(survivalrate+"");
+                txtDateStocked.setText(datestocked+"");
+                txtArea.setText(area+"");
+                txtCultureSystem.setText(culturesystem+"");
+
+                btnOK1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         d.hide();
                     }
                 });
+                btnOK1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        d.hide();
+                    }
+                });
+                btnOK1.setText("OK");
+                d.show();
             }
         });
 
@@ -143,6 +162,12 @@ public class Activity_PondWeeklyConsumption extends Activity {
                 Button cancel = (Button) d.findViewById(R.id.btnCancel);
                 final EditText edtAbw = (EditText) d.findViewById(R.id.edtAbw);
                 final EditText edtRemarks = (EditText) d.findViewById(R.id.edtRemarks);
+                if (strabw ==  0){
+                    edtAbw.setText(""+abw);
+                }else{
+                    edtAbw.setText(""+strabw);
+                }
+
                 d.show();
                 add.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -224,24 +249,25 @@ public class Activity_PondWeeklyConsumption extends Activity {
                         pondweeklyList = new ArrayList<>();
                         PD.dismiss();
 
+
+                        CustInfoObject weekinfo = new CustInfoObject();
+                        weekinfo.setRemarks(remarks);
+                        weekinfo.setSizeofStock(abw);
+                        weekinfo.setWeek(Helper.get_Tilapia_WeekNum_byABW(abw));
+                        weekinfo.setRecommendedConsumption(Helper.computeWeeklyFeedConsumption(Double.parseDouble(abw + ""), quantity,
+                                Helper.get_TilapiaFeedingRate_by_WeekNum(Helper.get_Tilapia_WeekNum_byABW(abw)),
+                                (Double.parseDouble(survivalrate) / 100)));
+                        weekinfo.setCurrentFeedType(Helper.getFeedTypeByNumberOfWeeks(Helper.get_Tilapia_WeekNum_byABW(abw)));
+                        pondweeklyList.add(weekinfo);
+
                         if (!response.substring(1,2).equalsIgnoreCase("0")) {
                             pondInfoList = PondWeeklyUpdateParser.parseFeed(response);
                             if (pondInfoList!=null) {
                                 if (pondInfoList.size() > 0){
                                     Log.d("null", "before for");
-                                    CustInfoObject weekinfo = new CustInfoObject();
-                                    weekinfo.setRemarks(remarks);
-                                    weekinfo.setSizeofStock(abw);
-                                    weekinfo.setWeek(Helper.get_Tilapia_WeekNum_byABW(abw));
-                                    weekinfo.setRecommendedConsumption(Helper.computeWeeklyFeedConsumption(Double.parseDouble(abw + ""), quantity,
-                                            Helper.get_TilapiaFeedingRate_by_WeekNum(Helper.get_Tilapia_WeekNum_byABW(abw)),
-                                            (Double.parseDouble(survivalrate) / 100)));
-                                    weekinfo.setCurrentFeedType(Helper.getFeedTypeByNumberOfWeeks(Helper.get_Tilapia_WeekNum_byABW(abw)));
-                                    pondweeklyList.add(weekinfo);
 
                                     for (int i = 0; i < pondInfoList.size(); i++) {
-                                        String strrecommended = "", strRemarks = "", strFeedtype="";
-                                        int strweeknum, strabw;
+
                                         CustInfoObject weekinfo1 = new CustInfoObject();
 
                                         strRemarks = pondInfoList.get(i).getRemarks();
@@ -263,18 +289,20 @@ public class Activity_PondWeeklyConsumption extends Activity {
                                         pondweeklyList.add(weekinfo1);
                                         Log.d("null", "end of loop");
                                     }//end of loop
-
-                                    adapterPondWeeklyReport = new Adapter_Growouts_PondWeekLyConsumption(Activity_PondWeeklyConsumption.this,
-                                            R.layout.item_lv_weeklypondsummary, pondweeklyList);
-                                    lvPonds.setAdapter(adapterPondWeeklyReport);
-
-                                    scrollMyListViewToBottom(lvPonds, adapterPondWeeklyReport, pondweeklyList.size());
                                 }
-
-
                             }
 
-                        }else { Helper.toastShort(activity, "No records"); }
+
+                        }else {
+//                            Helper.toastShort(activity, "No records");
+                        }
+
+
+                        adapterPondWeeklyReport = new Adapter_Growouts_PondWeekLyConsumption(Activity_PondWeeklyConsumption.this,
+                                R.layout.item_lv_weeklypondsummary, pondweeklyList);
+                        lvPonds.setAdapter(adapterPondWeeklyReport);
+
+                        scrollMyListViewToBottom(lvPonds, adapterPondWeeklyReport, pondweeklyList.size());
                     }
 
                 }, new Response.ErrorListener() {
@@ -369,7 +397,7 @@ public class Activity_PondWeeklyConsumption extends Activity {
 
 
     private void AddReport(final String abw2, String url, final String remarks2){
-        PD.setMessage("Retrieving Data. Please wait... ");
+        PD.setMessage("Saving Report. Please wait... ");
         PD.show();
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
@@ -381,9 +409,9 @@ public class Activity_PondWeeklyConsumption extends Activity {
 
 //                        Helper.createCustomThemedColorDialogOKOnly(activity, "Responze", response, "OK", R.color.red);
                         if (!response.substring(1,2).equalsIgnoreCase("0")) {
-                            Helper.toastShort(activity, "Report Added Successfully!" + response);
+                            Helper.toastShort(activity, "Report Added Successfully!");
                             getpondData(id, Helper.variables.URL_SELECT_POND_WEEKLY_UPDATES_BY_ID);
-                        }else { Helper.toastShort(activity, "No records" + response); }
+                        }else { Helper.toastShort(activity, "No records"); }
                     }
 
                 }, new Response.ErrorListener() {

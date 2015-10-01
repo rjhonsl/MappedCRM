@@ -598,7 +598,6 @@ public class Helper {
         txttitle.setText(title);
         txtok.setText(button);
         d.show();
-
         return d;
     }
 

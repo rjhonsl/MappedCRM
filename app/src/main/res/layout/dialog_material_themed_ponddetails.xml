@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center_horizontal"
+              android:weightSum="1">
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_marginBottom="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="left"
+        >
+        <TextView
+            android:gravity="center_vertical|left"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="13dp"
+            android:background="@color/deepteal_400"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:text="Pond Details "
+            android:drawableRight="@drawable/ic_info_white_24dp"
+            android:id="@+id/dialog_okonly_title"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal">
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="12sp"-->
+            <!--android:textColor="#7e829e"-->
+            <!--android:text="emaol"-->
+            <!--/>-->
+        <View android:layout_width="180dp"
+              android:layout_height="1dp"
+              android:background="@color/gray_200"/>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="3dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="Case Num. "
+
+                />
+            .
+            <TextView
+                android:id="@+id/txtPondNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="1"
+                />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="3dp"
+                      android:orientation="horizontal">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="Specie "
+
+                />
+            .
+            <TextView
+                android:id="@+id/txtSpecies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="Tilapia"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="3dp"
+                      android:orientation="horizontal">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="Quantity "
+
+                />
+            .
+            <TextView
+                android:id="@+id/txtQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="10000"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="3dp"
+                      android:gravity="center"
+                      android:orientation="horizontal">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="ABW when stocked "
+
+                />
+            .
+            <TextView
+                android:id="@+id/txtABW"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="10g"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="3dp"
+                      android:gravity="center"
+                      android:orientation="horizontal">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="Date Stocked"
+
+                />
+            .
+            <TextView
+                android:id="@+id/txtDateStocked"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="2015-9-25"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="3dp"
+                      android:gravity="center"
+                      android:orientation="horizontal">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="Survival Rate"
+
+                />
+            .
+            <TextView
+                android:id="@+id/txtSurvivalRate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="80%"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="3dp"
+                      android:gravity="center"
+                      android:orientation="horizontal">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="Case Area"
+
+                />
+            .
+            <TextView
+                android:id="@+id/txtArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="400m²"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:padding="3dp"
+                      android:gravity="center"
+                      android:orientation="horizontal">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="Culture System"
+
+                />
+            .
+            <TextView
+                android:id="@+id/txtCultureSystem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/gray_600"
+                android:text="Cage"
+                />
+
+        </LinearLayout>
+
+        <View android:layout_width="180dp"
+              android:layout_height="1dp"
+              android:background="@color/gray_200"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:layout_gravity="right">
+
+        <Button
+            android:textColor="@color/material_deep_teal_500"
+            android:textSize="13sp"
+            android:layout_width="70dp"
+            android:layout_height="35dp"
+            android:background="@drawable/bg_material_transparent"
+            android:text="OK"
+            android:id="@+id/btnOK"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
