@@ -288,7 +288,7 @@ public class MapsActivity_UserMonitoring extends AppCompatActivity implements On
                                 lvUserActivity.setVisibility(View.GONE);
                             }else{
 
-                                PD.dismiss();
+
 
                                 useractivityList  = new ArrayList<CustInfoObject>();
                                 useractivityList = UserActivityParser.parseFeed(response);
@@ -307,12 +307,15 @@ public class MapsActivity_UserMonitoring extends AppCompatActivity implements On
                                         lvUserActivity.setVisibility(View.VISIBLE);
                                         adapter_useractivity = new Adapter_UserMonitoring_SideNav_Activities(MapsActivity_UserMonitoring.this, R.layout.item_lv_useractivity, useractivityList);
                                         lvUserActivity.setAdapter(adapter_useractivity);
+
                                     }
                                 }else{
                                     txtfiller.setVisibility(View.VISIBLE);
                                     lvUserActivity.setVisibility(View.GONE);
                                     Helper.toastLong(activity, firstname + " " + lastname + " has no logs on current date selected");
                                 }
+
+                                PD.dismiss();
 
                             }
 

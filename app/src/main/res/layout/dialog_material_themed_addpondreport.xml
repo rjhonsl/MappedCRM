@@ -22,7 +22,7 @@
             android:text="Create Report "
             android:background="@color/deepteal_500"
             android:drawableRight="@drawable/ic_info_white_24dp"
-            android:id="@+id/dialog_yesno_title"
+            android:id="@+id/txtTitle"
             />
         <!--<TextView-->
             <!--android:layout_width="wrap_content"-->

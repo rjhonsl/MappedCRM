@@ -453,7 +453,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intent.putExtra("latitude", location.latitude +"");
                 intent.putExtra("longitude", location.longitude+ "");
                 startActivity(intent);
-                startActivity(intent);
             }
 
         });
@@ -800,15 +799,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             tvTitle.setText(details[1]);
             if (details[2].equalsIgnoreCase("") || details[2].equalsIgnoreCase("null")){
-                txtStock.setText("Stocks: n/a");
+                txtStock.setText("n/a");
             } else{
-                txtStock.setText("Stocks: " + details[2]);
+                txtStock.setText("" + details[2]);
             }
 
             if (details[3].equalsIgnoreCase("") || details[3].equalsIgnoreCase("null")){
-                txtSpecie.setText("Specie: n/a");
+                txtSpecie.setText("n/a");
             } else{
-                txtSpecie.setText("Specie: " + details[3]);
+                txtSpecie.setText("" + details[3]);
             }
 
 

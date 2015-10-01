@@ -102,6 +102,7 @@ public class Helper {
 
         public static String URL_DELETE_CUSTINFO_BY_ID  = "http://mysanteh.site50.net/santehweb/deleteByID.php";
         public static String URL_DELETE_POND_BY_ID      = "http://mysanteh.site50.net/santehweb/deletePondInfoByID.php";
+        public static String URL_DELETE_POND_WEEKLY_DETAILS_BY_ID      = "http://mysanteh.site50.net/santehweb/deletePondWeeklyDetailsByID.php";
 
         public static String URL_INSERT_PONDINFO        = "http://mysanteh.site50.net/santehweb/insertPondInformation.php";
         public static String URL_INSERT_LOGINLOCATION   = "http://mysanteh.site50.net/santehweb/insertLoginLocationOffUser.php";
@@ -110,6 +111,7 @@ public class Helper {
 
         public static String URL_UPDATE_PONDINFO_BY_ID              ="http://mysanteh.site50.net/santehweb/updatePondInformationByID.php";
         public static String URL_UPDATE_CUSTOMERINFORMATION_BY_ID   ="http://mysanteh.site50.net/santehweb/updateCustomerInformationByID.php";
+        public static String URL_UPDATE_POND_WEEKLY_DETAIL_BY_ID    ="http://mysanteh.site50.net/santehweb/updatePodWeeklyDetails.php";
 
         public static String URL_LOGIN  ="http://mysanteh.site50.net/santehweb/login.php";
 
