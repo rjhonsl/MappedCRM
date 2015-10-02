@@ -87,10 +87,6 @@
                   android:label="Grow Out Summary">
         </activity>
 
-        <activity android:name=".Main.Activity_WeeklyReports_Growout_Option"
-                  android:label="Summary Options">
-        </activity>
-
         <activity android:name=".Main.Activity_UserMonitoringOptions"
                   android:label="Monitoring Options">
         </activity>

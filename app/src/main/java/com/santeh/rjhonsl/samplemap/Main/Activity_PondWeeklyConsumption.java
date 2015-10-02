@@ -381,7 +381,7 @@ public class Activity_PondWeeklyConsumption extends Activity {
 
 
                         adapterPondWeeklyReport = new Adapter_Growouts_PondWeekLyConsumption(Activity_PondWeeklyConsumption.this,
-                                R.layout.item_lv_weeklypondsummary, pondweeklyList);
+                                R.layout.item_lv_weeklyreport_allfeeddemands, pondweeklyList);
                         lvPonds.setAdapter(adapterPondWeeklyReport);
 
                         scrollMyListViewToBottom(lvPonds, adapterPondWeeklyReport, pondweeklyList.size());

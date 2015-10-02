@@ -39,34 +39,38 @@
         />
         <LinearLayout android:layout_width="fill_parent"
                       android:padding="5dp"
-                      android:layout_marginLeft="2dp"
+                      android:layout_marginLeft="5dp"
                       android:layout_height="wrap_content"
                       android:orientation="vertical">
             <TextView
                 android:id="@+id/itemlv_feedconsSummary_farmname"
-                android:text="Juan Dela Cruz's Farm"
+                android:text="Gorio's Fish Farm"
                 android:textSize="15sp"
-                android:textStyle="bold"
+                android:textColor="@color/gray_900"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/itemlv_feedconsSummary_specie"
-                android:text="Tilapia"
+                android:id="@+id/itemlv_feedconsSummary_address"
+                android:text="Santo Nino, Calumpit, Bulacan"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/itemlv_feedconsSummary_weekandfeedtype"
-                android:text="Week 10 - Fry Mash"
+                android:id="@+id/itemlv_feedconsSummary_reportCount"
+                android:textColor="@color/red_600"
+                android:text="Reports:  4"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
+
 
             <TextView
                 android:id="@+id/itemlv_feedconsSummary_consumption"
                 android:text="Consumption this week:  29000(g)"
+                android:visibility="gone"
                 android:textSize="14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

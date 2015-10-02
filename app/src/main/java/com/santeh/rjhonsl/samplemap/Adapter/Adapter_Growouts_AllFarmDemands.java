@@ -38,7 +38,7 @@ public class Adapter_Growouts_AllFarmDemands extends ArrayAdapter<CustInfoObject
 	}
 
 	private class ViewHolder {
-		TextView txtFamrname, txtcurrentWeekAndFeedtype, txtspecie, txtconsumption, txtinitial;
+		TextView txtFamrname, txtaddress, txtreportCount, txtconsumption, txtinitial;
 	}
 
 	public View getView(int position, View view, ViewGroup parent) {
@@ -53,8 +53,8 @@ public class Adapter_Growouts_AllFarmDemands extends ArrayAdapter<CustInfoObject
 			view = inflater.inflate(R.layout.item_lv_weeklyreport_allfeeddemands, null);
 
 			holder.txtFamrname = (TextView) view.findViewById(R.id.itemlv_feedconsSummary_farmname);
-			holder.txtcurrentWeekAndFeedtype = (TextView) view.findViewById(R.id.itemlv_feedconsSummary_weekandfeedtype);
-			holder.txtspecie = (TextView) view.findViewById(R.id.itemlv_feedconsSummary_specie);
+			holder.txtaddress = (TextView) view.findViewById(R.id.itemlv_feedconsSummary_address);
+			holder.txtreportCount = (TextView) view.findViewById(R.id.itemlv_feedconsSummary_reportCount);
 			holder.txtconsumption = (TextView) view.findViewById(R.id.itemlv_feedconsSummary_consumption);
 			holder.txtinitial= (TextView) view.findViewById(R.id.itemlv_feedconsSummary_initials);
 
@@ -69,8 +69,8 @@ public class Adapter_Growouts_AllFarmDemands extends ArrayAdapter<CustInfoObject
 //		 Capture position and set to the TextViews
 		holder.txtinitial.setText(objArrayList.get(position).getFarmname().substring(0,1));
 		holder.txtFamrname.setText(objArrayList.get(position).getFarmname());
-		holder.txtcurrentWeekAndFeedtype.setText("Week "+objArrayList.get(position).getCurrentweekofStock() + " - " +objArrayList.get(position).getCurrentFeedType());
-		holder.txtspecie.setText(objArrayList.get(position).getSpecie() + " - " + objArrayList.get(position).getQuantity() + "(qty)");
+		holder.txtaddress.setText("" + objArrayList.get(position).getAddress());
+		holder.txtreportCount.setText("Reports: "+objArrayList.get(position).getCounter()+"");
 		DecimalFormat df = new DecimalFormat("#.##");
 		holder.txtconsumption.setText("Consumption: "+(df.format(objArrayList.get(position).getWeeklyConsumptionInGrams() / 1000))+" kg");
 

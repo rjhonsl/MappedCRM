@@ -84,36 +84,38 @@ public class Helper {
         public static final String ACTIVITY_LOG_TYPE_TSR_MONITORING= "2";
         public static final String ACTIVITY_LOG_TYPE_ADMIN_ACTIVITY= "3";
 
-        public static String URL_SELECT_ALL_CUSTINFO                    = "http://mysanteh.site50.net/santehweb/selectAllCustomerInfo.php";
-        public static String URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO  = "http://mysanteh.site50.net/santehweb/selectCustinfoLeftJoinPondinf.php";
-        public static String URL_SELECT_CUSTINFO_BY_ID                  = "http://mysanteh.site50.net/santehweb/selectByID.php";
-        public static String URL_SELECT_PONDINFO_BY_CUSTOMER_ID         ="http://mysanteh.site50.net/santehweb/selectPondByCustomerID.php";
-        public static String URL_SELECT_PONDINFO_BY_CUSTOMERID_AND_PONDID ="http://mysanteh.site50.net/santehweb/selectPondByCustomerIDandPondID.php";
-        public static String URL_SELECT_ALL_PONDINFO_GROUPBY_CUSTINFO   = "http://mysanteh.site50.net/santehweb/selectAllPondGroupBy.php";
-        public static String URL_SELECT_ALL_PONDINFO                    = "http://mysanteh.site50.net/santehweb/selectAllPond.php";
-        public static String URL_SELECT_ALL_USERS_IN_AREA               = "http://mysanteh.site50.net/santehweb/selectAlluserInAnArea.php";
-        public static String URL_SELECT_ALL_USERS                       = "http://mysanteh.site50.net/santehweb/selectAllUsers.php";
-        public static String URL_SELECT_ALL_AREA                        = "http://mysanteh.site50.net/santehweb/selectAllArea.php";
-        public static String URL_SELECT_USERS_ACTIVITY_BY_DATE_AND_ID   = "http://mysanteh.site50.net/santehweb/selectUserActivityByID.php";
-        public static String URL_SELECT_POND_WEEKLY_UPDATES_BY_ID       = "http://mysanteh.site50.net/santehweb/selectPondWeeklyUpdateByPondID.php";
-        public static String URL_SELECT_ALL_USERS_ACTIVITY_BY_ID        = "http://mysanteh.site50.net/santehweb/selectAllUserActivityByID.php";
-        public static String URL_SELECT_ALL_PONDINFO_BETWEEN_DATES      = "http://mysanteh.site50.net/santehweb/selectAllPondBetweenDate.php";
-        public static String URL_SELECT_ALL_PONDINFO_LEFTJOIN_CUSTINFO  = "http://mysanteh.site50.net/santehweb/selectAllPondInfoLeftJoinCustInfo.php";
+        public static String URL_SELECT_ALL_CUSTINFO                        = "http://mysanteh.site50.net/santehweb/selectAllCustomerInfo.php";
+        public static String URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO      = "http://mysanteh.site50.net/santehweb/selectCustinfoLeftJoinPondinf.php";
+        public static String URL_SELECT_CUSTINFO_BY_ID                      = "http://mysanteh.site50.net/santehweb/selectByID.php";
+        public static String URL_SELECT_PONDINFO_BY_CUSTOMER_ID             = "http://mysanteh.site50.net/santehweb/selectPondByCustomerID.php";
+        public static String URL_SELECT_PONDINFO_BY_CUSTOMERID_AND_PONDID   = "http://mysanteh.site50.net/santehweb/selectPondByCustomerIDandPondID.php";
+        public static String URL_SELECT_ALL_PONDINFO_GROUPBY_CUSTINFO       = "http://mysanteh.site50.net/santehweb/selectAllPondGroupBy.php";
+        public static String URL_SELECT_ALL_PONDINFO                        = "http://mysanteh.site50.net/santehweb/selectAllPond.php";
+        public static String URL_SELECT_ALL_USERS_IN_AREA                   = "http://mysanteh.site50.net/santehweb/selectAlluserInAnArea.php";
+        public static String URL_SELECT_ALL_USERS                           = "http://mysanteh.site50.net/santehweb/selectAllUsers.php";
+        public static String URL_SELECT_ALL_AREA                            = "http://mysanteh.site50.net/santehweb/selectAllArea.php";
+        public static String URL_SELECT_USERS_ACTIVITY_BY_DATE_AND_ID       = "http://mysanteh.site50.net/santehweb/selectUserActivityByID.php";
+        public static String URL_SELECT_POND_WEEKLY_UPDATES_BY_ID           = "http://mysanteh.site50.net/santehweb/selectPondWeeklyUpdateByPondID.php";
+        public static String URL_SELECT_ALL_USERS_ACTIVITY_BY_ID            = "http://mysanteh.site50.net/santehweb/selectAllUserActivityByID.php";
+        public static String URL_SELECT_ALL_PONDINFO_BETWEEN_DATES          = "http://mysanteh.site50.net/santehweb/selectAllPondBetweenDate.php";
+        public static String URL_SELECT_ALL_PONDINFO_LEFTJOIN_CUSTINFO      = "http://mysanteh.site50.net/santehweb/selectAllPondInfoLeftJoinCustInfo.php";
+        public static String URL_SELECT_ALL_POND_WEEKLYUPDATES_INNERJOIN_PONDINFO_GROUPBY_FARMNAME
+                = "http://mysanteh.site50.net/santehweb/selectPondWeeklyUpdate_InnerJoin_Pond_GroupByFarmName.php";
 
-        public static String URL_DELETE_CUSTINFO_BY_ID  = "http://mysanteh.site50.net/santehweb/deleteByID.php";
-        public static String URL_DELETE_POND_BY_ID      = "http://mysanteh.site50.net/santehweb/deletePondInfoByID.php";
-        public static String URL_DELETE_POND_WEEKLY_DETAILS_BY_ID      = "http://mysanteh.site50.net/santehweb/deletePondWeeklyDetailsByID.php";
+        public static String URL_DELETE_CUSTINFO_BY_ID                  = "http://mysanteh.site50.net/santehweb/deleteByID.php";
+        public static String URL_DELETE_POND_BY_ID                      = "http://mysanteh.site50.net/santehweb/deletePondInfoByID.php";
+        public static String URL_DELETE_POND_WEEKLY_DETAILS_BY_ID       = "http://mysanteh.site50.net/santehweb/deletePondWeeklyDetailsByID.php";
 
-        public static String URL_INSERT_PONDINFO        = "http://mysanteh.site50.net/santehweb/insertPondInformation.php";
-        public static String URL_INSERT_LOGINLOCATION   = "http://mysanteh.site50.net/santehweb/insertLoginLocationOffUser.php";
-        public static String URL_INSERT_USER_ACTIVITY   = "http://mysanteh.site50.net/santehweb/insertUserActivity.php";
-        public static String URL_INSERT_POND_REPORT     = "http://mysanteh.site50.net/santehweb/insertPondReport.php";
+        public static String URL_INSERT_PONDINFO                        = "http://mysanteh.site50.net/santehweb/insertPondInformation.php";
+        public static String URL_INSERT_LOGINLOCATION                   = "http://mysanteh.site50.net/santehweb/insertLoginLocationOffUser.php";
+        public static String URL_INSERT_USER_ACTIVITY                   = "http://mysanteh.site50.net/santehweb/insertUserActivity.php";
+        public static String URL_INSERT_POND_REPORT                     = "http://mysanteh.site50.net/santehweb/insertPondReport.php";
 
-        public static String URL_UPDATE_PONDINFO_BY_ID              ="http://mysanteh.site50.net/santehweb/updatePondInformationByID.php";
-        public static String URL_UPDATE_CUSTOMERINFORMATION_BY_ID   ="http://mysanteh.site50.net/santehweb/updateCustomerInformationByID.php";
-        public static String URL_UPDATE_POND_WEEKLY_DETAIL_BY_ID    ="http://mysanteh.site50.net/santehweb/updatePodWeeklyDetails.php";
+        public static String URL_UPDATE_PONDINFO_BY_ID                  = "http://mysanteh.site50.net/santehweb/updatePondInformationByID.php";
+        public static String URL_UPDATE_CUSTOMERINFORMATION_BY_ID       = "http://mysanteh.site50.net/santehweb/updateCustomerInformationByID.php";
+        public static String URL_UPDATE_POND_WEEKLY_DETAIL_BY_ID        = "http://mysanteh.site50.net/santehweb/updatePodWeeklyDetails.php";
 
-        public static String URL_LOGIN  ="http://mysanteh.site50.net/santehweb/login.php";
+        public static String URL_LOGIN  = "http://mysanteh.site50.net/santehweb/login.php";
 
         public static String[] ARRAY_SPECIES = {
 //                "Bangus",   //0
@@ -686,6 +688,13 @@ public class Helper {
         return formatter.format(calendar.getTime());
     }
 
+    public static String convertLongtoDateString_DB_format(long dateInMillis){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(dateInMillis);
+        return formatter.format(calendar.getTime());
+    }
+
 
     public static String convertLongtoDate_Gregorian(long dateInMillis){
         SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy");
@@ -695,7 +704,7 @@ public class Helper {
     }
 
     public static String convertLongtoDate_GregorianWithTime(long dateInMillis){
-        SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy hh:mm aa");
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy hh:mmaa");
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(dateInMillis);
         return formatter.format(calendar.getTime());
@@ -703,7 +712,7 @@ public class Helper {
 
 
     public static String convertLongtoDateTimeString(long dateInMillis){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mmaa");
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(dateInMillis);
         return formatter.format(calendar.getTime());
@@ -784,7 +793,7 @@ public class Helper {
         Dialog PD = new Dialog(activity);
         PD.requestWindowFeature(Window.FEATURE_NO_TITLE);
         PD.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-//        PD.setCancelable(false);
+        PD.setCancelable(false);
         PD.setContentView(R.layout.progressdialog);
         return  PD;
     }

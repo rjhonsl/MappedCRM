@@ -91,9 +91,17 @@ public class CustAndPondParser {
 				Log.d("PARSING", "farmname");
 				try {
 					if (obj.has("farm_name"))
-					custInfoObject.setFarmname(obj.getString("farm_name"));
+						custInfoObject.setFarmname(obj.getString("farm_name"));
 				}catch (Exception e){
 					custInfoObject.setFarmname("None");
+				}
+
+				Log.d("PARSING", "counter");
+				try {
+					if (obj.has("counter"))
+						custInfoObject.setCounter(obj.getInt("counter"));
+				}catch (Exception e){
+					custInfoObject.setCounter(0);
 				}
 
 

@@ -6,6 +6,7 @@ public class CustInfoObject {
 	
 	private int id;
 	private int ci_id;
+	private int counter;
 
 
 	private String latitude;
@@ -498,4 +499,13 @@ public class CustInfoObject {
 	public void setMunicipality_province(int municipality_province) {
 		this.municipality_province = municipality_province;
 	}
+
+	public int getCounter() {
+		return counter;
+	}
+
+	public void setCounter(int counter) {
+		this.counter = counter;
+	}
+
 }

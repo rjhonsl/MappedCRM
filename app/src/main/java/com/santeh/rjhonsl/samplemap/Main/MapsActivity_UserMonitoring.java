@@ -300,7 +300,7 @@ public class MapsActivity_UserMonitoring extends AppCompatActivity implements On
                                                     new LatLng(Double.parseDouble(useractivityList.get(i).getLatitude()), Double.parseDouble(useractivityList.get(i).getLongtitude())),//gets latlong
                                                     Helper.iconGeneratorSample(context, (i + 1) + "", activity), //creates an icon with a number
                                                     useractivityList.get(i).getActionDone(), //action done by the user in the latlong
-                                                    Helper.convertLongtoDateTimeString(Helper.convertDateTimeStringToMilis_DB_Format(useractivityList.get(i).getDateTime()))//date when action was done
+                                                    Helper.convertLongtoDate_GregorianWithTime(Helper.convertDateTimeStringToMilis_DB_Format(useractivityList.get(i).getDateTime()))//date when action was done
                                             );
                                         }
                                         txtfiller.setVisibility(View.GONE);

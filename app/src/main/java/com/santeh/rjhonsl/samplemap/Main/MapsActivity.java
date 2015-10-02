@@ -460,7 +460,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         nav_growout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Intent intent = new Intent(MapsActivity.this, Activity_WeeklyReports_Growout_Option.class);
+                final Intent intent = new Intent(MapsActivity.this, Activity_WeeklyReports_Growout_FeedDemands.class);
                 closeDrawer();
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {

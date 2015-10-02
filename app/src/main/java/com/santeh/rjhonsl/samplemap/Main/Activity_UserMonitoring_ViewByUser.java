@@ -91,8 +91,8 @@ public class Activity_UserMonitoring_ViewByUser extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                final Dialog d = Helper.createCustomDialogYesNO(activity, R.layout.dialog_material_yesno, "See " + userlist.get(position).getFirstname() + " " +
-                        userlist.get(position).getLastname() + "'s activity in map?", "VIEW IN MAP", "Cancel", "GO!");
+                final Dialog d = Helper.createCustomDialogThemedYesNO(activity, "See " + userlist.get(position).getFirstname() + " " +
+                        userlist.get(position).getLastname() + "'s activity in map?", "View in Map", "Cancel", "GO!", R.color.blue );
                 d.show();
 
                 Button cancel = (Button) d.findViewById(R.id.btn_dialog_yesno_opt1);
