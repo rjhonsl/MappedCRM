@@ -138,10 +138,6 @@ public class Activity_WeeklyReports_Growout_FeedDemands extends FragmentActivity
                         @Override
                         public void onResponse(String response) {
                             PD.dismiss();
-
-//
-
-
 //                            txtheader.setText(response);
                             if (!response.substring(1,2).equalsIgnoreCase("0")){
                                 pondInfoObj = CustAndPondParser.parseFeed(response);

@@ -129,10 +129,10 @@ public class Activity_PondWeeklyConsumption extends Activity {
                 txtpondNum.setText(pondid + "");
                 txtSpecie.setText(specie + "");
                 txtqty.setText(quantity + "");
-                txtabw.setText(abw + "");
-                txtSurvivalRate.setText(survivalrate + "");
+                txtabw.setText(abw + "g");
+                txtSurvivalRate.setText(survivalrate + "%");
                 txtDateStocked.setText(datestocked + "");
-                txtArea.setText(area + "");
+                txtArea.setText(area + "m²");
                 txtCultureSystem.setText(culturesystem + "");
 
                 btnOK1.setOnClickListener(new View.OnClickListener() {
