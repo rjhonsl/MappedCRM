@@ -152,7 +152,9 @@ public class Activity_WeeklyReports_Growout_FeedDemands extends FragmentActivity
                                 }else{Helper.toastLong(activity, "There are no demands for this week.");}
                             }
                             else {
-                                custinfoAdapter.clear();
+                                if (custinfoAdapter != null){
+                                    custinfoAdapter.clear();
+                                }
                                 lvFarmlist.setVisibility(View.GONE);
                                 llNoQuery.setVisibility(View.VISIBLE);
                             }

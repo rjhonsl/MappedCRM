@@ -882,7 +882,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 d.hide();
-                finish();
+                closeDrawer();
+                final Dialog d2 =  Helper.initProgressDialog(activity);
+                d2.show();
+
+                TextView message = (TextView) d2.findViewById(R.id.progress_message);
+                message.setText("Logging out...");
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        d2.hide();
+                        logoff();
+                    }
+                }, 1500);
+
+
             }
         });
 
@@ -894,5 +910,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
+    public void logoff(){
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                finish();
+            }
+        }, 300);
+    }
 
 }

@@ -798,6 +798,7 @@ public class Helper {
         return  PD;
     }
 
+
     public static void isLocationAvailable(final Context context, Activity activity){
         LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
         boolean gps_enabled = false;

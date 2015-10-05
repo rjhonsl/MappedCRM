@@ -71,7 +71,7 @@ public class Activity_ViewCustomerInfo extends Activity {
         PD.setMessage("Loading stuff....");
         PD.setCancelable(false);
 
-        url = "http://mysanteh.site50.net/santehweb/selectAllCustomerInfo.php";
+        url = "http://mysanteh.site50.net/santehweb/selectCustinfoLeftJoinPondinf.php";
         search();
 
         lvSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -170,7 +170,7 @@ public class Activity_ViewCustomerInfo extends Activity {
                     if(event.getRawX() >= (txtsearch.getRight() - txtsearch.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
 
                         if (txtsearch.getText().toString().trim().equalsIgnoreCase("") ||txtsearch.getText().toString().trim().equalsIgnoreCase(null)){
-                            url = "http://mysanteh.site50.net/santehweb/selectAllCustomerInfo.php";
+                            url = "http://mysanteh.site50.net/santehweb/selectCustinfoLeftJoinPondinf.php";
                             search();
                         }else{
                             url = "http://mysanteh.site50.net/santehweb/searchCustomerInfoByKey.php";
@@ -206,15 +206,31 @@ public class Activity_ViewCustomerInfo extends Activity {
                     public void onResponse(String response) {
 
                         PD.dismiss();
-                        beforesearchedList = searchedList;
-                        searchedList = CustomerInfoJsonParser.parseFeed(response);
-                        if (searchedList != null) {
+                        if(!response.substring(1,2).equalsIgnoreCase("0")){
+                            beforesearchedList = searchedList;
+                            searchedList = CustomerInfoJsonParser.parseFeed(response);
+                            if (searchedList != null) {
                                 custinfoAdapter = new AdapterViewCustInfo(Activity_ViewCustomerInfo.this, R.layout.item_lv_viewcustomerinfo, searchedList);
                                 lvSearch.setAdapter(custinfoAdapter);
-                        }else {
+                            }else {
+                                searchedList = beforesearchedList;
+                                final Dialog d = Helper.createCustomThemedColorDialogOKOnly(Activity_ViewCustomerInfo.this,
+                                        "OOPS!", response, "OK", R.color.blue);
+
+                                TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
+                                ok.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        d.hide();
+                                    }
+                                });
+                                d.show();
+                            }
+                        }else{
                             searchedList = beforesearchedList;
-                            final Dialog d = Helper.createCustomDialogOKOnly(Activity_ViewCustomerInfo.this,
-                                    "OOPS!", "Your keyword does not seem to match any of our records.", "OK");
+                            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(Activity_ViewCustomerInfo.this,
+                                    "OOPS!", response, "OK", R.color.blue);
+
                             TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
                             ok.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -224,6 +240,7 @@ public class Activity_ViewCustomerInfo extends Activity {
                             });
                             d.show();
                         }
+
 
                     }
                 }, new Response.ErrorListener() {
@@ -238,6 +255,12 @@ public class Activity_ViewCustomerInfo extends Activity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("keyword", keyword);
+                params.put("deviceid", Helper.getMacAddress(activity));
+                params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
+                params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
+                params.put("userlvl", Helper.variables.getGlobalVar_currentlevel(activity)+"");
+
                 return params;
             }
         };
@@ -282,6 +305,7 @@ public class Activity_ViewCustomerInfo extends Activity {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("id", id);
+
                     return params;
                 }
             };

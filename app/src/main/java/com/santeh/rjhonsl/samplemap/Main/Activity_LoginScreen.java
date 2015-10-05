@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -51,8 +53,11 @@ public class Activity_LoginScreen extends Activity{
     Activity activity; Context context;
     Dialog PD;
 
+    String versionName;
+    int versionCode;
     List<CustInfoObject> listaccounts = new ArrayList<>();
     FusedLocation fusedLocation;
+    PackageInfo pInfo = null;
 
 
 
@@ -65,6 +70,21 @@ public class Activity_LoginScreen extends Activity{
 
         fusedLocation = new FusedLocation(context, activity);
         fusedLocation.buildGoogleApiClient(context);
+
+
+
+        try {
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if (pInfo !=null){
+            versionName = pInfo.versionName;
+            versionCode = pInfo.versionCode;
+        }
+
+
 
 
         PD =  Helper.initProgressDialog(activity);
@@ -84,9 +104,10 @@ public class Activity_LoginScreen extends Activity{
         txtusername.setTypeface(font_roboto);
 
         txttester.setText(
-                Helper.getIMEI(context)
-                        + " " +
-                        Helper.getMacAddress(context)
+                Helper.getMacAddress(context)
+                        + "\n" +
+                "update: "+versionCode +  "    V." + versionName
+
         );
 
         txtshowpassword.setOnClickListener(new View.OnClickListener() {
@@ -337,7 +358,6 @@ public class Activity_LoginScreen extends Activity{
             // Adding request to request queue
             MyVolleyAPI api = new MyVolleyAPI();
             api.addToReqQueue(postRequest, Activity_LoginScreen.this);
-
         }
 
     }
