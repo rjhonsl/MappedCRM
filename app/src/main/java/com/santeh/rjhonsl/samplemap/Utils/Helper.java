@@ -79,43 +79,47 @@ public class Helper {
     }
 
     public static class variables{
+        public static String sourceAddress_bizNF      = "http://santeh.co.nf/phpsql/";
+        public static String sourceAddress_bizNF_downloadable      = "http://santeh.co.nf/downloadable/";
+        public static String sourceAddress_000webhost = "http://mysanteh.site50.net/santehweb/";
 
         public static final String ACTIVITY_LOG_TYPE_FARM_REPORTING= "1";
         public static final String ACTIVITY_LOG_TYPE_TSR_MONITORING= "2";
         public static final String ACTIVITY_LOG_TYPE_ADMIN_ACTIVITY= "3";
 
-        public static String URL_SELECT_ALL_CUSTINFO                        = "http://mysanteh.site50.net/santehweb/selectAllCustomerInfo.php";
-        public static String URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO      = "http://mysanteh.site50.net/santehweb/selectCustinfoLeftJoinPondinf.php";
-        public static String URL_SELECT_CUSTINFO_BY_ID                      = "http://mysanteh.site50.net/santehweb/selectByID.php";
-        public static String URL_SELECT_PONDINFO_BY_CUSTOMER_ID             = "http://mysanteh.site50.net/santehweb/selectPondByCustomerID.php";
-        public static String URL_SELECT_PONDINFO_BY_CUSTOMERID_AND_PONDID   = "http://mysanteh.site50.net/santehweb/selectPondByCustomerIDandPondID.php";
-        public static String URL_SELECT_ALL_PONDINFO_GROUPBY_CUSTINFO       = "http://mysanteh.site50.net/santehweb/selectAllPondGroupBy.php";
-        public static String URL_SELECT_ALL_PONDINFO                        = "http://mysanteh.site50.net/santehweb/selectAllPond.php";
-        public static String URL_SELECT_ALL_USERS_IN_AREA                   = "http://mysanteh.site50.net/santehweb/selectAlluserInAnArea.php";
-        public static String URL_SELECT_ALL_USERS                           = "http://mysanteh.site50.net/santehweb/selectAllUsers.php";
-        public static String URL_SELECT_ALL_AREA                            = "http://mysanteh.site50.net/santehweb/selectAllArea.php";
-        public static String URL_SELECT_USERS_ACTIVITY_BY_DATE_AND_ID       = "http://mysanteh.site50.net/santehweb/selectUserActivityByID.php";
-        public static String URL_SELECT_POND_WEEKLY_UPDATES_BY_ID           = "http://mysanteh.site50.net/santehweb/selectPondWeeklyUpdateByPondID.php";
-        public static String URL_SELECT_ALL_USERS_ACTIVITY_BY_ID            = "http://mysanteh.site50.net/santehweb/selectAllUserActivityByID.php";
-        public static String URL_SELECT_ALL_PONDINFO_BETWEEN_DATES          = "http://mysanteh.site50.net/santehweb/selectAllPondBetweenDate.php";
-        public static String URL_SELECT_ALL_PONDINFO_LEFTJOIN_CUSTINFO      = "http://mysanteh.site50.net/santehweb/selectAllPondInfoLeftJoinCustInfo.php";
+        public static String URL_SELECT_ALL_CUSTINFO                        = sourceAddress_bizNF + "selectAllCustomerInfo.php";
+        public static String URL_SELECT_CURRENT_VERSION_NUMBER              = sourceAddress_bizNF + "selectCurrentVersion.php";
+        public static String URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO      = sourceAddress_bizNF + "selectCustinfoLeftJoinPondinf.php";
+        public static String URL_SELECT_CUSTINFO_BY_ID                      = sourceAddress_bizNF + "selectByID.php";
+        public static String URL_SELECT_PONDINFO_BY_CUSTOMER_ID             = sourceAddress_bizNF + "selectPondByCustomerID.php";
+        public static String URL_SELECT_PONDINFO_BY_CUSTOMERID_AND_PONDID   = sourceAddress_bizNF + "selectPondByCustomerIDandPondID.php";
+        public static String URL_SELECT_ALL_PONDINFO_GROUPBY_CUSTINFO       = sourceAddress_bizNF + "selectAllPondGroupBy.php";
+        public static String URL_SELECT_ALL_PONDINFO                        = sourceAddress_bizNF + "selectAllPond.php";
+        public static String URL_SELECT_ALL_USERS_IN_AREA                   = sourceAddress_bizNF + "selectAlluserInAnArea.php";
+        public static String URL_SELECT_ALL_USERS                           = sourceAddress_bizNF + "selectAllUsers.php";
+        public static String URL_SELECT_ALL_AREA                            = sourceAddress_bizNF + "selectAllArea.php";
+        public static String URL_SELECT_USERS_ACTIVITY_BY_DATE_AND_ID       = sourceAddress_bizNF + "selectUserActivityByID.php";
+        public static String URL_SELECT_POND_WEEKLY_UPDATES_BY_ID           = sourceAddress_bizNF + "selectPondWeeklyUpdateByPondID.php";
+        public static String URL_SELECT_ALL_USERS_ACTIVITY_BY_ID            = sourceAddress_bizNF + "selectAllUserActivityByID.php";
+        public static String URL_SELECT_ALL_PONDINFO_BETWEEN_DATES          = sourceAddress_bizNF + "selectAllPondBetweenDate.php";
+        public static String URL_SELECT_ALL_PONDINFO_LEFTJOIN_CUSTINFO      = sourceAddress_bizNF + "selectAllPondInfoLeftJoinCustInfo.php";
         public static String URL_SELECT_ALL_POND_WEEKLYUPDATES_INNERJOIN_PONDINFO_GROUPBY_FARMNAME
-                = "http://mysanteh.site50.net/santehweb/selectPondWeeklyUpdate_InnerJoin_Pond_GroupByFarmName.php";
+                = sourceAddress_bizNF + "selectPondWeeklyUpdate_InnerJoin_Pond_GroupByFarmName.php";
 
-        public static String URL_DELETE_CUSTINFO_BY_ID                  = "http://mysanteh.site50.net/santehweb/deleteByID.php";
-        public static String URL_DELETE_POND_BY_ID                      = "http://mysanteh.site50.net/santehweb/deletePondInfoByID.php";
-        public static String URL_DELETE_POND_WEEKLY_DETAILS_BY_ID       = "http://mysanteh.site50.net/santehweb/deletePondWeeklyDetailsByID.php";
+        public static String URL_DELETE_CUSTINFO_BY_ID                  = sourceAddress_bizNF + "deleteByID.php";
+        public static String URL_DELETE_POND_BY_ID                      = sourceAddress_bizNF + "deletePondInfoByID.php";
+        public static String URL_DELETE_POND_WEEKLY_DETAILS_BY_ID       = sourceAddress_bizNF + "deletePondWeeklyDetailsByID.php";
 
-        public static String URL_INSERT_PONDINFO                        = "http://mysanteh.site50.net/santehweb/insertPondInformation.php";
-        public static String URL_INSERT_LOGINLOCATION                   = "http://mysanteh.site50.net/santehweb/insertLoginLocationOffUser.php";
-        public static String URL_INSERT_USER_ACTIVITY                   = "http://mysanteh.site50.net/santehweb/insertUserActivity.php";
-        public static String URL_INSERT_POND_REPORT                     = "http://mysanteh.site50.net/santehweb/insertPondReport.php";
+        public static String URL_INSERT_PONDINFO                        = sourceAddress_bizNF + "insertPondInformation.php";
+        public static String URL_INSERT_LOGINLOCATION                   = sourceAddress_bizNF + "insertLoginLocationOffUser.php";
+        public static String URL_INSERT_USER_ACTIVITY                   = sourceAddress_bizNF + "insertUserActivity.php";
+        public static String URL_INSERT_POND_REPORT                     = sourceAddress_bizNF + "insertPondReport.php";
 
-        public static String URL_UPDATE_PONDINFO_BY_ID                  = "http://mysanteh.site50.net/santehweb/updatePondInformationByID.php";
-        public static String URL_UPDATE_CUSTOMERINFORMATION_BY_ID       = "http://mysanteh.site50.net/santehweb/updateCustomerInformationByID.php";
-        public static String URL_UPDATE_POND_WEEKLY_DETAIL_BY_ID        = "http://mysanteh.site50.net/santehweb/updatePodWeeklyDetails.php";
+        public static String URL_UPDATE_PONDINFO_BY_ID                  = sourceAddress_bizNF + "updatePondInformationByID.php";
+        public static String URL_UPDATE_CUSTOMERINFORMATION_BY_ID       = sourceAddress_bizNF + "updateCustomerInformationByID.php";
+        public static String URL_UPDATE_POND_WEEKLY_DETAIL_BY_ID        = sourceAddress_bizNF + "updatePodWeeklyDetails.php";
 
-        public static String URL_LOGIN  = "http://mysanteh.site50.net/santehweb/login.php";
+        public static String URL_LOGIN  = sourceAddress_bizNF + "login.php";
 
         public static String[] ARRAY_SPECIES = {
 //                "Bangus",   //0

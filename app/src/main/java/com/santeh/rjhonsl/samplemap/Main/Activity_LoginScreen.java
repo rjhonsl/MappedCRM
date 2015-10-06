@@ -4,13 +4,18 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +23,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -31,6 +37,13 @@ import com.santeh.rjhonsl.samplemap.R;
 import com.santeh.rjhonsl.samplemap.Utils.FusedLocation;
 import com.santeh.rjhonsl.samplemap.Utils.Helper;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,12 +65,16 @@ public class Activity_LoginScreen extends Activity{
 
     Activity activity; Context context;
     Dialog PD;
+    ProgressDialog mProgressDialog;
 
-    String versionName;
+    String versionName, fileDir = "/sdcard/Download/", fulladdress, latestVersionName, versionFile;
     int versionCode;
     List<CustInfoObject> listaccounts = new ArrayList<>();
     FusedLocation fusedLocation;
     PackageInfo pInfo = null;
+
+    float filesize;
+
 
 
 
@@ -85,8 +102,6 @@ public class Activity_LoginScreen extends Activity{
         }
 
 
-
-
         PD =  Helper.initProgressDialog(activity);
         txtprogressdialog_message = (TextView) PD.findViewById(R.id.progress_message);
 
@@ -103,12 +118,14 @@ public class Activity_LoginScreen extends Activity{
         txtpassword.setTypeface(font_roboto);
         txtusername.setTypeface(font_roboto);
 
+
         txttester.setText(
                 Helper.getMacAddress(context)
                         + "\n" +
-                "update: "+versionCode +  "    V." + versionName
+                        "update: " + versionCode + "    V." + versionName
 
         );
+
 
         txtshowpassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,7 +250,6 @@ public class Activity_LoginScreen extends Activity{
                 {
                     login();
                 }
-
             }
         });
 
@@ -244,6 +260,8 @@ public class Activity_LoginScreen extends Activity{
                 toggle_showpassword();
             }
         });
+
+        checkVersionUpdates();
 
     }
 
@@ -297,51 +315,51 @@ public class Activity_LoginScreen extends Activity{
                         public void onResponse(final String response) {
 
                             String accountDetail="";
-                                        PD.dismiss();
-                                        if (response.substring(1, 2).equalsIgnoreCase("0")) {
-                                            Helper.toastShort(activity, "Username and password does not seem to match");
-                                        } else {
-                                          listaccounts = AccountsParser.parseFeed(response);
-                                            if (listaccounts.size() > 0){
-                                                accountDetail = ""+
-                                                listaccounts.get(0).getUserid()+" "+
-                                                listaccounts.get(0).getUserlevel()+" " +
-                                                listaccounts.get(0).getUsername() + " " +
-                                                listaccounts.get(0).getFirstname() + " " +
-                                                listaccounts.get(0).getAccountlevelDescription() + " " +
-                                                listaccounts.get(0).getLastname();
-                                            }
+                                PD.dismiss();
+                                if (response.substring(1, 2).equalsIgnoreCase("0")) {
+                                    Helper.toastShort(activity, "Username and password does not seem to match");
+                                } else {
+                                  listaccounts = AccountsParser.parseFeed(response);
+                                    if (listaccounts.size() > 0){
+                                        accountDetail = ""+
+                                        listaccounts.get(0).getUserid()+" "+
+                                        listaccounts.get(0).getUserlevel()+" " +
+                                        listaccounts.get(0).getUsername() + " " +
+                                        listaccounts.get(0).getFirstname() + " " +
+                                        listaccounts.get(0).getAccountlevelDescription() + " " +
+                                        listaccounts.get(0).getLastname();
+                                    }
 
 //                                            Helper.toastShort(activity, "Success: "+accountDetail);
-                                            Intent intent = new Intent(Activity_LoginScreen.this, MapsActivity.class);
-                                            Helper.variables.setGlobalVar_currentlevel(listaccounts.get(0).getUserlevel(), activity);
-                                            Helper.variables.setGlobalVar_currentUserID(listaccounts.get(0).getUserid(), activity);
-                                            Helper.variables.setGlobalVar_currentFirstname(listaccounts.get(0).getFirstname(), activity);
-                                            Helper.variables.setGlobalVar_currentLastname(listaccounts.get(0).getLastname(), activity);
-                                            Helper.variables.setGlobalVar_currentUsername(txtusername.getText().toString(),activity);
-                                            Helper.variables.setGlobalVar_currentUserpassword(txtpassword.getText().toString(),activity);
-                                            Helper.variables.setGlobalVar_currentAssignedArea(listaccounts.get(0).getAssingedArea(), activity);
+                                    Intent intent = new Intent(Activity_LoginScreen.this, MapsActivity.class);
+                                    Helper.variables.setGlobalVar_currentlevel(listaccounts.get(0).getUserlevel(), activity);
+                                    Helper.variables.setGlobalVar_currentUserID(listaccounts.get(0).getUserid(), activity);
+                                    Helper.variables.setGlobalVar_currentFirstname(listaccounts.get(0).getFirstname(), activity);
+                                    Helper.variables.setGlobalVar_currentLastname(listaccounts.get(0).getLastname(), activity);
+                                    Helper.variables.setGlobalVar_currentUsername(txtusername.getText().toString(),activity);
+                                    Helper.variables.setGlobalVar_currentUserpassword(txtpassword.getText().toString(),activity);
+                                    Helper.variables.setGlobalVar_currentAssignedArea(listaccounts.get(0).getAssingedArea(), activity);
 
-                                            intent.putExtra("userid", listaccounts.get(0).getUserid());
-                                            intent.putExtra("userlevel", listaccounts.get(0).getUserlevel());
-                                            intent.putExtra("username", listaccounts.get(0).getUsername());
-                                            intent.putExtra("firstname", listaccounts.get(0).getFirstname());
-                                            intent.putExtra("lastname", listaccounts.get(0).getLastname());
-                                            intent.putExtra("userdescription", listaccounts.get(0).getAccountlevelDescription());
-                                            intent.putExtra("fromActivity", "login");
-                                            intent.putExtra("lat",fusedLocation.getLastKnowLocation().latitude+"");
-                                            intent.putExtra("long",fusedLocation.getLastKnowLocation().longitude+"");
+                                    intent.putExtra("userid", listaccounts.get(0).getUserid());
+                                    intent.putExtra("userlevel", listaccounts.get(0).getUserlevel());
+                                    intent.putExtra("username", listaccounts.get(0).getUsername());
+                                    intent.putExtra("firstname", listaccounts.get(0).getFirstname());
+                                    intent.putExtra("lastname", listaccounts.get(0).getLastname());
+                                    intent.putExtra("userdescription", listaccounts.get(0).getAccountlevelDescription());
+                                    intent.putExtra("fromActivity", "login");
+                                    intent.putExtra("lat",fusedLocation.getLastKnowLocation().latitude+"");
+                                    intent.putExtra("long",fusedLocation.getLastKnowLocation().longitude+"");
 
 
-                                            startActivity(intent);
-                                        }
+                                    startActivity(intent);
+                                }
 
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     PD.dismiss();
-
+                    Helper.createCustomThemedColorDialogOKOnly(activity, "Error", error.toString(), "OK", R.color.red);
                 }
             }) {
                 @Override
@@ -366,7 +384,7 @@ public class Activity_LoginScreen extends Activity{
     @Override
     protected void onResume() {
         super.onResume();
-       Helper.isLocationAvailable(context, activity);
+        Helper.isLocationAvailable(context, activity);
         fusedLocation.connectToApiClient();
     }
 
@@ -406,4 +424,209 @@ public class Activity_LoginScreen extends Activity{
             }
         });
     }
+
+    public void checkVersionUpdates(){
+        if(!Helper.isNetworkAvailable(activity)) {
+            Helper.toastShort(activity, "Internet Connection is not available. Please try again later.");
+        }
+        else{
+            txtprogressdialog_message.setText("Checking if app is up to date...");
+            PD.show();
+
+            StringRequest postRequest = new StringRequest(Request.Method.POST, Helper.variables.URL_SELECT_CURRENT_VERSION_NUMBER,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(final String response) {
+                            PD.dismiss();
+
+//                            Helper.createCustomThemedColorDialogOKOnly(activity, "RESONSE", response, "OK", R.color.red);
+                            if (!response.substring(1, 2).equalsIgnoreCase("0")) {
+                                String[] splitted = response.split("!-!");
+                                String versionNumber = splitted[0];
+                                versionFile = splitted[1];
+
+                                if (Integer.parseInt(versionNumber) > versionCode) {
+                                    //download updates
+                                    // declare the dialog as a member field of your activity
+
+
+                                    // instantiate it within the onCreate method
+                                    mProgressDialog = new ProgressDialog(context);
+                                    mProgressDialog.setMessage("Getting the latest version...");
+                                    mProgressDialog.setIndeterminate(true);
+                                    mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                                    mProgressDialog.setCancelable(false);
+
+                                    // execute this when the downloader must be fired
+                                    final DownloadTask downloadTask = new DownloadTask(context);
+                                    downloadTask.execute(Helper.variables.sourceAddress_bizNF_downloadable+versionFile+".apk");
+
+                                    mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                        @Override
+                                        public void onCancel(DialogInterface dialog) {
+                                            downloadTask.cancel(true);
+                                        }
+                                    });
+
+
+                                }else{
+                                    Helper.toastShort(activity, "Your application is up to date!");
+                                }
+                            } else {
+                                Helper.createCustomThemedColorDialogOKOnly(activity, "Error", "Update Failed. Please try again later. \n"
+                                        , "OK", R.color.red);
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    PD.dismiss();
+                    Helper.createCustomThemedColorDialogOKOnly(activity, "Error", error.toString(), "OK", R.color.red);
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("deviceid", Helper.getMacAddress(activity)+"");
+                    params.put("username", Helper.variables.getGlobalVar_currentUsername(activity)+"");
+                    params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity)+"");
+                    params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
+                    params.put("userlvl", Helper.variables.getGlobalVar_currentlevel(activity)+"");
+
+                    return params;
+                }
+            };
+
+            // Adding request to request queue
+            MyVolleyAPI api = new MyVolleyAPI();
+            api.addToReqQueue(postRequest, Activity_LoginScreen.this);
+        }
+    }
+
+
+    private class DownloadTask extends AsyncTask<String, Integer, String> {
+
+        private Context context;
+        private PowerManager.WakeLock mWakeLock;
+
+        public DownloadTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected String doInBackground(String... sUrl) {
+            InputStream input = null;
+            OutputStream output = null;
+            HttpURLConnection connection = null;
+            try {
+                URL url = new URL(sUrl[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+                // expect HTTP 200 OK, so we don't mistakenly save error report
+                // instead of the file
+                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                    return "Server returned HTTP " + connection.getResponseCode()
+                            + " " + connection.getResponseMessage();
+                }
+
+                // this will be useful to display download percentage
+                // might be -1: server did not report the length
+                int fileLength = connection.getContentLength();
+
+                // download the file
+                input = connection.getInputStream();
+                filesize = connection.getContentLength();
+                mProgressDialog.setMessage("Getting updates... ("+filesize+")");
+                fulladdress = fileDir+versionFile+".apk";
+                output = new FileOutputStream(fulladdress);
+
+                byte data[] = new byte[4096];
+                long total = 0;
+                int count;
+                while ((count = input.read(data)) != -1) {
+                    // allow canceling with back button
+                    if (isCancelled()) {
+                        input.close();
+                        return null;
+                    }
+                    total += count;
+                    // publishing the progress....
+                    if (fileLength > 0) // only if total length is known
+                        publishProgress((int) (total * 100 / fileLength));
+                    output.write(data, 0, count);
+                }
+            } catch (Exception e) {
+                return e.toString();
+            } finally {
+                try {
+                    if (output != null)
+                        output.close();
+                    if (input != null)
+                        input.close();
+                } catch (IOException ignored) {
+                }
+
+                if (connection != null)
+                    connection.disconnect();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // take CPU lock to prevent CPU from going off if the user
+            // presses the power button during download
+            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                    getClass().getName());
+            mWakeLock.acquire();
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... progress) {
+            super.onProgressUpdate(progress);
+            // if we get here, length is known, now set indeterminate to false
+            mProgressDialog.setIndeterminate(false);
+            mProgressDialog.setMax(100);
+            mProgressDialog.setProgress(progress[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            mWakeLock.release();
+            mProgressDialog.dismiss();
+            if (result != null){
+                Toast.makeText(context,"Download error: "+result, Toast.LENGTH_LONG).show();
+            }
+            else {
+                InstallAPK(fulladdress);
+            }
+        }
+
+    }//end of AsyncTask
+
+    public void InstallAPK(String filename){
+
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(new File(filename)), "application/vnd.android.package-archive");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
+//        File file = new File(filename);
+//        if(file.exists()){
+//            try {
+//                String command;
+//                command = "adb install -r " + filename;
+//                Process proc = Runtime.getRuntime().exec(new String[] { "su", "-c", command });
+//                proc.waitFor();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+    }
+
 }//end of class
