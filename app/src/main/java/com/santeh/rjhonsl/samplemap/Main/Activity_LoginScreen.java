@@ -537,7 +537,6 @@ public class Activity_LoginScreen extends Activity{
                 // download the file
                 input = connection.getInputStream();
                 filesize = connection.getContentLength();
-                mProgressDialog.setMessage("Getting updates... ("+filesize+")");
                 fulladdress = fileDir+versionFile+".apk";
                 output = new FileOutputStream(fulladdress);
 
@@ -589,6 +588,7 @@ public class Activity_LoginScreen extends Activity{
         protected void onProgressUpdate(Integer... progress) {
             super.onProgressUpdate(progress);
             // if we get here, length is known, now set indeterminate to false
+            mProgressDialog.setMessage("Getting updates... ("+filesize+")");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.setMax(100);
             mProgressDialog.setProgress(progress[0]);
