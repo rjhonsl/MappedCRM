@@ -54,7 +54,7 @@ public class Activity_AddMarker_CustomerInfo extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addmarker);
+        setContentView(R.layout.activity_add_farminformation);
         context1 = this;
         context = Activity_AddMarker_CustomerInfo.this;
         activity = this;

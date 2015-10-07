@@ -57,7 +57,7 @@ public class Activity_CustomerInfo_Edit extends Activity{
         PD = new ProgressDialog(this);
         PD.setCancelable(false);
 
-        setContentView(R.layout.activity_addmarker);
+        setContentView(R.layout.activity_add_farminformation);
         intentExtras = getIntent();
         getextras(intentExtras);
         initXmlViews();
