@@ -127,13 +127,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 
-
-
-
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         nav_displayAllMarkers = (TextView) findViewById(R.id.txt_Nav_displayAll);
         nav_fingerlings = (TextView) findViewById(R.id.txt_Nav_fingerlings);
-        nav_Stockings = (TextView) findViewById(R.id.txt_Nav_stockings);
+        nav_Stockings = (TextView) findViewById(R.id.txt_Nav_customeraddress);
         nav_sperms = (TextView) findViewById(R.id.txt_Nav_sperms);
         nav_maptype = (TextView) findViewById(R.id.txt_Nav_changeMapType);
         nav_settings = (TextView) findViewById(R.id.txt_Nav_settings);
@@ -146,10 +143,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 //
 //
-
-
-
-
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
