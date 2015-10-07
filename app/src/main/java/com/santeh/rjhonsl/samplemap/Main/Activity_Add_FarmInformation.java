@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * Created by rjhonsl on 7/28/2015.
  */
-public class Activity_AddMarker_CustomerInfo extends Activity {
+public class Activity_Add_FarmInformation extends Activity {
 
     EditText txtContactName, txtCultureType, txtCultureLevel, txtWaterType, txtCompany, txtAddress, txtFarmname,txtFarmID,txtContactNumber;
     TextView txtLat, txtLong;
@@ -56,7 +56,7 @@ public class Activity_AddMarker_CustomerInfo extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_farminformation);
         context1 = this;
-        context = Activity_AddMarker_CustomerInfo.this;
+        context = Activity_Add_FarmInformation.this;
         activity = this;
         fusedLocation = new FusedLocation(context, activity);
         fusedLocation.buildGoogleApiClient(context);
@@ -128,7 +128,7 @@ public class Activity_AddMarker_CustomerInfo extends Activity {
                 txtCultureLevel.getText().toString().equalsIgnoreCase("") ||
                 txtWaterType.getText().toString().equalsIgnoreCase(""))
         {
-            final Dialog d = Helper.createCustomDialogOKOnly(Activity_AddMarker_CustomerInfo.this, "OOPS",
+            final Dialog d = Helper.createCustomDialogOKOnly(Activity_Add_FarmInformation.this, "OOPS",
                     "There seems to be field(s) that you have left behind... Please check then try again.", "OK");
             TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
             d.show();
@@ -158,7 +158,7 @@ public class Activity_AddMarker_CustomerInfo extends Activity {
 
 
                                 PD.dismiss();
-                                Dialog d = Helper.createCustomDialogOKOnly(Activity_AddMarker_CustomerInfo.this, "SUCCESS",
+                                Dialog d = Helper.createCustomDialogOKOnly(Activity_Add_FarmInformation.this, "SUCCESS",
                                         "You have successfully added " + txtContactName.getText().toString() + " to database", "OK");
                                 TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
                                 d.setCancelable(false);
@@ -212,7 +212,7 @@ public class Activity_AddMarker_CustomerInfo extends Activity {
 
             // Adding request to request queue
             MyVolleyAPI api = new MyVolleyAPI();
-            api.addToReqQueue(postRequest, Activity_AddMarker_CustomerInfo.this);
+            api.addToReqQueue(postRequest, Activity_Add_FarmInformation.this);
         }
 
 
@@ -236,7 +236,7 @@ public class Activity_AddMarker_CustomerInfo extends Activity {
         btnAddPond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Intent intent = new Intent(Activity_AddMarker_CustomerInfo.this, Activity_ManagePonds.class);
+                final Intent intent = new Intent(Activity_Add_FarmInformation.this, Activity_ManagePonds.class);
                 startActivity(intent);
             }
         });
@@ -268,7 +268,7 @@ public class Activity_AddMarker_CustomerInfo extends Activity {
         txtCultureType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog d = new Dialog(Activity_AddMarker_CustomerInfo.this);//
+                final Dialog d = new Dialog(Activity_Add_FarmInformation.this);//
                 d.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 d.setContentView(R.layout.dialog_listculturetype);
                 d.show();
@@ -295,7 +295,7 @@ public class Activity_AddMarker_CustomerInfo extends Activity {
         txtCultureLevel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog d = new Dialog(Activity_AddMarker_CustomerInfo.this);//
+                final Dialog d = new Dialog(Activity_Add_FarmInformation.this);//
                 d.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 d.setContentView(R.layout.dialog_listculturelevel);
                 d.show();
@@ -328,7 +328,7 @@ public class Activity_AddMarker_CustomerInfo extends Activity {
         txtWaterType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog d = new Dialog(Activity_AddMarker_CustomerInfo.this);//
+                final Dialog d = new Dialog(Activity_Add_FarmInformation.this);//
                 d.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 d.setContentView(R.layout.dialog_listwatertype);
                 d.show();
@@ -355,7 +355,7 @@ public class Activity_AddMarker_CustomerInfo extends Activity {
         txtCompany.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog d = new Dialog(Activity_AddMarker_CustomerInfo.this);//
+                final Dialog d = new Dialog(Activity_Add_FarmInformation.this);//
                 d.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 d.setContentView(R.layout.dialog_listcompany);
                 d.show();

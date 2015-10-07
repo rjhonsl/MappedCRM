@@ -368,53 +368,89 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
 //                setUpMap();
-                LatLng latlng = getLastKnownLocation();
+                fusedLocation.connectToApiClient();
 
-                if (checkIfLocationAvailable() || latlng != null) {
-                    try {
-                        //getLastKnownLocation();
-                        final Intent intent = new Intent(MapsActivity.this, Activity_AddMarker_CustomerInfo.class);
-                        intent.putExtra("latitude", latlng.latitude);
-                        intent.putExtra("longtitude", latlng.longitude);
-                        moveCameraAnimate(map, new LatLng(latlng.latitude, latlng.longitude), 15);
+
+                final Handler handler1 = new Handler();
+                handler1.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        final LatLng latlng = fusedLocation.getLastKnowLocation();
+
+                        if (checkIfLocationAvailable() || latlng != null) {
+                            try {
+                                //getLastKnownLocation();
+
+                                moveCameraAnimate(map, new LatLng(latlng.latitude, latlng.longitude), 15);
 //                        Helper.toastShort(MapsActivity.this,latlng.latitude+ " "+ latlng.longitude);
 
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                final Dialog d = Helper.createCustomDialogYesNO(MapsActivity.this, R.layout.dialog_material_yesno,
-                                        "Do you wish to add customer information here at your current location?\n\n" +
-                                                "Latitude  : " + curlat + "\n" +
-                                                "Longtitude: " + curLong, "ADD MARKER", "YES", "NO");
-                                d.show();
-                                TextView opt1 = (TextView) d.findViewById(R.id.btn_dialog_yesno_opt1),
-                                        opt2 = (TextView) d.findViewById(R.id.btn_dialog_yesno_opt2);
-
-                                opt1.setOnClickListener(new View.OnClickListener() {
+                                final Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
                                     @Override
-                                    public void onClick(View v) {
-                                        d.hide();
-                                        startActivity(intent);
-                                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                                    }
-                                });
+                                    public void run() {
 
-                                opt2.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        d.hide();
+                                        String[] options = {"Farm Information", "Customer Information"};
+                                        final Dialog d1 = Helper.createCustomThemedListDialogWithPrompt(activity, options, "Add Marker",
+                                            "Select the type of marker you want to add on this location.\n\nLat. " + latlng.latitude + "     Lng. " + latlng.longitude, R.color.blue);
+                                        ListView lvoptions = (ListView) d1.findViewById(R.id.dialog_list_listview);
+                                        lvoptions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                                if (position == 0){
+
+                                                    d1.hide();
+                                                    final Intent intent = new Intent(MapsActivity.this, Activity_Add_FarmInformation.class);
+                                                    intent.putExtra("latitude", latlng.latitude);
+                                                    intent.putExtra("longtitude", latlng.longitude);
+                                                    startActivity(intent);
+                                                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                                                }
+
+                                                if (position == 1){
+                                                    d1.hide();
+                                                    final Intent intent = new Intent(MapsActivity.this, Activity_Add_CustomerInfomration.class);
+                                                    intent.putExtra("latitude", latlng.latitude);
+                                                    intent.putExtra("longtitude", latlng.longitude);
+                                                    startActivity(intent);
+                                                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                                                }
+                                            }
+                                        });
+
+//                                        final Dialog d = Helper.createCustomDialogYesNO(MapsActivity.this, R.layout.dialog_material_yesno,
+//                                                "Do you wish to add customer information here at your current location?\n\n" +
+//                                                        "Latitude  : " + curlat + "\n" +
+//                                                        "Longtitude: " + curLong, "ADD MARKER", "YES", "NO");
+//                                        d.show();
+//                                        TextView opt1 = (TextView) d.findViewById(R.id.btn_dialog_yesno_opt1),
+//                                                opt2 = (TextView) d.findViewById(R.id.btn_dialog_yesno_opt2);
+//
+//                                        opt1.setOnClickListener(new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View v) {
+//                                                d.hide();
+//                                                startActivity(intent);
+//                                                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+//                                            }
+//                                        });
+//
+//                                        opt2.setOnClickListener(new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View v) {
+//                                                d.hide();
+//                                            }
+//                                        });
                                     }
-                                });
+                                }, 1200);
+
+                            } catch (Exception e) {
+                                dialogLocationNotAvailableOkOnly();
                             }
-                        }, 1200);
-
-                    } catch (Exception e) {
-                        dialogLocationNotAvailableOkOnly();
+                        } else {
+                            dialogLocationNotAvailableOkOnly();
+                        }
                     }
-                } else {
-                    dialogLocationNotAvailableOkOnly();
-                }
+                }, 200);
             }
         });
 

@@ -50,7 +50,7 @@
         </activity>
 
 
-        <activity android:name=".Main.Activity_AddMarker_CustomerInfo"
+        <activity android:name=".Main.Activity_Add_FarmInformation"
             android:label="Add Marker Details">
         </activity>
 
@@ -118,6 +118,9 @@
         </activity>
 
         <activity android:name=".Main.Activity_Pond_WeekDetails">
+        </activity>
+
+        <activity android:name=".Main.Activity_Add_CustomerInfomration">
         </activity>
 
 

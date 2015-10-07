@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:text="Add Customer Information"
+            android:text="Customer Information"
             android:gravity="center"
             android:id="@+id/title"
             android:textSize="19sp"
@@ -54,6 +54,19 @@
                       android:text="NOTE: All data added cannot be erased once saved."
                       android:paddingLeft="7dp"
                       android:paddingRight="7dp"
+                      android:paddingBottom="7dp"
+                      android:paddingTop="7dp"
+                />
+
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="13sp"
+                      android:textStyle="bold"
+                      android:textColor="@color/gray_900"
+                      android:text="BASIC INFORMATION"
+                      android:paddingLeft="7dp"
+                      android:paddingRight="7dp"
                       android:paddingTop="7dp"
                 />
 
@@ -61,19 +74,24 @@
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:orientation="horizontal"
-                          android:padding="7dp">
+                          android:paddingTop="1dp"
+                          android:paddingBottom="7dp"
+                          android:paddingRight="7dp"
+                          android:paddingLeft="7dp"
+                >
 
                 <TextView android:layout_width="140dp"
                           android:layout_height="wrap_content"
                           android:textSize="14sp"
                           android:textColor="@color/gray_600"
-                          android:text="Pond Number"
+                          android:text="Farm ID"
                     />
 
                 <EditText android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:id="@+id/edtpondnumber"
-                          android:inputType="number"
+                          android:paddingTop="1dp"
+                          android:id="@+id/edt_farmid"
+                          android:inputType="textCapCharacters"
                     />
 
             </LinearLayout>
@@ -87,15 +105,13 @@
                           android:layout_height="wrap_content"
                           android:textSize="14sp"
                           android:textColor="@color/gray_600"
-
-                          android:text="Specie"
+                          android:text="First Name"
                     />
 
                 <EditText android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:focusable="false"
-                          android:id="@+id/edtSpecie"
-                          android:drawableRight="@drawable/ic_keyboard_arrow_down_darkgreen_24dp"
+                          android:id="@+id/edt_fname"
+                          android:inputType="textCapWords"
                     />
 
             </LinearLayout>
@@ -109,8 +125,9 @@
                 <TextView android:layout_width="140dp"
                           android:layout_height="wrap_content"
                           android:textSize="14sp"
+                          android:inputType="textCapWords"
                           android:textColor="@color/gray_600"
-                          android:text="ABW(g)"
+                          android:text="Middle Name"
                     />
 
                 <EditText android:layout_width="fill_parent"
@@ -129,18 +146,51 @@
                           android:layout_height="wrap_content"
                           android:textSize="14sp"
                           android:textColor="@color/gray_600"
-
-                          android:text="Survival Rate(%)"
+                          android:text="Last Name"
                     />
 
                 <EditText android:layout_width="fill_parent"
-                          android:id="@+id/edtSurvivalRate"
+                          android:id="@+id/edt_lname"
+                          android:inputType="textCapWords"
+                          android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="13sp"
+                      android:textStyle="bold"
+                      android:textColor="@color/gray_900"
+                      android:text="ADDRESS"
+                      android:paddingLeft="7dp"
+                      android:paddingRight="7dp"
+                      android:paddingTop="10dp"
+                />
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:paddingLeft="7dp"
+                          android:paddingRight="7dp"
+                          android:paddingTop="1dp"
+                          android:paddingBottom="7dp"
+                >
+
+                <TextView android:layout_width="140dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="House Number"
+                    />
+
+                <EditText android:layout_width="fill_parent"
+                          android:id="@+id/edt_housenumber"
                           android:inputType="number"
                           android:layout_height="wrap_content"/>
 
             </LinearLayout>
 
-
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:orientation="horizontal"
@@ -150,33 +200,12 @@
                           android:layout_height="wrap_content"
                           android:textSize="14sp"
                           android:textColor="@color/gray_600"
-                          android:text="Date Stocked"
+                          android:text="Street"
                     />
 
                 <EditText android:layout_width="fill_parent"
-                          android:focusable="false"
-                          android:id="@+id/edtDateStocked"
-                          android:drawableRight="@drawable/ic_event_darkteal_24dp"
-                          android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal"
-                          android:padding="7dp">
-
-                <TextView android:layout_width="140dp"
-                          android:layout_height="wrap_content"
-                          android:textSize="14sp"
-                          android:textColor="@color/gray_600"
-
-                          android:text="Quantity"
-                    />
-
-                <EditText android:layout_width="fill_parent"
-                          android:id="@+id/edtQuantity"
-                          android:inputType="number"
+                          android:id="@+id/edt_street"
+                          android:inputType="textCapWords"
                           android:layout_height="wrap_content"/>
 
             </LinearLayout>
@@ -191,14 +220,13 @@
                           android:layout_height="wrap_content"
                           android:textSize="14sp"
                           android:textColor="@color/gray_600"
-
-                          android:text="Area(m²)"
+                          android:text="Subdivision"
                     />
 
 
                 <EditText android:layout_width="fill_parent"
                           android:id="@+id/edtArea"
-                          android:inputType="number"
+                          android:inputType="textCapWords"
                           android:layout_height="wrap_content"/>
 
             </LinearLayout>
@@ -213,13 +241,11 @@
                           android:layout_height="wrap_content"
                           android:textSize="14sp"
                           android:textColor="@color/gray_600"
-
-                          android:text="Culture System"
+                          android:text="City"
                     />
 
                 <EditText android:layout_width="fill_parent"
-                          android:id="@+id/edtCultureSystem"
-                          android:drawableRight="@drawable/ic_keyboard_arrow_down_darkgreen_24dp"
+                          android:id="@+id/edt_city"
                           android:focusable="false"
                           android:layout_height="wrap_content"/>
 
@@ -235,11 +261,11 @@
                           android:textSize="14sp"
                           android:textColor="@color/gray_600"
 
-                          android:text="Remarks"
+                          android:text="Province"
                     />
 
                 <EditText android:layout_width="fill_parent"
-                          android:id="@+id/edtRemarks"
+                          android:id="@+id/edt_province"
                           android:layout_height="wrap_content"/>
 
             </LinearLayout>
