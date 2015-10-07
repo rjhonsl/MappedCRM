@@ -329,18 +329,6 @@ public class Activity_PondWeeklyConsumption extends Activity {
                         pondweeklyList = new ArrayList<>();
                         PD.dismiss();
 
-
-//                        CustInfoObject weekinfo = new CustInfoObject();
-//                        weekinfo.setId(0);
-//                        weekinfo.setRemarks(remarks);
-//                        weekinfo.setSizeofStock(abw);
-//                        weekinfo.setWeek(Helper.get_Tilapia_WeekNum_byABW(abw));
-//                        weekinfo.setRecommendedConsumption(Helper.computeWeeklyFeedConsumption(Double.parseDouble(abw + ""), quantity,
-//                                Helper.get_TilapiaFeedingRate_by_WeekNum(Helper.get_Tilapia_WeekNum_byABW(abw)),
-//                                (Double.parseDouble(survivalrate) / 100)));
-//                        weekinfo.setCurrentFeedType(Helper.getFeedTypeByNumberOfWeeks(Helper.get_Tilapia_WeekNum_byABW(abw)));
-//                        pondweeklyList.add(weekinfo);
-
                         if (!response.substring(1,2).equalsIgnoreCase("0")) {
                             pondInfoList = PondWeeklyUpdateParser.parseFeed(response);
                             if (pondInfoList!=null) {
@@ -351,13 +339,29 @@ public class Activity_PondWeeklyConsumption extends Activity {
 
                                         CustInfoObject weekinfo1 = new CustInfoObject();
 
+
                                         strRemarks = pondInfoList.get(i).getRemarks();
                                         strabw = pondInfoList.get(i).getSizeofStock();
-                                        strweeknum = Helper.get_Tilapia_WeekNum_byABW(strabw);
-                                        strrecommended = Helper.computeWeeklyFeedConsumption(Double.parseDouble(strabw + ""), quantity,
-                                                Helper.get_TilapiaFeedingRate_by_WeekNum(Helper.get_Tilapia_WeekNum_byABW(strabw)),
-                                                (Double.parseDouble(survivalrate) / 100));
-                                        strFeedtype = Helper.getFeedTypeByNumberOfWeeks(Helper.get_Tilapia_WeekNum_byABW(strabw));
+
+
+                                        if (specie.equalsIgnoreCase("tilapia")){
+                                            strweeknum = Helper.get_Tilapia_WeekNum_byABW(strabw);
+                                        }else if (specie.equalsIgnoreCase("bangus")){
+                                            strweeknum = Helper.get_Bangus_WeekNum_byABW(strabw);
+                                        }else if (specie.equalsIgnoreCase("vannamei")){
+                                            strweeknum = Helper.get_Bangus_WeekNum_byABW(strabw);
+                                        }
+
+
+                                        strrecommended = (Double.parseDouble(Helper.computeWeeklyFeedConsumption(Double.parseDouble(strabw + ""), quantity,
+                                                Helper.get_TilapiaFeedingRate_by_WeekNum(strweeknum),
+                                                (Double.parseDouble(survivalrate) / 100)))/1000)+"";
+                                        if (specie.equalsIgnoreCase("tilapia")){
+                                            strFeedtype = Helper.getTilapiaTypeByNumberOfWeeks(Helper.get_Tilapia_WeekNum_byABW(strabw));
+                                        }else if (specie.equalsIgnoreCase("bangus")) {
+                                            strFeedtype = Helper.getBangusFeedtypeByABW(strabw);
+                                        }
+
 
                                         weekinfo1.setId(pondInfoList.get(i).getId());
                                         weekinfo1.setRemarks(strRemarks);

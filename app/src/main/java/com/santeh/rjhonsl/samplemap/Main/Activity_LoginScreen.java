@@ -44,6 +44,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -449,7 +450,6 @@ public class Activity_LoginScreen extends Activity{
                                     //download updates
                                     // declare the dialog as a member field of your activity
 
-
                                     // instantiate it within the onCreate method
                                     mProgressDialog = new ProgressDialog(context);
                                     mProgressDialog.setMessage("Getting the latest version...");
@@ -588,7 +588,9 @@ public class Activity_LoginScreen extends Activity{
         protected void onProgressUpdate(Integer... progress) {
             super.onProgressUpdate(progress);
             // if we get here, length is known, now set indeterminate to false
-            mProgressDialog.setMessage("Getting updates... ("+filesize+")");
+            DecimalFormat df = new DecimalFormat("#.##");
+
+            mProgressDialog.setMessage("Getting updates... "+(df.format((filesize/1024)/1014))+"mb");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.setMax(100);
             mProgressDialog.setProgress(progress[0]);

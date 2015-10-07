@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ public class AdapterPonds extends ArrayAdapter<CustInfoObject> {
 
 	private class ViewHolder {
 		TextView species, quantity, datestocked, pondid;
+		LinearLayout initialHolder;
 	}
 
 	public View getView(int position, View view, ViewGroup parent) {
@@ -49,6 +51,7 @@ public class AdapterPonds extends ArrayAdapter<CustInfoObject> {
 			holder.quantity = (TextView) view.findViewById(R.id.itemlv_managepond_quantity);
 			holder.datestocked = (TextView) view.findViewById(R.id.itemlv_managepond_datestocked);
 			holder.pondid = (TextView) view.findViewById(R.id.itemlv_managepond_initials);
+			holder.initialHolder = (LinearLayout) view.findViewById(R.id.weeknoHOlder);
 
 			view.setTag(holder);
 		}
@@ -58,7 +61,18 @@ public class AdapterPonds extends ArrayAdapter<CustInfoObject> {
 			holder = (ViewHolder) view.getTag();
 		}
 
-		holder.species.setText(ItemList.get(position).getSpecie()+"");//reversed this//
+		if (ItemList.get(position).getSpecie().equalsIgnoreCase("bangus")) {
+			holder.initialHolder.setBackground(context.getResources().getDrawable(R.drawable.bg_skyblue_oval));
+		}else if (ItemList.get(position).getSpecie().equalsIgnoreCase("tilapia")){
+			holder.initialHolder.setBackground(context.getResources().getDrawable(R.drawable.bg_amber_oval));
+		}else if (ItemList.get(position).getSpecie().equalsIgnoreCase("vannamei")){
+			holder.initialHolder.setBackground(context.getResources().getDrawable(R.drawable.bg_green_oval));
+		}else if (ItemList.get(position).getSpecie().equalsIgnoreCase("prawns")){
+			holder.initialHolder.setBackground(context.getResources().getDrawable(R.drawable.bg_red_oval));
+		}
+
+
+		holder.species.setText(ItemList.get(position).getSpecie()+"");
 		holder.quantity.setText("Quantity: "+ItemList.get(position).getQuantity()+"");
 		holder.datestocked.setText("Date Stocked: "+ItemList.get(position).getDateStocked()+"");
 		holder.pondid.setText(ItemList.get(position).getPondID()+"");

@@ -79,9 +79,9 @@ public class Helper {
     }
 
     public static class variables{
-        public static String sourceAddress_bizNF      = "http://santeh.co.nf/phpsql/";
-        public static String sourceAddress_bizNF_downloadable      = "http://santeh.co.nf/downloadable/";
-        public static String sourceAddress_000webhost = "http://mysanteh.site50.net/santehweb/";
+        public static String sourceAddress_bizNF                    = "http://santeh.co.nf/phpsql/";
+        public static String sourceAddress_bizNF_downloadable       = "http://santeh.co.nf/downloadable/";
+        public static String sourceAddress_000webhost               = "http://mysanteh.site50.net/santehweb/";
 
         public static final String ACTIVITY_LOG_TYPE_FARM_REPORTING= "1";
         public static final String ACTIVITY_LOG_TYPE_TSR_MONITORING= "2";
@@ -122,18 +122,18 @@ public class Helper {
         public static String URL_LOGIN  = sourceAddress_bizNF + "login.php";
 
         public static String[] ARRAY_SPECIES = {
-//                "Bangus",   //0
+                "Bangus",   //0
 //                "Catfish",  //1
 //                "Crab",     //2
 //                "Grouper",  //3
 //                "Pangasius",//5
 //                "Pompano",  //6
-//                "Prawns",   //7
+                "Prawns",   //7
 //                "Rabbit Fish",//8
 //                "Seabass",  //9
 //                "Snapper",  //10
-                "Tilapia"  //12
-//                "Vanamei"   //11
+                "Tilapia",  //12
+                "Vannamei"   //11
 
         };
 
@@ -154,7 +154,7 @@ public class Helper {
         };
 
 
-        public static double[] ARRAY_FEEDING_RATE_PER_WEEK={
+        public static double[] ARRAY_TILAPIA_FEEDING_RATE_PER_WEEK ={
                 0,       //week 1
                 0.1,     //week 2
                 0.09,    //week 3
@@ -175,8 +175,33 @@ public class Helper {
                 0.025,   //week 18
         };
 
+        public static double[] ARRAY_BANGUS_FEEDING_RATE_PER_WEEK ={
+                0.30,   //1
+                0.2332, //2
+                0.1668, //3
+                0.10,   //4
+                0.096,  //5
+                0.092,  //6
+                0.088,  //7
+                0.084,  //8
+                0.08,   //9
+                0.075,  //10
+                0.07,   //11
+                0.065,  //12
+                0.06,   //13
+                0.055,  //14
+                0.05,   //15
+                0.045,  //16
+                0.04,   //17
+                0.036,  //18
+                0.032,  //19
+                0.024,  //21
+                0.028,  //20
+                0.02    //22
+        };
 
-        public static double[] ARRAY_ABW_WEEKLY={
+
+        public static double[] ARRAY_TILAPIA_ABW_WEEKLY ={
                 0,       //week 1
                 7.5,     //week 2
                 10.0,    //week 3
@@ -196,6 +221,52 @@ public class Helper {
                 197.5,   //week 17
                 200.0,   //week 18
         };
+
+        public static double[] ARRAY_BANGUS_ABW_WEEKLY={
+                0,      //week 1
+                3.33,   //week 2
+                6.67,   //week 3
+                10,     //week 4
+                13,     //week 5
+                16,     //week 6
+                19,     //week 7
+                22,     //week 8
+                25,     //week 9
+                56.25,  //week 10
+                87.5,   //week 11
+                118.75, //week 12
+                150,    //week 13
+                182.5,  //week 14
+                215,    //week 15
+                247.5,  //week 16
+                280,    //week 17
+                324,    //week 18
+                368,    //week 19
+                412,    //week 20
+                456,    //week 21
+                500     //week 22
+        };
+
+
+        public static double[] ARRAY_VANNAMEI_EXTENSIVE_ABW_WEEKLY={
+                2.5,    //week 4
+                3.67,   //week 5
+                4.83,   //week 6
+                6,      //week 7
+                8,      //week 8
+                10,     //week 9
+                12,     //week 10
+                14,     //week 11
+                16.5,   //week 12
+                19,     //week 13
+                20.5,   //week 14
+                22,     //week 15
+                23.5,   //week 16
+                25      //week 17
+        };
+
+
+
 
 
 
@@ -327,7 +398,7 @@ public class Helper {
     }
 
     public static double get_ABW_BY_WEEK_NO(int weekNo) {
-        return variables.ARRAY_ABW_WEEKLY[(weekNo-1)];
+        return variables.ARRAY_TILAPIA_ABW_WEEKLY[(weekNo-1)];
     }
 
     public static String computeWeeklyFeedConsumption(double ABW, double NumberofStock, double feedingrate, double survivalrate) {
@@ -348,9 +419,9 @@ public class Helper {
 
     public static double get_TilapiaFeedingRate_by_WeekNum(int weeknum){
         if (weeknum > 18){
-            return Helper.variables.ARRAY_FEEDING_RATE_PER_WEEK[17];
+            return Helper.variables.ARRAY_TILAPIA_FEEDING_RATE_PER_WEEK[17];
         }else{
-            return Helper.variables.ARRAY_FEEDING_RATE_PER_WEEK[weeknum-1];
+            return Helper.variables.ARRAY_TILAPIA_FEEDING_RATE_PER_WEEK[weeknum-1];
         }
 
     }
@@ -390,43 +461,126 @@ public class Helper {
     }
 
 
+    public static int get_Bangus_WeekNum_byABW(int abw){
+
+        if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[21]){
+            return 22;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[20]){
+            return 21;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[19]){
+            return 20;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[18]){
+            return 19;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[17]){
+            return 18;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[16]){
+            return 17;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[15]){
+            return 16;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[14]){
+            return 15;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[13]){
+            return 14;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[12]){
+            return 13;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[11]){
+            return 12;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[10]){
+            return 11;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[9]){
+            return 10;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[8]){
+            return 9;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[7]){
+            return 8;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[6]){
+            return 7;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[5]){
+            return 6;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[4]){
+            return 5;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[3]){
+            return 4;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[2]){
+            return 3;
+        }else if (abw >= variables.ARRAY_BANGUS_ABW_WEEKLY[1]){
+            return 2;
+        }else{
+            return 1;
+        }//
+    }
+
+
+    public static int get_Vannamei_Extenxive_WeekNum_byABW(int abw){
+
+        if (abw >= variables.ARRAY_VANNAMEI_EXTENSIVE_ABW_WEEKLY[13]){
+            return 17;
+        }else if (abw >= variables.ARRAY_VANNAMEI_EXTENSIVE_ABW_WEEKLY[12]){
+            return 16;
+        }else if (abw >= variables.ARRAY_VANNAMEI_EXTENSIVE_ABW_WEEKLY[11]){
+            return 15;
+        }else if (abw >= variables.ARRAY_VANNAMEI_EXTENSIVE_ABW_WEEKLY[10]){
+            return 14;
+        }else if (abw >= variables.ARRAY_VANNAMEI_EXTENSIVE_ABW_WEEKLY[9]){
+            return 13;
+        }else if (abw >= variables.ARRAY_VANNAMEI_EXTENSIVE_ABW_WEEKLY[8]){
+            return 12;
+        }else if (abw >= variables.ARRAY_VANNAMEI_EXTENSIVE_ABW_WEEKLY[7]){
+            return 11;
+        }else if (abw >= variables.ARRAY_VANNAMEI_EXTENSIVE_ABW_WEEKLY[6]){
+            return 10;
+        }else if (abw >= variables.ARRAY_VANNAMEI_EXTENSIVE_ABW_WEEKLY[5]){
+            return 9;
+        }else if (abw >= variables.ARRAY_VANNAMEI_EXTENSIVE_ABW_WEEKLY[4]){
+            return 8;
+        }else if (abw >= variables.ARRAY_VANNAMEI_EXTENSIVE_ABW_WEEKLY[3]){
+            return 7;
+        }else if (abw >= variables.ARRAY_VANNAMEI_EXTENSIVE_ABW_WEEKLY[2]){
+            return 6;
+        }else if (abw >= variables.ARRAY_VANNAMEI_EXTENSIVE_ABW_WEEKLY[1]){
+            return 5;
+        }else{
+            return 4;
+        }
+    }
+
+
 
     public static int get_Tilapia_WeekNum_byABW(int abw){
 
-
-        if (abw >= variables.ARRAY_ABW_WEEKLY[17]){
+        if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[17]){
             return 18;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[16]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[16]){
             return 17;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[15]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[15]){
             return 16;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[14]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[14]){
             return 15;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[13]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[13]){
             return 14;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[12]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[12]){
             return 13;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[11]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[11]){
             return 12;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[10]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[10]){
             return 11;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[9]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[9]){
             return 10;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[8]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[8]){
             return 9;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[7]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[7]){
             return 8;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[6]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[6]){
             return 7;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[5]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[5]){
             return 6;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[4]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[4]){
             return 5;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[3]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[3]){
             return 4;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[2]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[2]){
             return 3;
-        }else if (abw >= variables.ARRAY_ABW_WEEKLY[1]){
+        }else if (abw >= variables.ARRAY_TILAPIA_ABW_WEEKLY[1]){
             return 2;
         }else{
             return 1;
@@ -435,7 +589,7 @@ public class Helper {
 
 
 
-    public static String getFeedTypeByNumberOfWeeks(int week){
+    public static String getTilapiaTypeByNumberOfWeeks(int week){
         String feedtype;
 
         if (week <= 6) {
@@ -445,6 +599,24 @@ public class Helper {
         } else if(week <= 10){
             feedtype = "Starter";
         } else if(week <= 14){
+            feedtype = "Grower";
+        } else {
+            feedtype = "Finisher";
+        }
+
+        return feedtype;
+    }
+
+    public static String getBangusFeedtypeByABW(double abw){
+        String feedtype;
+
+        if (abw <= 10) {
+            feedtype = "Pre-Starter Zero";
+        } else if(abw <= 25){
+            feedtype = "Pre-Starter";
+        } else if(abw <= 150){
+            feedtype = "Starter";
+        } else if(abw <= 280){
             feedtype = "Grower";
         } else {
             feedtype = "Finisher";

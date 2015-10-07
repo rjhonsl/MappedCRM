@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -18,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.maps.model.LatLng;
 import com.santeh.rjhonsl.samplemap.APIs.MyVolleyAPI;
 import com.santeh.rjhonsl.samplemap.Adapter.AdapterPonds;
 import com.santeh.rjhonsl.samplemap.Obj.CustInfoObject;
@@ -95,38 +98,37 @@ public class Activity_ManagePonds extends Activity {
                 fusedLocation.connectToApiClient();
 
 //
-//                final Handler handler = new Handler();
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        LatLng currentloc = fusedLocation.getLastKnowLocation();
-//                        LatLng farmlocat = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
-//
-//                        float[] results = new float[1];
-//                        Location.distanceBetween(farmlocat.latitude, farmlocat.longitude,
-//                                currentloc.latitude, currentloc.longitude, results);
-////                        Helper.toastLong(activity, results[0]+"");
-//
-//                        if (results[0] > 1000) {
-//                            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Out of range", "You must be near the farm to Add a new pond.", "OK", R.color.red);
-//                            d.show();
-//
-//                            Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
-//                            ok.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//                                    d.hide();
-//                                }
-//                            });
-//                        }
-//                        else{
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        LatLng currentloc = fusedLocation.getLastKnowLocation();
+                        LatLng farmlocat = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+
+                        float[] results = new float[1];
+                        Location.distanceBetween(farmlocat.latitude, farmlocat.longitude,
+                                currentloc.latitude, currentloc.longitude, results);
+//                        Helper.toastLong(activity, results[0]+"");
+
+                        if (results[0] > 1000) {
+                            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Out of range", "You must be near the farm to Add a new pond.", "OK", R.color.red);
+                            d.show();
+
+                            Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
+                            ok.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    d.hide();
+                                }
+                            });
+                        } else {
                             Intent intent = new Intent(Activity_ManagePonds.this, Activity_AddPond.class);
                             intent.putExtra("custid", id);
                             intent.putExtra("farmname", farmname);
                             startActivity(intent);
-//                        }
-//                    }
-//                }, 280);
+                        }
+                    }
+                }, 280);
 
 
             }

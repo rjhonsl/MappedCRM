@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.google.android.gms.maps.model.LatLng;
 import com.santeh.rjhonsl.samplemap.APIs.MyVolleyAPI;
 import com.santeh.rjhonsl.samplemap.R;
 import com.santeh.rjhonsl.samplemap.Utils.FusedLocation;
@@ -154,31 +157,31 @@ public class Activity_EditPonds extends FragmentActivity  implements DatePickerD
             @Override
             public void onClick(View v) {
 
-//                fusedLocation.connectToApiClient();
-//                final Handler handler = new Handler();
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        LatLng currentloc = fusedLocation.getLastKnowLocation();
-//                        LatLng farmlocat = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
-//
-//                        float[] results = new float[1];
-//                        Location.distanceBetween(farmlocat.latitude, farmlocat.longitude,
-//                                currentloc.latitude, currentloc.longitude, results);
-////                        Helper.toastLong(activity, results[0]+"");
-//
-//                        if (results[0] > 1000) {
-//                            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Out of range", "You must be near the farm to EDIT a new farm.", "OK", R.color.red);
-//                            d.show();
-//
-//                            Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
-//                            ok.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//                                    d.hide();
-//                                }
-//                            });
-//                        }else{
+                fusedLocation.connectToApiClient();
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        LatLng currentloc = fusedLocation.getLastKnowLocation();
+                        LatLng farmlocat = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+
+                        float[] results = new float[1];
+                        Location.distanceBetween(farmlocat.latitude, farmlocat.longitude,
+                                currentloc.latitude, currentloc.longitude, results);
+//                        Helper.toastLong(activity, results[0]+"");
+
+                        if (results[0] > 1000) {
+                            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Out of range", "You must be near the farm to EDIT a new farm.", "OK", R.color.red);
+                            d.show();
+
+                            Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
+                            ok.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    d.hide();
+                                }
+                            });
+                        }else{
 
                             if (edtPondNumber.getText().toString().equalsIgnoreCase("")
                                     || edtSpecie.getText().toString().equalsIgnoreCase("")
@@ -242,9 +245,9 @@ public class Activity_EditPonds extends FragmentActivity  implements DatePickerD
 
                             }
 
-//                        }
-//                    }
-//                }, 280);
+                        }
+                    }
+                }, 280);
 
 
 

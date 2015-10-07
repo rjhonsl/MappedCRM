@@ -215,7 +215,7 @@ public class Activity_AddPond extends FragmentActivity  implements DatePickerDia
 //                            Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "inserted id", response, "ok", R.color.red);
 
                             if (responseCode.equalsIgnoreCase("0")){
-                                oopsprompt();
+                                oopsprompt(response);
                             }else if (responseCode.equalsIgnoreCase("1")) {
 
                                 Logging.loguserAction(activity, activity.getBaseContext(), Helper.userActions.TSR.Edit_POND, Helper.variables.ACTIVITY_LOG_TYPE_TSR_MONITORING);
@@ -225,6 +225,7 @@ public class Activity_AddPond extends FragmentActivity  implements DatePickerDia
 
                                 final Dialog d = Helper.createCustomThemedColorDialogOKOnly(Activity_AddPond.this, title,
                                         prompt, "OK", R.color.skyblue_500);
+
                                 TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
                                 d.show();
                                 ok.setOnClickListener(new View.OnClickListener() {
@@ -236,15 +237,15 @@ public class Activity_AddPond extends FragmentActivity  implements DatePickerDia
                                 });
                             }
                             else {
-                                oopsprompt();
+                                oopsprompt(response);
                                 //sample upload
                             }
 
                         }
 
-                        private void oopsprompt() {
+                        private void oopsprompt(String rp) {
                             String title="OOPS";
-                            String prompt = "Something went wrong. Please try again later.";
+                            String prompt = "Something went wrong. Please try again later."+rp;
                             PD.dismiss();
 
                             final Dialog d = Helper.createCustomDialogOKOnly(Activity_AddPond.this, title,

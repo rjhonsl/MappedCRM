@@ -36,6 +36,12 @@
     <color name="green_300">#c980d47d</color>
     <color name="green_400">#e480d47d</color>
     <color name="green_500">#4CAF50</color>
+    <color name="darkgreen_900">#135e16</color>
+    <color name="darkgreen_800">#e7135e16</color>
+    <color name="darkgreen_700">#d5135e16</color>
+    <color name="darkgreen_600">#be135e16</color>
+    <color name="darkgreen_500">#ad135e16</color>
+    <color name="darkgreen_400">#98135e16</color>
     <color name="deepteal_500">#ff009688</color>
     <color name="deepteal_400">#c8009688</color>
     <color name="deepteal_300">#a5009688</color>

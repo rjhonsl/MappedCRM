@@ -78,22 +78,12 @@ public class Adapter_Growouts_PondWeekLyConsumption extends ArrayAdapter<CustInf
 		{
 			Log.d(tag, "if not null");
 			holder = (ViewHolder) view.getTag();
-
-//			weekinfo.setRemarks(strRemarks);
-//			weekinfo.setSizeofStock(strabw);
-//			weekinfo.setWeek(Helper.get_Tilapia_WeekNum_byABW(strweeknum));
-//			weekinfo.setRecommendedConsumption(strrecommended);
-//			weekinfo.setCurrentFeedType(strFeedtype);
-
-
-//			holder.chkisVisited.setOnCheckedChangeListener(null);
-
 		}
 
 		holder.txtremarks.setText("Remarks: " + objArrayList.get(positions).getRemarks()+"");
 		holder.txtabw.setText("ABW: " + objArrayList.get(positions).getSizeofStock()+"");
 		holder.txtweekno.setText( objArrayList.get(positions).getWeek()+"");
-		holder.txtrecommended.setText("Recommended: " + objArrayList.get(positions).getRecommendedConsumption()+"g");
+		holder.txtrecommended.setText("Recommended: " + objArrayList.get(positions).getRecommendedConsumption()+"kg");
 		holder.txtfeedtype.setText("Feed Type: " + objArrayList.get(positions).getCurrentFeedType()+"");
 
 //		visiblePosArray[position] = objArrayList.get(position).getIsVisited();
