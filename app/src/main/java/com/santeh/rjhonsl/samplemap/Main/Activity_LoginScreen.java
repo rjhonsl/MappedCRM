@@ -111,7 +111,7 @@ public class Activity_LoginScreen extends Activity{
         Typeface font_roboto = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
 
 
-        Helper.hidekeyboardOnLoad(activity);
+        Helper.hideKeyboardOnLoad(activity);
 
         btnLogin.requestFocus();
         txtappname1.setTypeface(font_roboto);

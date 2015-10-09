@@ -947,7 +947,7 @@ public class Helper {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public static void hidekeyboardOnLoad(Activity activity){
+    public static void hideKeyboardOnLoad(Activity activity){
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 

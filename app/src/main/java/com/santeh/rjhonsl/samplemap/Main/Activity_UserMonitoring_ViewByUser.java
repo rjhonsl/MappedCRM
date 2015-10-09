@@ -58,7 +58,7 @@ public class Activity_UserMonitoring_ViewByUser extends Activity {
 
         PD = new ProgressDialog(this);
         PD. setCancelable(false);
-        Helper.hidekeyboardOnLoad(activity);
+        Helper.hideKeyboardOnLoad(activity);
 
         lvUsers = (ListView) findViewById(R.id.listview_userMonitoring);
         btnsearch = (ImageButton) findViewById(R.id.btn_viewUserActivity_search);

@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:text="Customer Information"
+            android:text="Customer Address"
             android:gravity="center"
             android:id="@+id/title"
             android:textSize="19sp"
@@ -53,6 +53,7 @@
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textSize="13sp"
+                      android:id="@+id/txt_note"
                       android:textColor="@color/red_600"
                       android:text="NOTE: All data added cannot be erased once saved."
                       android:paddingLeft="7dp"
@@ -62,16 +63,6 @@
                 />
 
 
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:textSize="13sp"
-                      android:textStyle="bold"
-                      android:textColor="@color/gray_900"
-                      android:text="ADDRESS"
-                      android:paddingLeft="7dp"
-                      android:paddingRight="7dp"
-                      android:paddingTop="10dp"
-                />
 
 
             <LinearLayout android:layout_width="fill_parent"
@@ -83,12 +74,15 @@
                           android:paddingBottom="7dp"
                 >
 
-                <TextView android:layout_width="140dp"
+                <TextView android:layout_width="135dp"
                           android:layout_height="wrap_content"
                           android:textSize="14sp"
                           android:textColor="@color/gray_600"
                           android:text="House Number"
                     />
+                <TextView android:layout_width="5dp" android:layout_height="wrap_content"
+                          android:text="*"
+                          android:textColor="@color/red"/>
 
                 <EditText android:layout_width="fill_parent"
                           android:id="@+id/edt_housenumber"
@@ -118,20 +112,43 @@
 
 
             <LinearLayout android:layout_width="fill_parent"
+                                          android:layout_height="wrap_content"
+                                          android:orientation="horizontal"
+                                          android:padding="7dp">
+
+            <TextView android:layout_width="140dp"
+                      android:layout_height="wrap_content"
+                      android:textSize="14sp"
+                      android:textColor="@color/gray_600"
+                      android:text="Subdivision"
+                />
+
+
+            <EditText android:layout_width="fill_parent"
+                      android:id="@+id/edt_subdivision"
+                      android:inputType="textCapWords"
+                      android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+            <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:orientation="horizontal"
                           android:padding="7dp">
 
-                <TextView android:layout_width="140dp"
+                <TextView android:layout_width="135dp"
                           android:layout_height="wrap_content"
                           android:textSize="14sp"
                           android:textColor="@color/gray_600"
-                          android:text="Subdivision"
+                          android:text="Barangay"
                     />
 
+                <TextView android:layout_width="5dp" android:layout_height="wrap_content"
+                          android:text="*"
+                          android:textColor="@color/red"/>
 
                 <EditText android:layout_width="fill_parent"
-                          android:id="@+id/edtArea"
+                          android:id="@+id/edt_barangay"
                           android:inputType="textCapWords"
                           android:layout_height="wrap_content"/>
 
@@ -143,16 +160,19 @@
                           android:orientation="horizontal"
                           android:padding="7dp">
 
-                <TextView android:layout_width="140dp"
+                <TextView android:layout_width="135dp"
                           android:layout_height="wrap_content"
                           android:textSize="14sp"
                           android:textColor="@color/gray_600"
                           android:text="City"
                     />
+                <TextView android:layout_width="5dp" android:layout_height="wrap_content"
+                          android:text="*"
+                          android:textColor="@color/red"/>
 
                 <EditText android:layout_width="fill_parent"
                           android:id="@+id/edt_city"
-                          android:focusable="false"
+                          android:inputType="textCapWords"
                           android:layout_height="wrap_content"/>
 
             </LinearLayout>
@@ -162,13 +182,15 @@
                           android:orientation="horizontal"
                           android:padding="7dp">
 
-                <TextView android:layout_width="140dp"
+                <TextView android:layout_width="135dp"
                           android:layout_height="wrap_content"
                           android:textSize="14sp"
                           android:textColor="@color/gray_600"
-
                           android:text="Province"
                     />
+                <TextView android:layout_width="5dp" android:layout_height="wrap_content"
+                          android:text="*"
+                          android:textColor="@color/red"/>
 
                 <EditText android:layout_width="fill_parent"
                           android:id="@+id/edt_province"
@@ -190,7 +212,7 @@
 
         <ImageButton android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:id="@+id/btn_next"
+                android:id="@+id/btn_back"
                 android:layout_weight="1"
                 android:textColor="@color/deepteal_500"
                      android:padding="5dp"
@@ -200,7 +222,7 @@
 
         <ImageButton android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
-                     android:id="@+id/btn_back"
+                     android:id="@+id/btn_next"
                      android:padding="5dp"
                      android:layout_weight="1"
                      android:textColor="@color/deepteal_500"

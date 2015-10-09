@@ -120,11 +120,18 @@
         <activity android:name=".Main.Activity_Pond_WeekDetails">
         </activity>
 
-        <activity android:name=".Main.Activity_Add_CustomerInfomration_Basic">
+        <activity android:name=".Main.Activity_Add_CustomerInformation_Basic">
         </activity>
 
-        <activity android:name=".Main.Activity_Add_CustomerInfomration_Address">
+        <activity android:name=".Main.Activity_Add_CustomerInformation_Address">
         </activity>
+
+        <activity android:name=".Main.Activity_Add_CustomerInformation_ContactInfo">
+        </activity>
+
+        <activity android:name=".Main.Activity_Add_CustomerInformation_SpouseInfo">
+        </activity>
+
 
 
 

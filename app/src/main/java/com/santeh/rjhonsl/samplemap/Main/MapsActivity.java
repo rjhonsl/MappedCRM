@@ -403,7 +403,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                                                     if (position == 1){
                                                         d1.hide();
-                                                        final Intent intent = new Intent(MapsActivity.this, Activity_Add_CustomerInfomration_Basic.class);
+                                                        final Intent intent = new Intent(MapsActivity.this, Activity_Add_CustomerInformation_Basic.class);
                                                         intent.putExtra("latitude", latlng.latitude);
                                                         intent.putExtra("longtitude", latlng.longitude);
                                                         startActivity(intent);
