@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_titlebar"
+        android:background="#009688"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        >
+
+        <ImageButton
+            android:layout_weight="1"
+            android:background="@drawable/bg_material_transparent"
+            android:src="@drawable/ic_filler24dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="Preview"
+            android:gravity="center"
+            android:id="@+id/title"
+            android:textSize="19sp"
+            android:layout_weight="12"
+            android:textColor="@color/background_material_light"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:layout_weight="1"
+            android:background="@drawable/bg_material_transparent"
+            android:src="@drawable/ic_filler24dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <ScrollView android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_titlebar"
+                android:layout_above="@+id/ll_bottombutton">
+
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:orientation="vertical"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp">
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="13sp"
+                      android:id="@+id/txt_note"
+                      android:textColor="@color/red_600"
+                      android:text="NOTE:  All data can't be erased once it was saved."
+                      android:paddingLeft="7dp"
+                      android:paddingRight="7dp"
+                      android:paddingBottom="7dp"
+                      android:paddingTop="7dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Basic Information"
+                android:textColor="@color/gray_1000"
+                android:paddingRight="7dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="3dp"/>
+
+            <LinearLayout android:layout_width="fill_parent"
+                                         android:layout_height="wrap_content"
+                                         android:orientation="horizontal"
+                                         android:paddingLeft="7dp"
+                                         android:paddingRight="7dp"
+                                        >
+
+            <TextView android:layout_width="135dp"
+                      android:layout_height="wrap_content"
+                      android:textSize="14sp"
+                      android:textColor="@color/gray_600"
+                      android:text="Farm ID: " />
+
+            <TextView android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:textSize="14sp"
+                      android:id="@+id/txt_farmid"
+                      android:textColor="@color/darkgreen_800"
+                      android:text="FFF-0124" />
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="fill_parent"
+                                         android:layout_height="wrap_content"
+                                         android:orientation="horizontal"
+                                         android:paddingLeft="7dp"
+                                         android:paddingRight="7dp">
+
+                <TextView android:layout_width="135dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="First Name " />
+
+                <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:id="@+id/txt_fname"
+                          android:textColor="@color/gray_800"
+                          android:text="Juan" />
+
+            </LinearLayout>
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:paddingLeft="7dp"
+                          android:paddingRight="7dp"
+                >
+
+                <TextView android:layout_width="135dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="Middle Name" />
+
+                <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:id="@+id/txt_mname"
+                          android:textColor="@color/gray_800"
+                          android:text="Santos" />
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:paddingLeft="7dp"
+                          android:paddingRight="7dp"
+                >
+
+                <TextView android:layout_width="135dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="Last Name" />
+
+                <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:id="@+id/txt_lname"
+                          android:textColor="@color/gray_800"
+                          android:text="Torres" />
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="fill_parent"
+                                         android:layout_height="wrap_content"
+                                         android:orientation="horizontal"
+                                         android:paddingLeft="7dp"
+                                         android:paddingRight="7dp"
+                >
+
+                <TextView android:layout_width="135dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="Birthday" />
+
+                <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:id="@+id/txt_birthday"
+                          android:textColor="@color/gray_800"
+                          android:text="10/2/1966" />
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:paddingLeft="7dp"
+                          android:paddingRight="7dp"
+                >
+
+                <TextView android:layout_width="135dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="Birth Place" />
+
+                <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:id="@+id/txt_birthPlace"
+                          android:textColor="@color/gray_800"
+                          android:text="Maloos City" />
+
+            </LinearLayout>
+
+
+
+            <TextView
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:textColor="@color/gray_1000"
+                    android:paddingRight="7dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="3dp"/>
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:paddingLeft="7dp"
+                          android:paddingRight="7dp"
+                >
+
+                <TextView android:layout_width="135dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="House No." />
+
+                <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:id="@+id/txt_houseNumber"
+                          android:textColor="@color/gray_800"
+                          android:text="123" />
+
+            </LinearLayout>
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:paddingLeft="7dp"
+                          android:paddingRight="7dp"
+                >
+
+                <TextView android:layout_width="135dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="Street" />
+
+                <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:id="@+id/txt_street"
+                          android:textColor="@color/gray_800"
+                          android:text="Sampaguita St." />
+
+            </LinearLayout>
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:paddingLeft="7dp"
+                          android:paddingRight="7dp"
+                >
+
+                <TextView android:layout_width="135dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="Subdivision" />
+
+                <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:id="@+id/txt_subdivision"
+                          android:textColor="@color/gray_800"
+                          android:text="Ayala Heights" />
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:paddingLeft="7dp"
+                          android:paddingRight="7dp"
+                >
+
+                <TextView android:layout_width="135dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="Barangay" />
+
+                <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:id="@+id/txt_barangay"
+                          android:textColor="@color/gray_800"
+                          android:text="Poblacion" />
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:paddingLeft="7dp"
+                          android:paddingRight="7dp"
+                >
+
+                <TextView android:layout_width="135dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="City" />
+
+                <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:id="@+id/txt_city"
+                          android:textColor="@color/gray_800"
+                          android:text="Malolos" />
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:paddingLeft="7dp"
+                          android:paddingRight="7dp"
+                >
+
+                <TextView android:layout_width="135dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="Province" />
+
+                <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:id="@+id/txt_province"
+                          android:textColor="@color/gray_800"
+                          android:text="Bulacan" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Contact Info"
+                android:textColor="@color/gray_1000"
+                android:paddingRight="7dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="3dp"/>
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:paddingLeft="7dp"
+                          android:paddingRight="7dp"
+                >
+
+                <TextView android:layout_width="135dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="Telephone" />
+
+                <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:id="@+id/txt_telephone"
+                          android:textColor="@color/gray_800"
+                          android:text="711-85555" />
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:paddingLeft="7dp"
+                          android:paddingRight="7dp"
+                >
+
+                <TextView android:layout_width="135dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="Cellphone" />
+
+                <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:id="@+id/txt_cellphone"
+                          android:textColor="@color/gray_800"
+                          android:text="0915-123-4567" />
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:paddingLeft="7dp"
+                          android:paddingRight="7dp"
+                >
+
+                <TextView android:layout_width="135dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="House Status" />
+
+                <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:id="@+id/txt_houseStatus"
+                          android:textColor="@color/gray_800"
+                          android:text="Owned" />
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Spouse"
+                android:textColor="@color/gray_1000"
+                android:paddingRight="7dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="3dp"/>
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:paddingLeft="7dp"
+                          android:paddingRight="7dp"
+                >
+
+                <TextView android:layout_width="135dp"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:textColor="@color/gray_600"
+                          android:text="Civil Status" />
+
+                <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="14sp"
+                          android:id="@+id/txt_civilStatus"
+                          android:textColor="@color/gray_800"
+                          android:text="Married" />
+
+            </LinearLayout>
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical"
+                android:id="@+id/ll_ifNotSingle">
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:paddingLeft="7dp"
+                              android:paddingRight="7dp"
+                    >
+
+                    <TextView android:layout_width="135dp"
+                              android:layout_height="wrap_content"
+                              android:textSize="14sp"
+                              android:textColor="@color/gray_600"
+                              android:text="First Name" />
+
+                    <TextView android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:textSize="14sp"
+                              android:id="@+id/txt_s_fname"
+                              android:textColor="@color/gray_800"
+                              android:text="Constancia" />
+
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:paddingLeft="7dp"
+                              android:paddingRight="7dp"
+                    >
+
+                    <TextView android:layout_width="135dp"
+                              android:layout_height="wrap_content"
+                              android:textSize="14sp"
+                              android:textColor="@color/gray_600"
+                              android:text="Middle Name" />
+
+                    <TextView android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:textSize="14sp"
+                              android:id="@+id/txt_s_mname"
+                              android:textColor="@color/gray_800"
+                              android:text="Cruz" />
+
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:paddingLeft="7dp"
+                              android:paddingRight="7dp"
+                    >
+
+                    <TextView android:layout_width="135dp"
+                              android:layout_height="wrap_content"
+                              android:textSize="14sp"
+                              android:textColor="@color/gray_600"
+                              android:text="Last Name" />
+
+                    <TextView android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:textSize="14sp"
+                              android:id="@+id/txt_s_lname"
+                              android:textColor="@color/gray_800"
+                              android:text="Torres" />
+
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:paddingLeft="7dp"
+                              android:paddingRight="7dp"
+                    >
+
+                    <TextView android:layout_width="135dp"
+                              android:layout_height="wrap_content"
+                              android:textSize="14sp"
+                              android:textColor="@color/gray_600"
+                              android:text="Last Name" />
+
+                    <TextView android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:textSize="14sp"
+                              android:id="@+id/txt_s_birthday"
+                              android:textColor="@color/gray_800"
+                              android:text="10/1/1978" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:id="@+id/ll_bottombutton"
+                  android:layout_alignParentBottom="true"
+                  android:gravity="center"
+        >
+
+        <ImageButton android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/btn_back"
+                android:layout_weight="1"
+                android:textColor="@color/deepteal_500"
+                     android:padding="5dp"
+                android:background="@drawable/bg_material_transparent"
+                android:src="@drawable/ic_keyboard_arrow_left_darkteal_24dp"
+            />
+
+        <ImageButton android:layout_width="wrap_content"
+                     android:layout_height="fill_parent"
+                     android:id="@+id/btn_next"
+                     android:layout_weight="1"
+                     android:padding="5dp"
+                     android:textColor="@color/deepteal_500"
+                     android:background="@drawable/bg_material_transparent"
+                     android:src="@drawable/ic_check_black_24dp"
+            />
+    </LinearLayout>
+</RelativeLayout>

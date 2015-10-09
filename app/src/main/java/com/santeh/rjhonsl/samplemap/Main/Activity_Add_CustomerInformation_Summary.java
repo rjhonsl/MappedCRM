@@ -29,7 +29,7 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity i
     private double lat = 0, lng = 0;
     private String farmid, fname, lname, mname, birthday, birthplace;
     private ImageButton btnBack, btnNext;
-    private String housenumber, street, subdivision, city, barangay, province, housestat, telephone, cellphone;
+    private String housenumber, street, subdivision, city, barangay, province, housestat, telephone, cellphone, s_birthday, s_fname, s_lname, s_mname, civilstatus;
 
     EditText edtfname, edtmname, edtlname, edtBirthday, edtCivilStatus;
     LinearLayout ll;
@@ -37,6 +37,10 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity i
     public static final String DATEPICKER_TAG = "datepicker";
 
     DatePickerDialog datePickerDialog;
+
+    TextView txtFarmID, txtFname, txtMname, txtLname, txtBirthday, txtBirthPlace, txtHouseNumber, txtStreet, txtSubdivision, txtBarangay,
+        txtCity, txtProvince, txttelephone, txtCellphone, txtHouseStatus, txtCivilStatus, txt_S_fname, txt_S_mname, txt_S_lname, txt_S_Birthday;
+
     int y, m, d;
 
 
@@ -65,6 +69,7 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity i
 //        edt = (EditText) findViewById(R.id.edt_cellphone);
 //        edtHouseStatus = (EditText) findViewById(R.id.edt_housestatus);
 
+
         if (getIntent().hasExtra("latitude")){lat= getIntent().getDoubleExtra("latitude", 0);}
         if (getIntent().hasExtra("longtitude")){lng= getIntent().getDoubleExtra("longtitude", 0);}
         if (getIntent().hasExtra("farmid")){farmid = getIntent().getStringExtra("farmid");}
@@ -85,6 +90,61 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity i
         if (getIntent().hasExtra("cel")){cellphone = getIntent().getStringExtra("cel");}
         if (getIntent().hasExtra("housestat")){housestat = getIntent().getStringExtra("housestat");}
 
+        if (getIntent().hasExtra("civilstatus")){civilstatus = getIntent().getStringExtra("civilstatus");}
+        if (getIntent().hasExtra("s_fname")){s_fname = getIntent().getStringExtra("s_fname");}
+        if (getIntent().hasExtra("s_mname")){s_mname = getIntent().getStringExtra("s_mname");}
+        if (getIntent().hasExtra("s_lname")){s_lname = getIntent().getStringExtra("s_lname");}
+        if (getIntent().hasExtra("s_birthday")){s_birthday = getIntent().getStringExtra("s_birthday");}
+
+
+        txtFarmID = (TextView) findViewById(R.id.txt_farmid);
+        txtFname = (TextView) findViewById(R.id.txt_fname);
+        txtMname = (TextView) findViewById(R.id.txt_mname);
+        txtLname = (TextView) findViewById(R.id.txt_lname);
+        txtBirthday = (TextView) findViewById(R.id.txt_birthday);
+        txtBirthPlace = (TextView) findViewById(R.id.txt_birthPlace);
+        txtHouseNumber = (TextView) findViewById(R.id.txt_houseNumber);
+        txtStreet = (TextView) findViewById(R.id.txt_street);
+        txtSubdivision = (TextView) findViewById(R.id.txt_subdivision);
+        txtBarangay = (TextView) findViewById(R.id.txt_barangay);
+        txtCity = (TextView) findViewById(R.id.txt_city);
+        txtProvince = (TextView) findViewById(R.id.txt_province);
+        txttelephone = (TextView) findViewById(R.id.txt_telephone);
+        txtCellphone = (TextView) findViewById(R.id.txt_cellphone);
+        txtHouseStatus = (TextView) findViewById(R.id.txt_houseStatus);
+        txtCivilStatus = (TextView) findViewById(R.id.txt_civilStatus);
+        txt_S_fname = (TextView) findViewById(R.id.txt_s_fname);
+        txt_S_mname = (TextView) findViewById(R.id.txt_s_mname);
+        txt_S_lname = (TextView) findViewById(R.id.txt_s_lname);
+        txt_S_Birthday = (TextView) findViewById(R.id.txt_s_birthday);
+
+
+        txtFarmID.setText(farmid);
+        txtFname.setText(fname);
+        txtMname.setText(mname);
+        txtLname.setText(lname);
+        txtBirthday.setText(birthday);
+        txtBirthPlace.setText(birthplace);
+        txtHouseNumber.setText(housenumber);
+        txtStreet.setText(street);
+        txtSubdivision.setText(subdivision);
+        txtBarangay.setText(barangay);
+        txtCity.setText(city);
+        txtProvince.setText(province);
+        txttelephone.setText(telephone);
+        txtCellphone.setText(cellphone);
+        txtHouseStatus.setText(housestat);
+        txtCivilStatus.setText(civilstatus);
+        txt_S_fname.setText(s_fname);
+        txt_S_mname.setText(s_mname);
+        txt_S_lname.setText(s_lname);
+        txt_S_Birthday.setText(s_birthday);
+
+        if (civilstatus.equalsIgnoreCase("Married")){
+            ll.setVisibility(View.VISIBLE);
+        }else{
+            ll.setVisibility(View.GONE);
+        }
 
         edtBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,10 +176,6 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity i
             }
         });
 
-        TextView txtnote = (TextView) findViewById(R.id.txt_note);
-        txtnote.setText(lat + " "+lng +" " + farmid + " " + fname+ " " + lname + " " + mname+ " " + birthday+ " " + birthplace +
-                " " + housenumber + " " + street + " " + subdivision + " " + barangay + " " + city + " " + province + " " +
-                cellphone + " " + telephone + " " + housestat);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,11 +185,9 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity i
                     if (!edtCivilStatus.getText().toString().equalsIgnoreCase("") && !edtBirthday.getText().toString().equalsIgnoreCase("")
                             && !edtlname.getText().toString().equalsIgnoreCase("") && !edtmname.getText().toString().equalsIgnoreCase("")
                             && !edtmname.getText().toString().equalsIgnoreCase("")) {
-                        gotoSummary();
                     }
                 } else {
                     if (!edtCivilStatus.getText().toString().equalsIgnoreCase("")) {
-                        gotoSummary();
                     }
                 }
             }
@@ -145,39 +199,6 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity i
         });
     }
 
-    public void gotoSummary(){
-//        final Intent intent = new Intent(Activity_Add_CustomerInformation_Summary.this, Ac.class);
-//        intent.putExtra("latitude", lat);
-//        intent.putExtra("longtitude", lng);
-//
-//        intent.putExtra("farmid",   farmid+"");
-//        intent.putExtra("fname",    fname+"");
-//        intent.putExtra("lname",    lname+"");
-//        intent.putExtra("mname",    fname+"");
-//        intent.putExtra("birthday", birthday+"");
-//        intent.putExtra("birthplace", birthplace+"");
-//
-//        intent.putExtra("housenumber", housenumber+"");
-//        intent.putExtra("street", street+"");
-//        intent.putExtra("subdivision", subdivision+"");
-//        intent.putExtra("barangay", barangay+"");
-//        intent.putExtra("city", city+"");
-//        intent.putExtra("province", province+"");
-//
-//        intent.putExtra("tel", telephone+"");
-//        intent.putExtra("cel", cellphone+"");
-//        intent.putExtra("housestat", housestat+ "");
-//
-//        intent.putExtra("civilstatus", edtCivilStatus.getText().toString()+ "");
-//        intent.putExtra("s_fname", edtfname.getText().toString()+ "");
-//        intent.putExtra("s_mname", edtmname.getText().toString()+ "");
-//        intent.putExtra("s_lname", edtlname.getText().toString()+ "");
-//        intent.putExtra("s_bithday", edtBirthday.getText()+ "");
-//
-//
-//        startActivity(intent);
-//        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-    }
 
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {

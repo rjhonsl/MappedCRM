@@ -3,6 +3,7 @@ package com.santeh.rjhonsl.samplemap.Main;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -125,6 +126,12 @@ public class Activity_Add_CustomerInformation_SpouseInfo extends FragmentActivit
             @Override
             public void onClick(View v) {
                 finish();
+
+            }
+        });
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 if (edtCivilStatus.getText().toString().equalsIgnoreCase("married")) {
                     if (!edtCivilStatus.getText().toString().equalsIgnoreCase("") && !edtBirthday.getText().toString().equalsIgnoreCase("")
                             && !edtlname.getText().toString().equalsIgnoreCase("") && !edtmname.getText().toString().equalsIgnoreCase("")
@@ -138,45 +145,40 @@ public class Activity_Add_CustomerInformation_SpouseInfo extends FragmentActivit
                 }
             }
         });
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
     }
 
     public void gotoSummary(){
-//        final Intent intent = new Intent(Activity_Add_CustomerInformation_SpouseInfo.this, Ac.class);
-//        intent.putExtra("latitude", lat);
-//        intent.putExtra("longtitude", lng);
-//
-//        intent.putExtra("farmid",   farmid+"");
-//        intent.putExtra("fname",    fname+"");
-//        intent.putExtra("lname",    lname+"");
-//        intent.putExtra("mname",    fname+"");
-//        intent.putExtra("birthday", birthday+"");
-//        intent.putExtra("birthplace", birthplace+"");
-//
-//        intent.putExtra("housenumber", housenumber+"");
-//        intent.putExtra("street", street+"");
-//        intent.putExtra("subdivision", subdivision+"");
-//        intent.putExtra("barangay", barangay+"");
-//        intent.putExtra("city", city+"");
-//        intent.putExtra("province", province+"");
-//
-//        intent.putExtra("tel", telephone+"");
-//        intent.putExtra("cel", cellphone+"");
-//        intent.putExtra("housestat", housestat+ "");
-//
-//        intent.putExtra("civilstatus", edtCivilStatus.getText().toString()+ "");
-//        intent.putExtra("s_fname", edtfname.getText().toString()+ "");
-//        intent.putExtra("s_mname", edtmname.getText().toString()+ "");
-//        intent.putExtra("s_lname", edtlname.getText().toString()+ "");
-//        intent.putExtra("s_bithday", edtBirthday.getText()+ "");
-//
-//
-//        startActivity(intent);
-//        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        final Intent intent = new Intent(Activity_Add_CustomerInformation_SpouseInfo.this, Activity_Add_CustomerInformation_Summary.class);
+        intent.putExtra("latitude", lat);
+        intent.putExtra("longtitude", lng);
+
+        intent.putExtra("farmid",   farmid+"");
+        intent.putExtra("fname",    fname+"");
+        intent.putExtra("lname",    lname+"");
+        intent.putExtra("mname",    fname+"");
+        intent.putExtra("birthday", birthday+"");
+        intent.putExtra("birthplace", birthplace+"");
+
+        intent.putExtra("housenumber", housenumber+"");
+        intent.putExtra("street", street+"");
+        intent.putExtra("subdivision", subdivision+"");
+        intent.putExtra("barangay", barangay+"");
+        intent.putExtra("city", city+"");
+        intent.putExtra("province", province+"");
+
+        intent.putExtra("tel", telephone+"");
+        intent.putExtra("cel", cellphone+"");
+        intent.putExtra("housestat", housestat+ "");
+
+        intent.putExtra("civilstatus", edtCivilStatus.getText().toString()+ "");
+        intent.putExtra("s_fname", edtfname.getText().toString()+ "");
+        intent.putExtra("s_mname", edtmname.getText().toString()+ "");
+        intent.putExtra("s_lname", edtlname.getText().toString()+ "");
+        intent.putExtra("s_birthday", edtBirthday.getText()+ "");
+
+
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
     @Override
