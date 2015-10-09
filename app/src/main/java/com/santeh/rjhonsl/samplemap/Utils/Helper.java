@@ -820,14 +820,10 @@ public class Helper {
         d.requestWindowFeature(Window.FEATURE_NO_TITLE); //notitle
         d.setContentView(R.layout.dialog_material_themed_list_with_prompt);//Set the xml view of the dialog
 
-
-
         ListView listview = (ListView) d.findViewById(R.id.dialog_list_listview);
         ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(activity, R.layout.select_dialog_item_material, options); //selected item will look like a spinner set from XML
         listViewAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         listview.setAdapter(listViewAdapter);
-
-
 
         TextView txtTitle = (TextView) d.findViewById(R.id.dialog_okonly_title);
         TextView txtmessage = (TextView) d.findViewById(R.id.txt_message);

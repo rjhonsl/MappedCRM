@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
@@ -16,7 +16,7 @@
         <ImageButton
             android:layout_weight="1"
             android:background="@drawable/bg_material_transparent"
-            android:src="@drawable/ic_keyboard_arrow_left_white_24dp"
+            android:src="@drawable/ic_filler24dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
@@ -40,7 +40,10 @@
     </LinearLayout>
 
     <ScrollView android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_titlebar"
+                android:layout_above="@+id/ll_bottombutton">
+
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="fill_parent"
                       android:orientation="vertical"
@@ -58,103 +61,6 @@
                       android:paddingTop="7dp"
                 />
 
-
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:textSize="13sp"
-                      android:textStyle="bold"
-                      android:textColor="@color/gray_900"
-                      android:text="BASIC INFORMATION"
-                      android:paddingLeft="7dp"
-                      android:paddingRight="7dp"
-                      android:paddingTop="7dp"
-                />
-
-
-            <LinearLayout android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal"
-                          android:paddingTop="1dp"
-                          android:paddingBottom="7dp"
-                          android:paddingRight="7dp"
-                          android:paddingLeft="7dp"
-                >
-
-                <TextView android:layout_width="140dp"
-                          android:layout_height="wrap_content"
-                          android:textSize="14sp"
-                          android:textColor="@color/gray_600"
-                          android:text="Farm ID"
-                    />
-
-                <EditText android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:paddingTop="1dp"
-                          android:id="@+id/edt_farmid"
-                          android:inputType="textCapCharacters"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal"
-                          android:padding="7dp">
-
-                <TextView android:layout_width="140dp"
-                          android:layout_height="wrap_content"
-                          android:textSize="14sp"
-                          android:textColor="@color/gray_600"
-                          android:text="First Name"
-                    />
-
-                <EditText android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:id="@+id/edt_fname"
-                          android:inputType="textCapWords"
-                    />
-
-            </LinearLayout>
-
-
-            <LinearLayout android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal"
-                          android:padding="7dp">
-
-                <TextView android:layout_width="140dp"
-                          android:layout_height="wrap_content"
-                          android:textSize="14sp"
-                          android:inputType="textCapWords"
-                          android:textColor="@color/gray_600"
-                          android:text="Middle Name"
-                    />
-
-                <EditText android:layout_width="fill_parent"
-                          android:id="@+id/edtAbw"
-                          android:inputType="number"
-                          android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal"
-                          android:padding="7dp">
-
-                <TextView android:layout_width="140dp"
-                          android:layout_height="wrap_content"
-                          android:textSize="14sp"
-                          android:textColor="@color/gray_600"
-                          android:text="Last Name"
-                    />
-
-                <EditText android:layout_width="fill_parent"
-                          android:id="@+id/edt_lname"
-                          android:inputType="textCapWords"
-                          android:layout_height="wrap_content"/>
-
-            </LinearLayout>
 
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
@@ -271,23 +177,35 @@
             </LinearLayout>
 
 
-            <LinearLayout android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal"
-                          android:gravity="right"
-                          android:padding="7dp">
-
-                <Button android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/btnSave"
-                        android:textColor="@color/deepteal_500"
-                        android:background="@drawable/bg_material_transparent"
-                        android:text="SAVE"
-                    />
-            </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:id="@+id/ll_bottombutton"
+                  android:layout_alignParentBottom="true"
+                  android:gravity="center"
+        >
 
-</LinearLayout>
+        <ImageButton android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/btn_next"
+                android:layout_weight="1"
+                android:textColor="@color/deepteal_500"
+                     android:padding="5dp"
+                android:background="@drawable/bg_material_transparent"
+                android:src="@drawable/ic_keyboard_arrow_left_darkteal_24dp"
+            />
+
+        <ImageButton android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/btn_back"
+                     android:padding="5dp"
+                     android:layout_weight="1"
+                     android:textColor="@color/deepteal_500"
+                     android:background="@drawable/bg_material_transparent"
+                     android:src="@drawable/ic_keyboard_arrow_right_darkteal_24dp"
+            />
+    </LinearLayout>
+</RelativeLayout>
