@@ -190,6 +190,7 @@
 
                     <EditText android:layout_width="fill_parent"
                               android:id="@+id/edt_birthday"
+                              android:focusable="false"
                               android:drawableRight="@drawable/ic_event_darkteal_24dp"
                               android:inputType="textCapWords"
                               android:layout_height="wrap_content"/>

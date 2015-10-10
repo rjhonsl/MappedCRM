@@ -71,6 +71,7 @@ public class Helper {
             public static String ADD_POND   ="Add Pond Information";
             public static String DELETE_POND="Delete Pond Information";
             public static String Edit_POND  ="Modify Pond Information";
+            public static String ADD_MAIN_CUSTOMERINFO ="Add Customer Address Information";
 
             public static String USER_LOGIN = "Login";
 
@@ -114,6 +115,7 @@ public class Helper {
         public static String URL_INSERT_LOGINLOCATION                   = sourceAddress_bizNF + "insertLoginLocationOffUser.php";
         public static String URL_INSERT_USER_ACTIVITY                   = sourceAddress_bizNF + "insertUserActivity.php";
         public static String URL_INSERT_POND_REPORT                     = sourceAddress_bizNF + "insertPondReport.php";
+        public static String URL_INSERT_MAIN_CUSTOMERINFO               = sourceAddress_bizNF + "insertMainCustomerInfo.php";
 
         public static String URL_UPDATE_PONDINFO_BY_ID                  = sourceAddress_bizNF + "updatePondInformationByID.php";
         public static String URL_UPDATE_CUSTOMERINFORMATION_BY_ID       = sourceAddress_bizNF + "updateCustomerInformationByID.php";

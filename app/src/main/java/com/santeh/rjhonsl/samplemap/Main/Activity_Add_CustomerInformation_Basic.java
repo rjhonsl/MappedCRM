@@ -65,12 +65,12 @@ public class Activity_Add_CustomerInformation_Basic extends FragmentActivity imp
         edtBirhday = (EditText) findViewById(R.id.edt_birthday);
         edtBirthPlace = (EditText) findViewById(R.id.edt_BirthPlace);
 
-        txtnote.setText(+lat + " " + lng);
+//        txtnote.setText(+lat + " " + lng);
 
         edtBirhday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                datePickerDialog.setYearRange(1980, 2030);
+                datePickerDialog.setYearRange(1902, 2037);
                 datePickerDialog.show(getSupportFragmentManager(), DATEPICKER_TAG);
             }
         });

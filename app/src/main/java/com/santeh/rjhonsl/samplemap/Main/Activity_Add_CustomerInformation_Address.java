@@ -55,7 +55,7 @@ public class Activity_Add_CustomerInformation_Address extends FragmentActivity{
         if (getIntent().hasExtra("birthplace")){birthplace = getIntent().getStringExtra("birthplace");}
 
         TextView txtnote = (TextView) findViewById(R.id.txt_note);
-        txtnote.setText(lat + " "+lng +" " + farmid + " " + fname+ " " + lname + " " + mname+ " " + birthday+ " " + birthplace);
+//        txtnote.setText(lat + " "+lng +" " + farmid + " " + fname+ " " + lname + " " + mname+ " " + birthday+ " " + birthplace);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override

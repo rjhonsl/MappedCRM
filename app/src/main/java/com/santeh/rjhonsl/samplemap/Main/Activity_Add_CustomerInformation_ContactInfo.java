@@ -79,8 +79,8 @@ public class Activity_Add_CustomerInformation_ContactInfo extends FragmentActivi
         });
 
         TextView txtnote = (TextView) findViewById(R.id.txt_note);
-        txtnote.setText(lat + " "+lng +" " + farmid + " " + fname+ " " + lname + " " + mname+ " " + birthday+ " " + birthplace +
-                " " + housenumber + " " + street + " " + subdivision + " " + barangay + " " + city + " " + province);
+//        txtnote.setText(lat + " "+lng +" " + farmid + " " + fname+ " " + lname + " " + mname+ " " + birthday+ " " + birthplace +
+//                " " + housenumber + " " + street + " " + subdivision + " " + barangay + " " + city + " " + province);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

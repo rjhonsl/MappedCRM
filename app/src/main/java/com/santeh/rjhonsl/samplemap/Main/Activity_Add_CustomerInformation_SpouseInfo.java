@@ -89,7 +89,7 @@ public class Activity_Add_CustomerInformation_SpouseInfo extends FragmentActivit
         edtBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                datePickerDialog.setYearRange(1980, 2030);
+                datePickerDialog.setYearRange(1902, 2037);
                 datePickerDialog.show(getSupportFragmentManager(), DATEPICKER_TAG);
             }
         });
@@ -117,9 +117,9 @@ public class Activity_Add_CustomerInformation_SpouseInfo extends FragmentActivit
         });
 
         TextView txtnote = (TextView) findViewById(R.id.txt_note);
-        txtnote.setText(lat + " "+lng +" " + farmid + " " + fname+ " " + lname + " " + mname+ " " + birthday+ " " + birthplace +
-                " " + housenumber + " " + street + " " + subdivision + " " + barangay + " " + city + " " + province + " " +
-                cellphone + " " + telephone + " " + housestat);
+//        txtnote.setText(lat + " "+lng +" " + farmid + " " + fname+ " " + lname + " " + mname+ " " + birthday+ " " + birthplace +
+//                " " + housenumber + " " + street + " " + subdivision + " " + barangay + " " + city + " " + province + " " +
+//                cellphone + " " + telephone + " " + housestat);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override

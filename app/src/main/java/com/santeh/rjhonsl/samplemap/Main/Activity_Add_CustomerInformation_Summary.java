@@ -1,17 +1,29 @@
 package com.santeh.rjhonsl.samplemap.Main;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.santeh.rjhonsl.samplemap.APIs.MyVolleyAPI;
 import com.santeh.rjhonsl.samplemap.R;
 import com.santeh.rjhonsl.samplemap.Utils.Helper;
+import com.santeh.rjhonsl.samplemap.Utils.Logging;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by rjhonsl on 10/7/2015.
@@ -36,6 +48,9 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity{
 
     LinearLayout ll;
 
+    Dialog PD;
+    TextView dialogmessage;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +58,11 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity{
         activity = this;
         context = Activity_Add_CustomerInformation_Summary.this;
         Helper.hideKeyboardOnLoad(activity);
+
+        PD = Helper.initProgressDialog(activity);
+        dialogmessage = (TextView) PD.findViewById(R.id.progress_message);
+
+
 
         btnBack = (ImageButton) findViewById(R.id.btn_back);
         btnNext = (ImageButton) findViewById(R.id.btn_next);
@@ -123,6 +143,17 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity{
             street =" --- ";
         }
 
+        String[] splitter;
+        if (!birthday.equalsIgnoreCase("")){
+            splitter = birthday.split("/");
+            birthday = splitter[2] + "-" + splitter[0] + "-" + splitter[1];
+        }
+
+        if (!s_birthday.equalsIgnoreCase("")){
+            splitter = s_birthday.split("/");
+            s_birthday = splitter[2] + "-" + splitter[0] + "-" + splitter[1];
+        }
+
 
         txtFarmID.setText(farmid + " ");
         txtFname.setText(fname + " ");
@@ -156,12 +187,131 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity{
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final Dialog d = Helper.createCustomDialogThemedYesNO(activity, "Add " + fname + " " + lname + " to customer information?",
+                        "Save", "YES", "NO", R.color.blue);
+                d.show();
 
+                Button btnYes = (Button) d.findViewById(R.id.btn_dialog_yesno_opt1);
+                Button btnNo = (Button) d.findViewById(R.id.btn_dialog_yesno_opt2);
+
+                btnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        d.hide();
+                        insertCustomerMainInfo(Helper.variables.URL_INSERT_MAIN_CUSTOMERINFO);
+                    }
+                });
+
+                btnNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        d.hide();
+                    }
+                });
             }
         });
-
     }
 
+
+    public void insertCustomerMainInfo(final String url) {
+
+        PD.show();
+        dialogmessage.setText("Updating. Please wait...");
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        String responseCode = Helper.extractResponseCode(response);
+                        PD.hide();
+
+
+                        if (!responseCode.equalsIgnoreCase("0")){
+
+                            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Save", "Saving successfull. ", "OK", R.color.amber_600);
+
+                            Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
+                            ok.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(activity, MapsActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                    finish(); // call this to finish the current activity
+                                }
+                            });
+
+                            Logging.loguserAction(activity, activity.getBaseContext(), Helper.userActions.TSR.ADD_MAIN_CUSTOMERINFO, Helper.variables.ACTIVITY_LOG_TYPE_TSR_MONITORING);
+
+
+                        }else{
+
+                        }
+
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                PD.dismiss();
+
+                final Dialog d = Helper.createCustomDialogOKOnly(activity, "OOPS",
+                        "Something went wrong. error( "+ error +" )", "OK");
+                TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
+                d.setCancelable(false);
+                d.show();
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                                    finish();
+                        d.hide();
+                    }
+                });
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("deviceid", Helper.getMacAddress(activity));
+                params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
+                params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
+                params.put("userlvl", Helper.variables.getGlobalVar_currentlevel(activity)+"");
+
+                params.put("mci_lname", lname+"");
+                params.put("mci_fname", fname+"");
+                params.put("mci_mname", mname+"");
+                params.put("mci_farmid", farmid+"");
+                params.put("mci_housenumber", housenumber+"");
+                params.put("mci_street", street+"");
+                params.put("mci_subdivision", subdivision+"");
+                params.put("mci_barangay", barangay+"");
+                params.put("mci_city", city+"");
+                params.put("mci_province", province+"");
+                params.put("mci_customerbirthday", birthday+"");
+                params.put("mci_birthplace", birthplace+"");
+                params.put("mci_telephone", telephone+"");
+                params.put("mci_cellphone", cellphone+"");
+                params.put("mci_civilstatus", civilstatus+"");
+                params.put("mci_s_fname", s_fname+"");
+                params.put("mci_s_lname", s_lname+"");
+                params.put("mci_s_mname", s_mname+"");
+                params.put("mci_s_birthday", s_birthday+"");
+                params.put("mci_housestatus", housestat+"");
+                params.put("mci_latitude", lat+"");
+                params.put("mci_longitude", lng+"");
+
+
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        MyVolleyAPI api = new MyVolleyAPI();
+        api.addToReqQueue(postRequest, context);
+    }
 
 }
 
