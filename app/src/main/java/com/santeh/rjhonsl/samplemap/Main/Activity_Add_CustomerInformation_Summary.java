@@ -239,6 +239,8 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity{
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
                                     finish(); // call this to finish the current activity
+
+                                    //ugygff
                                 }
                             });
 
