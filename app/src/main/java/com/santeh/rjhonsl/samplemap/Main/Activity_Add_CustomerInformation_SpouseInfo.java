@@ -51,10 +51,9 @@ public class Activity_Add_CustomerInformation_SpouseInfo extends FragmentActivit
 
         btnBack = (ImageButton) findViewById(R.id.btn_back);
         btnNext = (ImageButton) findViewById(R.id.btn_next);
-        edtfname = (EditText) findViewById(R.id.edt_telephone);
-        edtlname = (EditText) findViewById(R.id.edt_fname);
-        edtmname = (EditText) findViewById(R.id.edt_mname);
+        edtfname = (EditText) findViewById(R.id.edt_fname);
         edtlname = (EditText) findViewById(R.id.edt_lname);
+        edtmname = (EditText) findViewById(R.id.edt_mname);
         edtBirthday = (EditText) findViewById(R.id.edt_birthday);
         edtCivilStatus = (EditText) findViewById(R.id.edt_civilStatus);
         ll = (LinearLayout) findViewById(R.id.ll_ifNotSingle);
@@ -137,6 +136,8 @@ public class Activity_Add_CustomerInformation_SpouseInfo extends FragmentActivit
                             && !edtlname.getText().toString().equalsIgnoreCase("") && !edtmname.getText().toString().equalsIgnoreCase("")
                             && !edtmname.getText().toString().equalsIgnoreCase("")) {
                         gotoSummary();
+                    }else{
+                        Helper.createCustomThemedColorDialogOKOnly(activity, "Warning","You must complete fields with '*' to continue.", "OK", R.color.red);
                     }
                 } else {
                     if (!edtCivilStatus.getText().toString().equalsIgnoreCase("")) {
@@ -175,7 +176,6 @@ public class Activity_Add_CustomerInformation_SpouseInfo extends FragmentActivit
         intent.putExtra("s_mname", edtmname.getText().toString()+ "");
         intent.putExtra("s_lname", edtlname.getText().toString()+ "");
         intent.putExtra("s_birthday", edtBirthday.getText()+ "");
-
 
         startActivity(intent);
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);

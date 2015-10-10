@@ -132,6 +132,9 @@
         <activity android:name=".Main.Activity_Add_CustomerInformation_SpouseInfo">
         </activity>
 
+        <activity android:name=".Main.Activity_Add_CustomerInformation_Summary">
+        </activity>
+
 
 
 

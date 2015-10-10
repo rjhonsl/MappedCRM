@@ -142,7 +142,7 @@
                               android:textColor="@color/red"/>
 
                     <EditText android:layout_width="fill_parent"
-                              android:id="@+id/edt_cellphone"
+                              android:id="@+id/edt_mname"
                               android:inputType="textCapWords"
                               android:layout_height="wrap_content"/>
 
@@ -166,7 +166,7 @@
                               android:textColor="@color/red"/>
 
                     <EditText android:layout_width="fill_parent"
-                              android:id="@+id/edt_housestatus"
+                              android:id="@+id/edt_lname"
                               android:layout_height="wrap_content"/>
 
                 </LinearLayout>
