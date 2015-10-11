@@ -302,7 +302,7 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity{
                 params.put("mci_s_mname", s_mname+"");
                 params.put("mci_s_birthday", s_birthday+"");
                 params.put("mci_housestatus", housestat+"");
-                params.put("mci_latitude", lat+""); // sample
+                params.put("mci_latitude", lat+""); // sample test
                 params.put("mci_longitude", lng+"");
 
 
