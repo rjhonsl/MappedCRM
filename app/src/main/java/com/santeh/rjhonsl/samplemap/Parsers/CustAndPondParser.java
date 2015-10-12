@@ -266,42 +266,136 @@ public class CustAndPondParser {
 					custInfoObject.setCustomerID("n/a");
 				}
 
-
 				if (obj.has("survivalrate")){
 					custInfoObject.setSurvivalrate_per_pond(obj.getString("survivalrate"));
 				}
 
 
+				//CUSTOMER ADDRESS INFO
+				if (obj.has("mci_id")){
+					custInfoObject.setCustomerID(obj.getString("mci_id"));
+				}
 
+				if (obj.has("mci_lname")){
+					custInfoObject.setLastname(obj.getString("mci_lname"));
+				}
+
+				if (obj.has("mci_fname")){
+					custInfoObject.setFirstname(obj.getString("mci_fname"));
+				}
+
+				if (obj.has("mci_mname")){
+					custInfoObject.setMiddleName(obj.getString("mci_mname"));
+				}
+
+				if (obj.has("mci_farmid")){
+					custInfoObject.setFarmID(obj.getString("mci_farmid"));
+				}
+
+				if (obj.has("mci_street")){
+					custInfoObject.setStreet(obj.getString("mci_street"));
+				}
+				if (obj.has("mci_housenumber")){
+					custInfoObject.setHouseNumber(obj.getInt("mci_housenumber"));
+				}
+
+				if (obj.has("mci_subdivision")){
+					custInfoObject.setSubdivision(obj.getString("mci_subdivision"));
+				}
+
+				if (obj.has("mci_barangay")){
+					custInfoObject.setBarangay(obj.getString("mci_barangay"));
+				}
+
+				if (obj.has("mci_city")){
+					custInfoObject.setCity(obj.getString("mci_city"));
+				}
+
+				if (obj.has("mci_province")){
+					custInfoObject.setProvince(obj.getString("mci_province"));
+				}
+
+				if (obj.has("mci_customerbirthday")){
+					custInfoObject.setBirthday(obj.getString("mci_customerbirthday"));
+				}
+
+				if (obj.has("mci_birthplace")){
+					custInfoObject.setBirthPlace(obj.getString("mci_birthplace"));
+				}
+
+				if (obj.has("mci_telephone")){
+					custInfoObject.setTelephone(obj.getString("mci_telephone"));
+				}
+
+				if (obj.has("mci_cellphone")){
+					custInfoObject.setCellphone(obj.getString("mci_cellphone"));
+				}
+
+				if (obj.has("mci_civilstatus")){
+					custInfoObject.setCivilStatus(obj.getString("mci_civilstatus"));
+				}
+
+				if (obj.has("mci_s_lname")){
+					custInfoObject.setSpouse_lname(obj.getString("mci_s_lname"));
+				}
+
+				if (obj.has("mci_s_fname")){
+					custInfoObject.setSpouse_fname(obj.getString("mci_s_fname"));
+				}
+
+				if (obj.has("mci_s_mname")){
+					custInfoObject.setSpouse_mname(obj.getString("mci_s_mname"));
+				}
+
+				if (obj.has("mci_s_birthday")){
+					custInfoObject.setSpouse_birthday(obj.getString("mci_s_birthday"));
+				}
+
+				if (obj.has("mci_housestatus")){
+					custInfoObject.setHouseStatus(obj.getString("mci_housestatus"));
+				}
+				if (obj.has("mci_longitude")){
+					custInfoObject.setLongtitude(obj.getString("mci_longitude"));
+				}
+
+				if (obj.has("mci_latitude")){
+					custInfoObject.setLatitude(obj.getString("mci_latitude"));
+				}
+
+				if (obj.has("mci_dateadded")){
+					custInfoObject.setDateAddedToDB(obj.getString("mci_dateadded"));
+				}
+
+				if (obj.has("mci_addedby")){
+					custInfoObject.setAddedBy(obj.getString("mci_addedby"));
+				}
+
+//				Log.d("JSON PARSE",
+//						"ID: "+custInfoObject.getId()+
+//						"Latitude: "+custInfoObject.getLatitude()+
+//						"Longtitude: "+custInfoObject.getLongtitude()+
+//						"contact name: "+custInfoObject.getContact_name()+
+//						"company: "+custInfoObject.getCompany()+
+//						"address: "+custInfoObject.getAddress()+
+//						"farm_name: "+custInfoObject.getFarmname()+
+//						"farmid: "+custInfoObject.getFarmID()+
+//						"contact number: "+custInfoObject.getContact_number()+
+//						"culture type: "+custInfoObject.getCultureType()+
+//						"culture level: "+custInfoObject.getCulturelevel()+
+//						"watertype: "+custInfoObject.getWaterType()+
+//						"date added: "+custInfoObject.getDateAddedToDB()+
 //
-//
-
-				Log.d("JSON PARSE",
-						"ID: "+custInfoObject.getId()+
-						"Latitude: "+custInfoObject.getLatitude()+
-						"Longtitude: "+custInfoObject.getLongtitude()+
-						"contact name: "+custInfoObject.getContact_name()+
-						"company: "+custInfoObject.getCompany()+
-						"address: "+custInfoObject.getAddress()+
-						"farm_name: "+custInfoObject.getFarmname()+
-						"farmid: "+custInfoObject.getFarmID()+
-						"contact number: "+custInfoObject.getContact_number()+
-						"culture type: "+custInfoObject.getCultureType()+
-						"culture level: "+custInfoObject.getCulturelevel()+
-						"watertype: "+custInfoObject.getWaterType()+
-						"date added: "+custInfoObject.getDateAddedToDB()+
-
-						"sizeofstock: "+custInfoObject.getSizeofStock()+
-						"pond id: "+custInfoObject.getPondID()+
-						"quantity: "+custInfoObject.getQuantity()+
-						"area: "+custInfoObject.getArea()+
-						"specie: "+custInfoObject.getSpecie()+
-						"datestocked: "+custInfoObject.getDateStocked()+
-						"culture system: "+custInfoObject.getCulturesystem()+
-						"remarks: "+custInfoObject.getRemarks()+
-						"custoemrId: "+custInfoObject.getCustomerID()+
-						"survivalRate: " + custInfoObject.getSurvivalrate_per_pond()
-				);
+//						"sizeofstock: "+custInfoObject.getSizeofStock()+
+//						"pond id: "+custInfoObject.getPondID()+
+//						"quantity: "+custInfoObject.getQuantity()+
+//						"area: "+custInfoObject.getArea()+
+//						"specie: "+custInfoObject.getSpecie()+
+//						"datestocked: "+custInfoObject.getDateStocked()+
+//						"culture system: "+custInfoObject.getCulturesystem()+
+//						"remarks: "+custInfoObject.getRemarks()+
+//						"custoemrId: "+custInfoObject.getCustomerID()+
+//						"survivalRate: " + custInfoObject.getSurvivalrate_per_pond()
+//				);
 				custInfoObjectList.add(custInfoObject);
 
 			}

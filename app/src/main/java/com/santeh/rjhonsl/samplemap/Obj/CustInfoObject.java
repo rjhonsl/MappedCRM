@@ -7,6 +7,7 @@ public class CustInfoObject {
 	private int id;
 	private int ci_id;
 	private int counter;
+	private int houseNumber;
 
 
 	private String latitude;
@@ -31,6 +32,16 @@ public class CustInfoObject {
 	private String username;
 	private String firstname;
 	private String lastname;
+	private String middleName;
+	private String birthday;
+	private String birthPlace;
+	private String telephone;
+	private String cellphone;
+	private String spouse_fname;
+	private String spouse_mname;
+	private String spouse_lname;
+	private String spouse_birthday;
+	private String civilStatus;
 
 	private String accountlevelDescription;
 	private int userlevel;
@@ -57,6 +68,12 @@ public class CustInfoObject {
 
 	private String province;
 	private String municipality;
+	private String street;
+	private String barangay;
+	private String city;
+	private String subdivision;
+	private String houseStatus;
+	private String addedBy;
 
 
 
@@ -508,4 +525,139 @@ public class CustInfoObject {
 		this.counter = counter;
 	}
 
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+
+	public int getHouseNumber() {
+		return houseNumber;
+	}
+
+	public void setHouseNumber(int houseNumber) {
+		this.houseNumber = houseNumber;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getBarangay() {
+		return barangay;
+	}
+
+	public void setBarangay(String barangay) {
+		this.barangay = barangay;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getSubdivision() {
+		return subdivision;
+	}
+
+	public void setSubdivision(String subdivision) {
+		this.subdivision = subdivision;
+	}
+
+	public String getSpouse_fname() {
+		return spouse_fname;
+	}
+
+	public void setSpouse_fname(String spouse_fname) {
+		this.spouse_fname = spouse_fname;
+	}
+
+	public String getSpouse_mname() {
+		return spouse_mname;
+	}
+
+	public void setSpouse_mname(String spouse_mname) {
+		this.spouse_mname = spouse_mname;
+	}
+
+	public String getSpouse_lname() {
+		return spouse_lname;
+	}
+
+	public void setSpouse_lname(String spouse_lname) {
+		this.spouse_lname = spouse_lname;
+	}
+
+	public String getCivilStatus() {
+		return civilStatus;
+	}
+
+	public void setCivilStatus(String civilStatus) {
+		this.civilStatus = civilStatus;
+	}
+
+	public String getSpouse_birthday() {
+		return spouse_birthday;
+	}
+
+	public void setSpouse_birthday(String spouse_birthday) {
+		this.spouse_birthday = spouse_birthday;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getBirthPlace() {
+		return birthPlace;
+	}
+
+	public void setBirthPlace(String birthPlace) {
+		this.birthPlace = birthPlace;
+	}
+
+	public String getCellphone() {
+		return cellphone;
+	}
+
+	public void setCellphone(String cellphone) {
+		this.cellphone = cellphone;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public String getHouseStatus() {
+		return houseStatus;
+	}
+
+	public void setHouseStatus(String houseStatus) {
+		this.houseStatus = houseStatus;
+	}
+
+	public String getAddedBy() {
+		return addedBy;
+	}
+
+	public void setAddedBy(String addedBy) {
+		this.addedBy = addedBy;
+	}
 }

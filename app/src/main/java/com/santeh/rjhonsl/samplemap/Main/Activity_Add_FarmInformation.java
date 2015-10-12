@@ -42,7 +42,8 @@ public class Activity_Add_FarmInformation extends Activity {
 
     Context context;
 
-    String url = "http://mysanteh.site50.net/santehweb/insertCustomerInformation.php";
+    String url = Helper.variables.URL_INSERT_FARM_INFO;
+
     String latitude, longtitude, id, imageName;
 
     ProgressDialog PD;
@@ -58,6 +59,7 @@ public class Activity_Add_FarmInformation extends Activity {
         context1 = this;
         context = Activity_Add_FarmInformation.this;
         activity = this;
+
         fusedLocation = new FusedLocation(context, activity);
         fusedLocation.buildGoogleApiClient(context);
         fusedLocation.connectToApiClient();
@@ -135,7 +137,6 @@ public class Activity_Add_FarmInformation extends Activity {
             ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                    d.hide();
                 }
             });
@@ -149,7 +150,7 @@ public class Activity_Add_FarmInformation extends Activity {
                         public void onResponse(String response) {
 
                             fusedLocation.connectToApiClient();
-                            if (!Helper.extractResponseCodeBySplit(response).equalsIgnoreCase("0")) {
+                            if (response.substring(1,2).equalsIgnoreCase("1")) {
 
 //                                Log.d("LOGGING", "" + activity.toString() + " " + context.toString() + " " + Helper.variables.getGlobalVar_currentUserID(activity) + ""
 //                                        + " " + fusedLocation.getLastKnowLocation().latitude + " " + fusedLocation.getLastKnowLocation().longitude);
@@ -158,8 +159,8 @@ public class Activity_Add_FarmInformation extends Activity {
 
 
                                 PD.dismiss();
-                                Dialog d = Helper.createCustomDialogOKOnly(Activity_Add_FarmInformation.this, "SUCCESS",
-                                        "You have successfully added " + txtContactName.getText().toString() + " to database", "OK");
+                                Dialog d = Helper.createCustomThemedColorDialogOKOnly(Activity_Add_FarmInformation.this, "SUCCESS",
+                                        "You have successfully added " + txtContactName.getText().toString() + " to database", "OK", R.color.blue);
                                 TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
                                 d.setCancelable(false);
                                 d.show();
@@ -167,12 +168,18 @@ public class Activity_Add_FarmInformation extends Activity {
                                     @Override
                                     public void onClick(View v) {
                                         finish();
+                                        Intent intent = new Intent(activity, MapsActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        intent.putExtra("fromActivity", "addfarminfo");
+                                        startActivity(intent);
+                                        finish(); // call this to finish the current activity
+
                                     }
                                 });
 
 
                             }else {
-                                Helper.toastShort(activity, getResources().getString(R.string.VolleyUnexpectedError));
+                                Helper.createCustomThemedColorDialogOKOnly(activity, "Error", "Something happened. Please try again." , "OK", R.color.red);
                                 PD.dismiss();
                             }
 
@@ -199,6 +206,7 @@ public class Activity_Add_FarmInformation extends Activity {
                     params.put("cultureType", txtCultureType.getText().toString());
                     params.put("cultureLevel", txtCultureLevel.getText().toString());
                     params.put("waterType",   txtWaterType.getText().toString());
+
                     params.put("dateAdded", Helper.convertLongtoDateString(System.currentTimeMillis()));
                     params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
                     params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
@@ -244,9 +252,9 @@ public class Activity_Add_FarmInformation extends Activity {
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog d = Helper.createCustomDialogYesNO(activity, R.layout.dialog_material_yesno,
+                final Dialog d = Helper.createCustomDialogThemedYesNO(activity,
                         "Are you sure you want to save this information to our database?",
-                        "SAVE", "YES", "NO");
+                        "Save", "YES", "NO", R.color.deepteal_500);
                 Button yes = (Button) d.findViewById(R.id.btn_dialog_yesno_opt1);
                 Button no = (Button) d.findViewById(R.id.btn_dialog_yesno_opt2);
                 no.setOnClickListener(new View.OnClickListener() {
@@ -259,6 +267,7 @@ public class Activity_Add_FarmInformation extends Activity {
                     @Override
                     public void onClick(View v) {
                         insertCustomerInfo();
+                        d.hide();
                     }
                 });
                 d.show();

@@ -87,10 +87,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     LatLng curLatlng, lastlatlng;
 
     TextView textView, tvlat, tvlong;
-    TextView nav_fingerlings, nav_Stockings, nav_sperms, nav_logout, nav_maptype, nav_displayAllMarkers, nav_settings, nav_growout,nav_usermonitoring, txtusername;
+    TextView nav_fingerlings, nav_customerAddress, nav_sperms, nav_logout, nav_maptype, nav_displayAllMarkers, nav_settings, nav_growout,nav_usermonitoring, txtusername;
 
     EditText editSearch;
-    String Stritem;
+    String Stritem, activeSelection;
 
 
     List<CustInfoObject> custInfoObjectList;
@@ -113,6 +113,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        passedintent = getIntent();
+        extrass = getIntent().getExtras();
 
 
         fusedLocation = new FusedLocation(context, activity);
@@ -122,15 +124,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         lastlatlng = fusedLocation.getLastKnowLocation();
 
 
-        extrass = getIntent().getExtras();
-        passedintent = getIntent();
-
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         nav_displayAllMarkers = (TextView) findViewById(R.id.txt_Nav_displayAll);
         nav_fingerlings = (TextView) findViewById(R.id.txt_Nav_fingerlings);
-        nav_Stockings = (TextView) findViewById(R.id.txt_Nav_customeraddress);
+        nav_customerAddress = (TextView) findViewById(R.id.txt_Nav_customeraddress);
         nav_sperms = (TextView) findViewById(R.id.txt_Nav_sperms);
         nav_maptype = (TextView) findViewById(R.id.txt_Nav_changeMapType);
         nav_settings = (TextView) findViewById(R.id.txt_Nav_settings);
@@ -234,15 +233,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if (checkIfLocationAvailable()){
                         moveCameraAnimate(map, fusedLocation.getLastKnowLocation(), zoom);
                         initMarkers();
-
                     }
                     else{
                         PD.hide();
-                        //West avenue
                         curlat = 14.651391;
                         curLong = 121.029335;
                         zoom = 9;
-
                     }
 
                 }catch(Exception e){
@@ -250,9 +246,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         }, 500);
-
-
-
     }
 
     private void initListners(final GoogleMap map) {
@@ -287,14 +280,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                 mapClear(map);
                 closeDrawer();
+
             }
         });
 
-        nav_Stockings.setOnClickListener(new View.OnClickListener() {
+        nav_customerAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mapClear(map);
                 closeDrawer();
+                activeSelection = "customer";
+                showAllCustomerLocation();
             }
         });
 
@@ -329,7 +325,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 closeDrawer();
 
-                String[] maptypes = {"Normal","Satellite","Terrain", "Hybrid"};
+                String[] maptypes = {"Normal", "Satellite", "Terrain", "Hybrid"};
                 final Dialog dd = Helper.createCustomListDialog(activity, maptypes, "Map Types");
                 ListView lstMapType = (ListView) dd.findViewById(R.id.dialog_list_listview);
                 dd.show();
@@ -337,17 +333,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 lstMapType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        if (position == 0){
+                        if (position == 0) {
                             map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                             dd.hide();
-                        }else if (position == 1) {
+                        } else if (position == 1) {
                             map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
                             dd.hide();
-                        }else if (position == 2) {
+                        } else if (position == 2) {
                             map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                             dd.hide();
-                        }
-                        else if (position == 3) {
+                        } else if (position == 3) {
                             map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                             dd.hide();
                         }
@@ -362,7 +357,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
 //                setUpMap();
 
-                if(Helper.isLocationEnabled(context)){
+                if (Helper.isLocationEnabled(context)) {
                     fusedLocation.connectToApiClient();
 
 
@@ -377,7 +372,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                     //getLastKnownLocation();
 
                                     moveCameraAnimate(map, new LatLng(latlng.latitude, latlng.longitude), 15);
-//                        Helper.toastShort(MapsActivity.this,latlng.latitude+ " "+ latlng.longitude);
 
                                     final Handler handler = new Handler();
                                     handler.postDelayed(new Runnable() {
@@ -391,7 +385,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                             lvoptions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                                 @Override
                                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                                    if (position == 0){
+                                                    if (position == 0) {
 
                                                         d1.hide();
                                                         final Intent intent = new Intent(MapsActivity.this, Activity_Add_FarmInformation.class);
@@ -401,7 +395,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                                                     }
 
-                                                    if (position == 1){
+                                                    if (position == 1) {
                                                         d1.hide();
                                                         final Intent intent = new Intent(MapsActivity.this, Activity_Add_CustomerInformation_Basic.class);
                                                         intent.putExtra("latitude", latlng.latitude);
@@ -411,30 +405,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                     }
                                                 }
                                             });
-
-//                                        final Dialog d = Helper.createCustomDialogYesNO(MapsActivity.this, R.layout.dialog_material_yesno,
-//                                                "Do you wish to add customer information here at your current location?\n\n" +
-//                                                        "Latitude  : " + curlat + "\n" +
-//                                                        "Longtitude: " + curLong, "ADD MARKER", "YES", "NO");
-//                                        d.show();
-//                                        TextView opt1 = (TextView) d.findViewById(R.id.btn_dialog_yesno_opt1),
-//                                                opt2 = (TextView) d.findViewById(R.id.btn_dialog_yesno_opt2);
-//
-//                                        opt1.setOnClickListener(new View.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(View v) {
-//                                                d.hide();
-//                                                startActivity(intent);
-//                                                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-//                                            }
-//                                        });
-//
-//                                        opt2.setOnClickListener(new View.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(View v) {
-//                                                d.hide();
-//                                            }
-//                                        });
                                         }
                                     }, 1200);
 
@@ -446,7 +416,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             }
                         }
                     }, 200);
-                }else{
+                } else {
                     Helper.isLocationAvailable(context, activity);
                 }
 
@@ -468,26 +438,30 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onInfoWindowClick(Marker marker) {
 
-                String ID = marker.getId(), curId = "";
-                for (int i = 0; i < marker.getTitle().length(); i++) {
-                    char c = marker.getTitle().charAt(i);
-                    if (c == '-') {
-                        break;
+                if (activeSelection.equalsIgnoreCase("farm")){
+                    String ID = marker.getId(), curId = "";
+                    for (int i = 0; i < marker.getTitle().length(); i++) {
+                        char c = marker.getTitle().charAt(i);
+                        if (c == '-') {
+                            break;
+                        }
+                        curId = curId + c;
                     }
-                    curId = curId + c;
+
+                    String[] details = marker.getTitle().split("-");
+//                Helper.toastShort(activity, "."+marker.getTitle()+"."+details[0]);
+                    LatLng location = marker.getPosition();
+
+                    Intent intent = new Intent(MapsActivity.this, Activity_ManagePonds.class);
+                    intent.putExtra("id", Integer.parseInt(details[0]));
+                    intent.putExtra("farmname", "" + details[1]);
+                    intent.putExtra("latitude", location.latitude +"");
+                    intent.putExtra("longitude", location.longitude+ "");
+                    startActivity(intent);
+                }else if (activeSelection.equalsIgnoreCase("farm")){
+
                 }
 
-                String[] details = marker.getTitle().split("-");
-
-//                Helper.toastShort(activity, "."+marker.getTitle()+"."+details[0]);
-                LatLng location = marker.getPosition();
-
-                Intent intent = new Intent(MapsActivity.this, Activity_ManagePonds.class);
-                intent.putExtra("id", Integer.parseInt(details[0]));
-                intent.putExtra("farmname", "" + details[1]);
-                intent.putExtra("latitude", location.latitude +"");
-                intent.putExtra("longitude", location.longitude+ "");
-                startActivity(intent);
             }
 
         });
@@ -495,6 +469,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         nav_growout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 final Intent intent = new Intent(MapsActivity.this, Activity_WeeklyReports_Growout_FeedDemands.class);
                 closeDrawer();
                 final Handler handler = new Handler();
@@ -534,7 +509,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        iconGenerator.setColor(Color.parseColor("#00000"));
         iconGenerator.setColor(R.color.yellow);
         iconGenerator.setTextAppearance(R.style.IconGeneratorTextView);
-        return  iconGenerator.makeIcon(str);
+        return iconGenerator.makeIcon(str);
     }
 
     private boolean checkIfLocationAvailable() {
@@ -616,37 +591,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         textView.setText("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
     }
 
-    private LatLng getLastKnownLocation() {
-        fusedLocation.connectToApiClient();
-
-        LatLng latLng = fusedLocation.getLastKnowLocation();
-
-        curlat = latLng.latitude;
-        curLong = latLng.longitude;
-
-//        String location_context = Context.LOCATION_SERVICE;
-//        LocationManager mLocationManager = (LocationManager) activity.getSystemService(location_context);
-//
-//        List<String> providers = mLocationManager.getProviders(true);
-//        Location bestLocation = null;
-//        for (String provider : providers) {
-//            final Location l = mLocationManager.getLastKnownLocation(provider);
-////            int d = Log.d("last known location, provider: %s, location: %s", provider);
-//
-//            if (l == null) {
-//                continue;
-//            }
-//            if (bestLocation == null
-//                    || l.getAccuracy() < bestLocation.getAccuracy()) {
-////                Log.d("found best last known location: %s", String.valueOf(l));
-//                bestLocation = l;
-//            }
-//        }
-//        if (bestLocation == null) {
-//            return null;
-//        }
-        return latLng;
-    }
 
     @Override
     public void onConnected(Bundle bundle) {
@@ -670,8 +614,37 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void showAllRelatedMarkers(){
         PD.setMessage("Please wait...");
         PD.show();
+        String url =  "";
+        passedintent = getIntent();
+        if (passedintent != null){
+            if (passedintent.hasExtra("fromActivity")){
 
-        StringRequest postRequest = new StringRequest(Request.Method.POST, Helper.variables.URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO,
+                if (passedintent.getStringExtra("fromActivity").equalsIgnoreCase("login")
+                        || passedintent.getStringExtra("fromActivity").equalsIgnoreCase("addfarminfo") ){
+                    url  = Helper.variables.URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO;
+                    activeSelection = "farm";
+                    Log.d("URL", "login and farminfo");
+                }else if (passedintent.getStringExtra("fromActivity").equalsIgnoreCase("addcustomerinfo")){
+                    url  = Helper.variables.URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO;
+                    Log.d("URL", "addcustomerinfo");
+                    activeSelection = "customer";
+                }else{
+                    url  = Helper.variables.URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO;
+                    Log.d("URL", "default");
+                    activeSelection = "farm";
+                }
+
+            }else{
+                url  = Helper.variables.URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO;
+                Log.d("URL", "fromActivity null");
+            }
+        }else{
+            url  = Helper.variables.URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO;
+            Log.d("URL", "passed intent null");
+        }
+
+        final String finalUrl = url;
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(final String response) {
@@ -685,16 +658,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             custInfoObjectList = CustAndPondParser.parseFeed(response);
 //                            Helper.toastShort(activity, "after parse feed");
                             if (custInfoObjectList != null) {
-//                                Helper.toastShort(activity, "obj not null");
                                 if (custInfoObjectList.size() > 0) {
-                                 //   Helper.toastShort(activity, "obj not zero");
                                     if (passedintent != null) {
-                                       // Helper.toastShort(activity, "intent not null");
                                         if (passedintent.hasExtra("fromActivity")) {
-                                         //   Helper.toastShort(activity, "ihas extra");
-                                            if (passedintent.getStringExtra("fromActivity").equalsIgnoreCase("login")) {
-                                             //   Helper.toastShort(activity, "from login");
-
                                                 userid = extrass.getInt("userid");
                                                 userlevel = extrass.getInt("userlevel");
                                                 username = extrass.getString("username");
@@ -703,10 +669,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                 userdescription = extrass.getString("userdescription");
                                                 insertloginlocation();
                                                 updateDisplay();
-                                            } else {
-                                               // Helper.toastShort(activity, "not login");
-                                                updateDisplay();
-                                            }
                                         } else {
                                             updateDisplay();
                                         }
@@ -746,6 +708,75 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         api.addToReqQueue(postRequest, MapsActivity.this);
     }
 
+
+    public void showAllCustomerLocation(){
+        PD.setMessage("Please wait...");
+        PD.show();
+        String url = Helper.variables.URL_SELECT_CUST_LOCAITON_BY_ASSIGNED_AREA;
+
+        final String finalUrl = url;
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+
+                        PD.dismiss();
+
+                        if (!response.substring(1, 2).equalsIgnoreCase("0")) {
+                            custInfoObjectList = CustAndPondParser.parseFeed(response);
+
+                            if (custInfoObjectList!=null){
+                                if (custInfoObjectList.size() > 0){
+                                    for (int i = 0; i < custInfoObjectList.size(); i++) {
+
+                                        String address = custInfoObjectList.get(i).getHouseNumber()+"";
+
+                                        if(custInfoObjectList.get(i).getStreet().equalsIgnoreCase("")){
+                                            address = address + " " + custInfoObjectList.get(i).getStreet();
+                                        }
+                                        if(custInfoObjectList.get(i).getSubdivision().equalsIgnoreCase("")){
+                                            address = address + ", " + custInfoObjectList.get(i).getSubdivision();
+                                        }
+                                        address = address + " " + custInfoObjectList.get(i).getBarangay() + ", " + custInfoObjectList.get(i).getBarangay() + ", " + custInfoObjectList.get(i).getCity() + ", " + custInfoObjectList.get(i).getProvince();
+
+
+                                        Helper.map_addMarker(maps, new LatLng(Double.parseDouble(custInfoObjectList.get(i).getLatitude()), Double.parseDouble(custInfoObjectList.get(i).getLongtitude())),
+                                                R.drawable.ic_housemarker_24dp,
+                                                custInfoObjectList.get(i).getFirstname() +" "+ custInfoObjectList.get(i).getLastname(), //Firstname and LastName
+                                               address,  custInfoObjectList.get(i).getFarmID(), "0", "0" );
+                                    }
+                                }else{Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "You have not added any customer address", "OK", R.color.red);}
+                            }else{ Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "You have not added any customer address", "OK", R.color.red);}
+                        } else {Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "You have not added any customer address", "OK", R.color.red);}
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        PD.dismiss();
+                        Helper.toastShort(MapsActivity.this,"Something happened. Please try again later");
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
+                params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                params.put("deviceid", Helper.getMacAddress(context));
+                params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
+                params.put("userlvl", Helper.variables.getGlobalVar_currentlevel(activity)+"");
+//
+                return params;
+            }
+        };
+
+        MyVolleyAPI api = new MyVolleyAPI();
+        api.addToReqQueue(postRequest, MapsActivity.this);
+
+
+
+    }
+
     private void insertloginlocation(){
         fusedLocation.connectToApiClient();
         if (Helper.isIntentKeywordNotNull("fromActivity", passedintent)){
@@ -778,18 +809,32 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         if(custInfoObjectList != null){
 
-            Log.d("UPDATE DISPLAY", "after condition");
-            for (int i = 0; i < custInfoObjectList.size(); i++) {
-                final CustInfoObject ci;
-                ci = custInfoObjectList.get(i);
-                Log.d("JSON PARSE", "" + ci.getFarmID() +" " +ci.getFarmname());
-                LatLng custLatlng = new LatLng(Double.parseDouble(ci.getLatitude()), Double.parseDouble(ci.getLongtitude()));
-                Marker marker = Helper.map_addMarker(maps, custLatlng,
-                        R.drawable.ic_place_red_24dp, ci.getFarmname(), ci.getAddress(), ci.getCi_id() + "", ci.getTotalStockOfFarm() + "", ci.getAllSpecie());
+            if (custInfoObjectList.size() > 0){
+                Log.d("UPDATE DISPLAY", "after condition");
+                for (int i = 0; i < custInfoObjectList.size(); i++) {
+                    final CustInfoObject ci;
+                    ci = custInfoObjectList.get(i);
+                    Log.d("JSON PARSE", "" + ci.getFarmID() +" " +ci.getFarmname());
+                    LatLng custLatlng = new LatLng(Double.parseDouble(ci.getLatitude()+""), Double.parseDouble(ci.getLongtitude()+""));
+                    Marker marker = Helper.map_addMarker(maps, custLatlng,
+                            R.drawable.ic_place_red_24dp, ci.getFarmname(), ci.getAddress(), ci.getCi_id() + "", ci.getTotalStockOfFarm() + "", ci.getAllSpecie());
+                }
+            }else{
+                final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "MAP", "You have not added a farm yet. \n You can start by pressing the  plus '+' on the upper right side of the screen.", "OK", R.color.skyblue_400);
+                Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
+                d.show();
 
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        d.hide();
+                    }
+                });
             }
+
+
         }else {
-            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "MAP", "You have not added a farm yet. You can start by pressing the  plus(' + ') on the upper right side of the screen.", "OK", R.color.skyblue_400);
+            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "MAP", "You have not added a farm yet. \n You can start by pressing the  plus '+' on the upper right side of the screen.", "OK", R.color.skyblue_400);
             Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
             d.show();
 
@@ -807,7 +852,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("PROCESS","Onpause");
+        Log.d("PROCESS", "Onpause");
     }
 
 

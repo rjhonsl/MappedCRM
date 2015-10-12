@@ -149,7 +149,7 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity{
             birthday = splitter[2] + "-" + splitter[0] + "-" + splitter[1];
         }
 
-        if (!s_birthday.equalsIgnoreCase("")){
+        if (!s_birthday.equalsIgnoreCase("") && !s_birthday.equalsIgnoreCase(" --- ")){
             splitter = s_birthday.split("/");
             s_birthday = splitter[2] + "-" + splitter[0] + "-" + splitter[1];
         }
@@ -227,9 +227,9 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity{
                         PD.hide();
 
 
-                        if (!responseCode.equalsIgnoreCase("0")){
+                        if (responseCode.equalsIgnoreCase("1")){
 
-                            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Save", "Saving successfull. ", "OK", R.color.amber_600);
+                            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Save", "Saving successful. ", "OK", R.color.amber_600);
 
                             Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
                             ok.setOnClickListener(new View.OnClickListener() {
@@ -237,6 +237,7 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity{
                                 public void onClick(View v) {
                                     Intent intent = new Intent(activity, MapsActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.putExtra("fromActivity", "addcustomerinfo");
                                     startActivity(intent);
                                     finish(); // call this to finish the current activity
 
@@ -247,7 +248,8 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity{
                             Logging.loguserAction(activity, activity.getBaseContext(), Helper.userActions.TSR.ADD_MAIN_CUSTOMERINFO, Helper.variables.ACTIVITY_LOG_TYPE_TSR_MONITORING);
 
 
-                        }else{
+                        }else {
+                            Helper.toastLong(activity, response);
 
                         }
 
