@@ -20,11 +20,14 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -63,6 +66,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     boolean isDrawerOpen = false;
     private boolean mPaused;
 
+
+    PopupWindow popUp;
+    LinearLayout layout;
+    TextView tv;
+    ViewGroup.LayoutParams params;
+    LinearLayout mainLayout;
+    boolean ifViewVisible = true;
+
     private LocationSource.OnLocationChangedListener mListener;
     Location mLastLocation;
 
@@ -74,6 +85,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     ImageButton map_add_marker;
     ActionBarDrawerToggle drawerListener;
 
+    Marker clickedMarker;
 
     double curlat, curLong;
     int zoom = 15,
@@ -116,6 +128,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         passedintent = getIntent();
         extrass = getIntent().getExtras();
 
+        popUp = new PopupWindow(this);
+        layout = new LinearLayout(this);
+        mainLayout = new LinearLayout(this);
+        tv = new TextView(this);
 
         fusedLocation = new FusedLocation(context, activity);
         fusedLocation.buildGoogleApiClient(context);
@@ -142,6 +158,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 //
 //
+
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -216,10 +233,48 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         initListners(map);
         fusedLocation.connectToApiClient();
 
+
+        params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        tv.setBackgroundColor(getResources().getColor(R.color.white_200));
+        tv.setText("Owner Location");
+        layout.addView(tv, params);
+        layout.setBackgroundColor(getResources().getColor(R.color.white_200));
+        popUp.setContentView(layout);
+
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Helper.toastShort(activity, clickedMarker.getTitle());
+            }
+        });
+
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                if (popUp.isShowing()){
+                    popUp.dismiss();
+                }
+            }
+        });
+
         map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                Helper.toastShort(activity, marker.getId()+"");
+                clickedMarker = marker;
+                if (activeSelection.equalsIgnoreCase("farm")){
+                    if (!popUp.isShowing()) {
+                        popUp.showAtLocation(mainLayout, Gravity.BOTTOM, 0, 20);
+                        popUp.update(0, 30, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    } else {
+                        popUp.dismiss();
+                    }
+                }
+
+
                 return false;
             }
         });
@@ -279,6 +334,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 showAllRelatedMarkers();
                 closeDrawer();
                 activeSelection = "farm";
+                if (popUp.isShowing()){
+                    popUp.dismiss();
+                }
             }
         });
 
@@ -299,6 +357,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 closeDrawer();
                 activeSelection = "customer";
                 showAllCustomerLocation();
+                if (popUp.isShowing()){
+                    popUp.dismiss();
+                }
             }
         });
 

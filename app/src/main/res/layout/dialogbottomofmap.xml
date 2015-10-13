@@ -2,22 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="wrap_content"
+              android:paddingLeft="5dp"
+              android:paddingRight="5dp"
               android:background="@drawable/bg_white_box_shadowed"
-              android:layout_height="25dp">
+              android:padding="0dp"
+              android:layout_margin="0dp"
+              android:layout_height="22dp">
 
     <Button
         android:layout_weight="1"
-        android:textSize="14sp"
+        android:textSize="13sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="POND INFO"
+        android:text="Customer Address"
+        android:padding="0dp"
+        android:textColor="@color/gray_900"
         android:background="@drawable/bg_material_transparent"
         android:id="@+id/btn_bottomMap1"
         android:layout_gravity="center_horizontal"/>
 
     <Button
-        android:textSize="14sp"
+        android:textSize="13sp"
         android:layout_weight="1"
+        android:visibility="gone"
         android:background="@drawable/bg_material_transparent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
