@@ -54,6 +54,7 @@
     <color name="orange_400">#bfff5722</color>
     <color name="orange_500">#d3ff5722</color>
     <color name="orange_600">#edff5722</color>
+    <color name="red_orange_800">#EB2C02</color>
     <color name="transparent">#00ffffff</color>
 
 </resources>

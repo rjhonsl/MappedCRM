@@ -678,7 +678,7 @@ public class Helper {
 
 
         Marker marker = map.addMarker(new MarkerOptions()
-                        .title(id + "-" + farmname + "-" + totalstock + "-" + specie)
+                        .title(id + "#-#" + farmname + "#-#" + totalstock + "#-#" + specie)
                         .icon(BitmapDescriptorFactory.fromResource(iconResID))
                         .snippet(address)
                         .position(latlng)

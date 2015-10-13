@@ -175,9 +175,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                         if(((Var) this.getApplication()).getGoogleMap() != null){
                             moveCameraAnimate(((Var) this.getApplication()).getGoogleMap(), latLng, 14);
-                        maps.clear();
-                        Helper.map_addMarker(((Var) this.getApplication()).getGoogleMap(), latLng, R.drawable.ic_place_red_24dp,
-                                extras.getString("contactName"), extras.getString("address"), extras.getInt("id")+"",null, null);
+                            maps.setInfoWindowAdapter(new FarmInfoWindow());
+                            maps.clear();
+                            Helper.map_addMarker(((Var) this.getApplication()).getGoogleMap(), latLng, R.drawable.ic_place_red_24dp,
+                                    extras.getString("contactName"), extras.getString("address"), extras.getInt("id")+"",null, null);
                         PD.dismiss();
                         }
                         else{
@@ -211,11 +212,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         ((Var) this.getApplication()).setGoogleMap(map);
 
         txtusername.setText(Helper.variables.getGlobalVar_currentUserFirstname(activity) + " " + Helper.variables.getGlobalVar_currentUserLastname(activity));
-        map.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+        map.setInfoWindowAdapter(new FarmInfoWindow());
         initListners(map);
         fusedLocation.connectToApiClient();
 
-
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Helper.toastShort(activity, marker.getId()+"");
+                return false;
+            }
+        });
         if (Helper.variables.getGlobalVar_currentlevel(activity) > 1){
             nav_usermonitoring.setVisibility(View.GONE);
         }else{
@@ -271,6 +278,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 mapClear(map);
                 showAllRelatedMarkers();
                 closeDrawer();
+                activeSelection = "farm";
             }
         });
 
@@ -448,7 +456,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         curId = curId + c;
                     }
 
-                    String[] details = marker.getTitle().split("-");
+                    String[] details = marker.getTitle().split("#-#");
 //                Helper.toastShort(activity, "."+marker.getTitle()+"."+details[0]);
                     LatLng location = marker.getPosition();
 
@@ -458,9 +466,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     intent.putExtra("latitude", location.latitude +"");
                     intent.putExtra("longitude", location.longitude+ "");
                     startActivity(intent);
-                }else if (activeSelection.equalsIgnoreCase("farm")){
-
-                }
+                }else if(activeSelection.equalsIgnoreCase("customer")){
+                    Helper.toastShort(activity, marker.getTitle() + " " + marker.getSnippet());
+                }//here i stopped
 
             }
 
@@ -611,11 +619,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    public void showAllRelatedMarkers(){
+    public void showAllRelatedMarkers() {
         PD.setMessage("Please wait...");
         PD.show();
         String url =  "";
-        passedintent = getIntent();
         if (passedintent != null){
             if (passedintent.hasExtra("fromActivity")){
 
@@ -633,7 +640,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Log.d("URL", "default");
                     activeSelection = "farm";
                 }
-
             }else{
                 url  = Helper.variables.URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO;
                 Log.d("URL", "fromActivity null");
@@ -661,6 +667,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 if (custInfoObjectList.size() > 0) {
                                     if (passedintent != null) {
                                         if (passedintent.hasExtra("fromActivity")) {
+                                            if (passedintent.getStringExtra("fromActivity").equalsIgnoreCase("login")) {
                                                 userid = extrass.getInt("userid");
                                                 userlevel = extrass.getInt("userlevel");
                                                 username = extrass.getString("username");
@@ -668,6 +675,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                 lastname = extrass.getString("lastname");
                                                 userdescription = extrass.getString("userdescription");
                                                 insertloginlocation();
+                                            }
                                                 updateDisplay();
                                         } else {
                                             updateDisplay();
@@ -739,11 +747,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                         }
                                         address = address + " " + custInfoObjectList.get(i).getBarangay() + ", " + custInfoObjectList.get(i).getBarangay() + ", " + custInfoObjectList.get(i).getCity() + ", " + custInfoObjectList.get(i).getProvince();
 
+                                        maps.setInfoWindowAdapter(new CustomerInfoWindow());
 
-                                        Helper.map_addMarker(maps, new LatLng(Double.parseDouble(custInfoObjectList.get(i).getLatitude()), Double.parseDouble(custInfoObjectList.get(i).getLongtitude())),
-                                                R.drawable.ic_housemarker_24dp,
-                                                custInfoObjectList.get(i).getFirstname() +" "+ custInfoObjectList.get(i).getLastname(), //Firstname and LastName
-                                               address,  custInfoObjectList.get(i).getFarmID(), "0", "0" );
+                                                Helper.map_addMarker(maps, new LatLng(Double.parseDouble(custInfoObjectList.get(i).getLatitude()), Double.parseDouble(custInfoObjectList.get(i).getLongtitude())),
+                                                        R.drawable.ic_housemarker_24dp,
+                                                        custInfoObjectList.get(i).getFirstname() + " " + custInfoObjectList.get(i).getLastname(), //Firstname and LastName
+                                                        address, custInfoObjectList.get(i).getFarmID(), "0", "0");
                                     }
                                 }else{Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "You have not added any customer address", "OK", R.color.red);}
                             }else{ Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "You have not added any customer address", "OK", R.color.red);}
@@ -814,7 +823,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 for (int i = 0; i < custInfoObjectList.size(); i++) {
                     final CustInfoObject ci;
                     ci = custInfoObjectList.get(i);
-                    Log.d("JSON PARSE", "" + ci.getFarmID() +" " +ci.getFarmname());
+                    Log.d("JSON PARSE", "" + ci.getFarmID() + " " + ci.getFarmname());
+                    maps.setInfoWindowAdapter(new FarmInfoWindow());
                     LatLng custLatlng = new LatLng(Double.parseDouble(ci.getLatitude()+""), Double.parseDouble(ci.getLongtitude()+""));
                     Marker marker = Helper.map_addMarker(maps, custLatlng,
                             R.drawable.ic_place_red_24dp, ci.getFarmname(), ci.getAddress(), ci.getCi_id() + "", ci.getTotalStockOfFarm() + "", ci.getAllSpecie());
@@ -857,13 +867,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 
-    //class that handles CustomInfowWindow
-    class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
+    //clasfarfowWindow
+    class FarmInfoWindow implements GoogleMap.InfoWindowAdapter {
 
         private final View myContentsView;
 
-        CustomInfoWindowAdapter() {
-            myContentsView = getLayoutInflater().inflate(R.layout.custom_info_contents, null);
+        FarmInfoWindow() {
+            myContentsView = getLayoutInflater().inflate(R.layout.infowindow_farminfo, null);
         }
 
 
@@ -875,7 +885,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             TextView txtStock = ((TextView) myContentsView.findViewById(R.id.stocks));
             TextView txtSpecie = ((TextView) myContentsView.findViewById(R.id.specie));
 //            id + "-" + farmname +"-"+ totalstock + "-" + specie
-            String[] details = marker.getTitle().split("-");
+            String[] details = marker.getTitle().split("#-#");
 
             tvTitle.setText(details[1]);
             if (details[2].equalsIgnoreCase("") || details[2].equalsIgnoreCase("null")){
@@ -901,7 +911,40 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         @Override
         public View getInfoContents(Marker marker) {
 
-           return null;
+            return null;
+        }
+    }
+
+
+    class CustomerInfoWindow implements GoogleMap.InfoWindowAdapter {
+
+        private final View myContentsView;
+
+        CustomerInfoWindow() {
+            myContentsView = getLayoutInflater().inflate(R.layout.infowindow_customer_address, null);
+        }
+
+
+        @Override
+        public View getInfoWindow(Marker marker) {
+
+            TextView tvSnippet = ((TextView) myContentsView.findViewById(R.id.address));
+            TextView tvTitle = ((TextView) myContentsView.findViewById(R.id.title));
+
+            String[] details = marker.getTitle().split("#-#");
+
+            tvSnippet.setText(marker.getSnippet());
+            tvTitle.setText(details[1]+"");
+
+
+            return myContentsView;
+        }
+
+
+        @Override
+        public View getInfoContents(Marker marker) {
+
+            return null;
         }
     }
 

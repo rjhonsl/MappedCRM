@@ -63,12 +63,12 @@
                     android:textSize="18sp"
                     android:textColor="#a3002a24"
                     android:textStyle="normal"
-                    android:id="@+id/txt_settings_customerInfo"
+                    android:id="@+id/txt_settings_farmInfo"
                     android:background="@drawable/bg_white_box_noshadow"
                     android:drawableLeft="@drawable/ic_people_darkteal_24dp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="    Customer Information"
+                    android:text="    Farm Information"
                     />
 
                 <TextView
@@ -76,11 +76,11 @@
                     android:textSize="18sp"
                     android:background="@drawable/bg_white_box_noshadow"
                     android:drawableLeft="@drawable/ic_event_darkteal_24dp"
-                    android:id="@+id/txt_settings_customerActivity"
+                    android:id="@+id/txt_settings_customerInfo"
                     android:textColor="#a3002a24"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="    Customer Activity"
+                    android:text="    Customer Information"
                     />
 
                 <TextView

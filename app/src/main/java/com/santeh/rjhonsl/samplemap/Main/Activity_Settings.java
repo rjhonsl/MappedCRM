@@ -8,9 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.santeh.rjhonsl.samplemap.R;
-import com.santeh.rjhonsl.samplemap.Utils.Helper;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by rjhonsl on 7/31/2015.
@@ -28,9 +25,9 @@ public class Activity_Settings extends Activity{
 
         txtTitle = (TextView) findViewById(R.id.txt_settings_title);
         txtAbout = (TextView) findViewById(R.id.txt_settings_about);
-        txtSettings_custinfo = (TextView) findViewById(R.id.txt_settings_customerInfo);
+        txtSettings_custinfo = (TextView) findViewById(R.id.txt_settings_farmInfo);
         txtChangeLog = (TextView) findViewById(R.id.txt_settings_changelog);
-        txtCustActivity = (TextView) findViewById(R.id.txt_settings_customerActivity);
+        txtCustActivity = (TextView) findViewById(R.id.txt_settings_customerInfo);
         txtCustMonitoring = (TextView) findViewById(R.id.txt_settings_customerMonitoring);
 
         txtTitle.setOnClickListener(new View.OnClickListener() {
