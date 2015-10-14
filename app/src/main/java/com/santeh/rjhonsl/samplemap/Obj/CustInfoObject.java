@@ -12,6 +12,10 @@ public class CustInfoObject {
 
 	private String latitude;
 	private String longtitude;
+	private String cust_latitude;
+	private String cust_longtitude;
+
+
 	private String contact_name;
 	private String company;
 	private String address;
@@ -59,6 +63,7 @@ public class CustInfoObject {
 	private int isVisited;
 
 	private String customerID;
+	private String mainCustomerId;
 	private String specie;
 	private String culturesystem;
 	private String dateStocked;
@@ -659,5 +664,29 @@ public class CustInfoObject {
 
 	public void setAddedBy(String addedBy) {
 		this.addedBy = addedBy;
+	}
+
+	public String getCust_latitude() {
+		return cust_latitude;
+	}
+
+	public void setCust_latitude(String cust_latitude) {
+		this.cust_latitude = cust_latitude;
+	}
+
+	public String getCust_longtitude() {
+		return cust_longtitude;
+	}
+
+	public void setCust_longtitude(String cust_longtitude) {
+		this.cust_longtitude = cust_longtitude;
+	}
+
+	public String getMainCustomerId() {
+		return mainCustomerId;
+	}
+
+	public void setMainCustomerId(String mainCustomerId) {
+		this.mainCustomerId = mainCustomerId;
 	}
 }

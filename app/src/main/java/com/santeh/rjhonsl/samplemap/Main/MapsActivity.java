@@ -7,7 +7,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,7 +44,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.maps.android.ui.IconGenerator;
 import com.santeh.rjhonsl.samplemap.APIs.MyVolleyAPI;
 import com.santeh.rjhonsl.samplemap.Obj.CustInfoObject;
 import com.santeh.rjhonsl.samplemap.Obj.Var;
@@ -69,7 +67,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     PopupWindow popUp;
     LinearLayout layout;
-    TextView tv;
+    TextView tvBottomPopUp;
     ViewGroup.LayoutParams params;
     LinearLayout mainLayout;
     boolean ifViewVisible = true;
@@ -131,7 +129,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         popUp = new PopupWindow(this);
         layout = new LinearLayout(this);
         mainLayout = new LinearLayout(this);
-        tv = new TextView(this);
+        tvBottomPopUp = new TextView(this);
 
         fusedLocation = new FusedLocation(context, activity);
         fusedLocation.buildGoogleApiClient(context);
@@ -230,7 +228,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         txtusername.setText(Helper.variables.getGlobalVar_currentUserFirstname(activity) + " " + Helper.variables.getGlobalVar_currentUserLastname(activity));
         map.setInfoWindowAdapter(new FarmInfoWindow());
-        initListners(map);
+        initListeners(map);
         fusedLocation.connectToApiClient();
 
 
@@ -239,16 +237,37 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         layout.setOrientation(LinearLayout.VERTICAL);
 
-        tv.setBackgroundColor(getResources().getColor(R.color.white_200));
-        tv.setText("Owner Location");
-        layout.addView(tv, params);
+        tvBottomPopUp.setBackgroundColor(getResources().getColor(R.color.white_200));
+        tvBottomPopUp.setText("Owner Location");
+        layout.addView(tvBottomPopUp, params);
         layout.setBackgroundColor(getResources().getColor(R.color.white_200));
         popUp.setContentView(layout);
 
-        tv.setOnClickListener(new View.OnClickListener() {
+        tvBottomPopUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Helper.toastShort(activity, clickedMarker.getTitle());
+                popUp.dismiss();
+//                Helper.toastShort(activity, clickedMarker.getTitle());
+                double lat = 0,lng = 0;
+                String[] splitted = clickedMarker.getTitle().split("#-#");
+                if (!splitted[4].equalsIgnoreCase("") && !splitted[4].equalsIgnoreCase("null")){
+                    lat = Double.parseDouble(splitted[4]);
+                }
+
+                if (!splitted[5].equalsIgnoreCase("") && !splitted[5].equalsIgnoreCase("null")){
+                    lng = Double.parseDouble(splitted[5]);
+                }
+
+                if (lat > 0 && lng > 0){
+                    Helper.moveCameraAnimate(maps, new LatLng(lat, lng), 14);
+                    maps.clear();
+                    showAllCustomerLocation();
+
+                }else{
+                    Helper.createCustomThemedColorDialogOKOnly(activity, "Oops", "Address of farm owner is currently not available", "OK", R.color.blue);
+                }
+
+
             }
         });
 
@@ -265,11 +284,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public boolean onMarkerClick(Marker marker) {
                 clickedMarker = marker;
-                if (activeSelection.equalsIgnoreCase("farm")){
-                    if (!popUp.isShowing()) {
+                if (activeSelection.equalsIgnoreCase("farm")) {
+
+                    if (!marker.isInfoWindowShown()) {
                         popUp.showAtLocation(mainLayout, Gravity.BOTTOM, 0, 20);
                         popUp.update(0, 30, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    } else {
+                    }
+                    else{
                         popUp.dismiss();
                     }
                 }
@@ -310,7 +331,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }, 500);
     }
 
-    private void initListners(final GoogleMap map) {
+    private void initListeners(final GoogleMap map) {
         map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(final LatLng latLng) {
@@ -334,7 +355,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 showAllRelatedMarkers();
                 closeDrawer();
                 activeSelection = "farm";
-                if (popUp.isShowing()){
+                if (popUp.isShowing()) {
                     popUp.dismiss();
                 }
             }
@@ -357,7 +378,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 closeDrawer();
                 activeSelection = "customer";
                 showAllCustomerLocation();
-                if (popUp.isShowing()){
+                if (popUp.isShowing()) {
                     popUp.dismiss();
                 }
             }
@@ -506,8 +527,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-
-                if (activeSelection.equalsIgnoreCase("farm")){
+                String[] details = marker.getTitle().split("#-#");
+                if (activeSelection.equalsIgnoreCase("farm")) {
                     String ID = marker.getId(), curId = "";
                     for (int i = 0; i < marker.getTitle().length(); i++) {
                         char c = marker.getTitle().charAt(i);
@@ -517,19 +538,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         curId = curId + c;
                     }
 
-                    String[] details = marker.getTitle().split("#-#");
-//                Helper.toastShort(activity, "."+marker.getTitle()+"."+details[0]);
+
+//                    Helper.toastShort(activity, "."+marker.getTitle()+"."+details[0]);
                     LatLng location = marker.getPosition();
 
                     Intent intent = new Intent(MapsActivity.this, Activity_ManagePonds.class);
                     intent.putExtra("id", Integer.parseInt(details[0]));
                     intent.putExtra("farmname", "" + details[1]);
-                    intent.putExtra("latitude", location.latitude +"");
-                    intent.putExtra("longitude", location.longitude+ "");
+                    intent.putExtra("latitude", location.latitude + "");
+                    intent.putExtra("longitude", location.longitude + "");
                     startActivity(intent);
-                }else if(activeSelection.equalsIgnoreCase("customer")){
-                    Helper.toastShort(activity, marker.getTitle() + " " + marker.getSnippet());
-                }//here i stopped
+                } else if (activeSelection.equalsIgnoreCase("customer")) {
+                    showAllRelatedFarmsOfCustomer(details[0], details[2]);
+                }
 
             }
 
@@ -569,16 +590,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 d.hide();
             }
         });
-    }
-
-    private Bitmap iconGeneratorSample(Context context, String str) {
-
-        IconGenerator iconGenerator = new IconGenerator(context);
-        iconGenerator.setBackground(getResources().getDrawable(R.drawable.ic_place_red_24dp));
-//        iconGenerator.setColor(Color.parseColor("#00000"));
-        iconGenerator.setColor(R.color.yellow);
-        iconGenerator.setTextAppearance(R.style.IconGeneratorTextView);
-        return iconGenerator.makeIcon(str);
     }
 
     private boolean checkIfLocationAvailable() {
@@ -737,6 +748,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                 userdescription = extrass.getString("userdescription");
                                                 insertloginlocation();
                                             }
+                                            activeSelection = "farm";
                                                 updateDisplay();
                                         } else {
                                             updateDisplay();
@@ -768,6 +780,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 params.put("deviceid", Helper.getMacAddress(context));
                 params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
                 params.put("userlvl", Helper.variables.getGlobalVar_currentlevel(activity)+"");
+
 //
                 return params;
             }
@@ -776,6 +789,72 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         MyVolleyAPI api = new MyVolleyAPI();
         api.addToReqQueue(postRequest, MapsActivity.this);
     }
+
+
+    public void showAllCustomerFarmByID(final String farmid) {
+        PD.setMessage("Please wait...");
+        PD.show();
+        StringRequest postRequest = new StringRequest(Request.Method.POST, Helper.variables.URL_SELECT_FARMINFO_LF_PIANDMCI_BY_FARMID,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+
+                        if (response.substring(1, 2).equalsIgnoreCase("0")) {
+                            PD.dismiss();
+                            updateDisplay();
+                        } else {
+                            PD.dismiss();
+                            custInfoObjectList = CustAndPondParser.parseFeed(response);
+                            if (custInfoObjectList != null) {
+                                if (custInfoObjectList.size() > 0) {
+
+                                    maps.clear();
+                                    activeSelection = "farm";
+
+                                    maps.setInfoWindowAdapter(new FarmInfoWindow());
+
+                                    for (int i = 0; i < custInfoObjectList.size(); i++) {
+                                        final CustInfoObject ci;
+                                        ci = custInfoObjectList.get(i);
+                                        Log.d("MARKER", "ADDING FARM MARKER"+1);
+                                        LatLng custLatlng = new LatLng(Double.parseDouble(ci.getLatitude() + ""), Double.parseDouble(ci.getLongtitude() + ""));
+                                        Helper.map_addMarker(maps, custLatlng,
+                                                R.drawable.ic_place_red_24dp, ci.getFarmname(), ci.getAddress(), ci.getCi_id() + "", ci.getTotalStockOfFarm() + "",
+                                                ci.getAllSpecie() + "#-#" + ci.getCust_latitude() + "#-#" + ci.getCust_longtitude());
+                                    }
+                                }
+                            }
+
+
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        PD.dismiss();
+                        Helper.toastShort(MapsActivity.this, "Something happened. Please try again later");
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
+                params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                params.put("deviceid", Helper.getMacAddress(context));
+                params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
+                params.put("userlvl", Helper.variables.getGlobalVar_currentlevel(activity)+"");
+                params.put("farmid", farmid+"");
+
+//
+                return params;
+            }
+        };
+
+        MyVolleyAPI api = new MyVolleyAPI();
+        api.addToReqQueue(postRequest, MapsActivity.this);
+    }
+
 
 
     public void showAllCustomerLocation(){
@@ -809,13 +888,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                         address = address + " " + custInfoObjectList.get(i).getBarangay() + ", " + custInfoObjectList.get(i).getBarangay() + ", " + custInfoObjectList.get(i).getCity() + ", " + custInfoObjectList.get(i).getProvince();
 
                                         maps.setInfoWindowAdapter(new CustomerInfoWindow());
-
-                                                Helper.map_addMarker(maps, new LatLng(Double.parseDouble(custInfoObjectList.get(i).getLatitude()), Double.parseDouble(custInfoObjectList.get(i).getLongtitude())),
-                                                        R.drawable.ic_housemarker_24dp,
-                                                        custInfoObjectList.get(i).getFirstname() + " " + custInfoObjectList.get(i).getLastname(), //Firstname and LastName
-                                                        address, custInfoObjectList.get(i).getFarmID(), "0", "0");
+                                        activeSelection = "customer";
+                                        Helper.map_addMarker(maps, new LatLng(Double.parseDouble(custInfoObjectList.get(i).getCust_latitude()), Double.parseDouble(custInfoObjectList.get(i).getCust_longtitude())),
+                                                R.drawable.ic_housemarker_24dp,
+                                                custInfoObjectList.get(i).getFirstname() + " " + custInfoObjectList.get(i).getLastname(), //Firstname and LastName
+                                                address, custInfoObjectList.get(i).getFarmID(), custInfoObjectList.get(i).getMainCustomerId(), "0");
                                     }
-                                }else{Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "You have not added any customer address", "OK", R.color.red);}
+                                }else{Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "You have not added any customer address" , "OK", R.color.red);}
                             }else{ Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "You have not added any customer address", "OK", R.color.red);}
                         } else {Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "You have not added any customer address", "OK", R.color.red);}
                     }
@@ -843,9 +922,86 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         MyVolleyAPI api = new MyVolleyAPI();
         api.addToReqQueue(postRequest, MapsActivity.this);
 
-
-
     }
+
+
+
+    public void showAllRelatedFarmsOfCustomer(final String farmid, final String ownerName){
+        PD.setMessage("Please wait...");
+        PD.show();
+        String url = Helper.variables.URL_SELECT_FARM_BY_FARMID;
+
+        final String finalUrl = url;
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(final String response) {
+
+                        PD.dismiss();
+
+                        if (!response.substring(1, 2).equalsIgnoreCase("0")) {
+                            custInfoObjectList = CustAndPondParser.parseFeed(response);
+
+                            if (custInfoObjectList!=null){
+                                if (custInfoObjectList.size() > 0){
+                                    activeSelection = "customer";
+                                    String farmnames[] = new String[custInfoObjectList.size()];
+                                    for (int i = 0; i < custInfoObjectList.size(); i++) {
+                                        farmnames[i] = custInfoObjectList.get(i).getFarmname();
+                                    }
+
+                                    final Dialog d = Helper.createCustomThemedListDialog(activity, farmnames, "Farm(s)", R.color.darkgreen_800);
+                                    d.show();
+                                    ListView lv = (ListView) d.findViewById(R.id.dialog_list_listview);
+                                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            maps.setInfoWindowAdapter(new FarmInfoWindow());
+                                            double lat = Double.parseDouble(custInfoObjectList.get(position).getLatitude() + "");
+                                            double lng = Double.parseDouble(custInfoObjectList.get(position).getLongtitude() + "");
+                                            LatLng latLng = new LatLng(lat, lng);
+//                                            Helper.toastShort(activity, custInfoObjectList.get(position).getFarmID() + " " + custInfoObjectList.get(position).getLongtitude() + " " + custInfoObjectList.get(position).getLatitude());
+                                            Helper.moveCameraAnimate(maps,latLng, 14 );
+
+                                            showAllCustomerFarmByID(custInfoObjectList.get(position).getFarmID());
+                                            d.hide();
+                                        }
+                                    });
+
+//                                    Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", response, "OK", R.color.red);
+
+//                                 //ass
+//                                    12344;
+                                }else{Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "No farm related to selected customer. Please check Farm ID" , "OK", R.color.red);}
+                            }else{ Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "No farm related to selected customer. Please check Farm ID", "OK", R.color.red);}
+                        } else {Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "No farm related to selected customer. Please check Farm ID", "OK", R.color.red);}
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        PD.dismiss();
+                        Helper.toastShort(MapsActivity.this,"Something happened. Please try again later");
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
+                params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                params.put("deviceid", Helper.getMacAddress(context));
+                params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
+                params.put("userlvl", Helper.variables.getGlobalVar_currentlevel(activity)+"");
+                params.put("farmid", farmid+"");
+//
+                return params;
+            }
+        };
+
+        MyVolleyAPI api = new MyVolleyAPI();
+        api.addToReqQueue(postRequest, MapsActivity.this);
+    }
+
 
     private void insertloginlocation(){
         fusedLocation.connectToApiClient();
@@ -873,24 +1029,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     protected void updateDisplay() {
-        Log.d("UPDATE DISPLAY", "before condition "+ String.valueOf("a"));
-
-
-
-        if(custInfoObjectList != null){
-
-            if (custInfoObjectList.size() > 0){
-                Log.d("UPDATE DISPLAY", "after condition");
+        Log.d("UPDATE DISPLAY", "CUSTINFOOBJECT");
+        if (custInfoObjectList != null) {
+            Log.d("UPDATE DISPLAY", "not null");
+            if (custInfoObjectList.size() > 0) {
+                Log.d("UPDATE DISPLAY", "not zero");
                 for (int i = 0; i < custInfoObjectList.size(); i++) {
                     final CustInfoObject ci;
                     ci = custInfoObjectList.get(i);
-                    Log.d("JSON PARSE", "" + ci.getFarmID() + " " + ci.getFarmname());
                     maps.setInfoWindowAdapter(new FarmInfoWindow());
-                    LatLng custLatlng = new LatLng(Double.parseDouble(ci.getLatitude()+""), Double.parseDouble(ci.getLongtitude()+""));
+                    LatLng custLatlng = new LatLng(Double.parseDouble(ci.getLatitude() + ""), Double.parseDouble(ci.getLongtitude() + ""));
                     Marker marker = Helper.map_addMarker(maps, custLatlng,
-                            R.drawable.ic_place_red_24dp, ci.getFarmname(), ci.getAddress(), ci.getCi_id() + "", ci.getTotalStockOfFarm() + "", ci.getAllSpecie());
+                            R.drawable.ic_place_red_24dp, ci.getFarmname(), ci.getAddress(), ci.getCi_id() + "", ci.getTotalStockOfFarm() + "",
+                            ci.getAllSpecie() + "#-#" + ci.getCust_latitude() + "#-#" + ci.getCust_longtitude());
                 }
-            }else{
+            } else {
                 final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "MAP", "You have not added a farm yet. \n You can start by pressing the  plus '+' on the upper right side of the screen.", "OK", R.color.skyblue_400);
                 Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
                 d.show();
@@ -903,8 +1056,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 });
             }
 
-
-        }else {
+        } else {
             final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "MAP", "You have not added a farm yet. \n You can start by pressing the  plus '+' on the upper right side of the screen.", "OK", R.color.skyblue_400);
             Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
             d.show();
@@ -925,7 +1077,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onPause();
         Log.d("PROCESS", "Onpause");
     }
-
 
 
     //clasfarfowWindow

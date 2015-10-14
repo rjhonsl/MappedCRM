@@ -104,6 +104,8 @@ public class Helper {
         public static String URL_SELECT_ALL_USERS_ACTIVITY_BY_ID            = sourceAddress_bizNF + "selectAllUserActivityByID.php";
         public static String URL_SELECT_ALL_PONDINFO_BETWEEN_DATES          = sourceAddress_bizNF + "selectAllPondBetweenDate.php";
         public static String URL_SELECT_ALL_PONDINFO_LEFTJOIN_CUSTINFO      = sourceAddress_bizNF + "selectAllPondInfoLeftJoinCustInfo.php";
+        public static String URL_SELECT_FARM_BY_FARMID                      = sourceAddress_bizNF + "selectFarmByFarmID.php";
+        public static String URL_SELECT_FARMINFO_LF_PIANDMCI_BY_FARMID      = sourceAddress_bizNF + "selectCustomerInfoLeftJoinPondInfoLeftJoinMciByFarmID.php";
         public static String URL_SELECT_CUST_LOCAITON_BY_ASSIGNED_AREA      = sourceAddress_bizNF + "selectCustomerLocationByAssingedUser.php";
         public static String URL_SELECT_ALL_POND_WEEKLYUPDATES_INNERJOIN_PONDINFO_GROUPBY_FARMNAME
                 = sourceAddress_bizNF + "selectPondWeeklyUpdate_InnerJoin_Pond_GroupByFarmName.php";
