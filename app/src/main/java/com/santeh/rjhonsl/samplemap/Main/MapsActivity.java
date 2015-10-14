@@ -332,13 +332,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void initListeners(final GoogleMap map) {
-        map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(final LatLng latLng) {
-
-            }
-
-        });
 
         nav_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -449,63 +442,127 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 if (Helper.isLocationEnabled(context)) {
                     fusedLocation.connectToApiClient();
-
-
-                    final Handler handler1 = new Handler();
-                    handler1.postDelayed(new Runnable() {
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            final LatLng latlng = fusedLocation.getLastKnowLocation();
+                            curLatlng = fusedLocation.getLastKnowLocation();
+                            Helper.createCustomThemedColorDialogOKOnly(activity, "Add Marker", "Long press any location within 1km to add marker", "OK", R.color.blue);
+                        }
+                    }, 280);
 
-                            if (checkIfLocationAvailable() || latlng != null) {
-                                try {
-                                    //getLastKnownLocation();
+                    maps.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                        @Override
+                        public void onMapLongClick(LatLng latLng) {
 
-                                    moveCameraAnimate(map, new LatLng(latlng.latitude, latlng.longitude), 15);
+                            final LatLng touchLocation = latLng;
+                            LatLng center = fusedLocation.getLastKnowLocation();
 
-                                    final Handler handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
+                            float[] results = new float[1];
+                            Location.distanceBetween(center.latitude, center.longitude,
+                                    touchLocation.latitude, touchLocation.longitude, results);
+//                        Helper.toastLong(activity, results[0]+"");
 
-                                            String[] options = {"Farm Information", "Customer Information"};
-                                            final Dialog d1 = Helper.createCustomThemedListDialogWithPrompt(activity, options, "Add Marker",
-                                                    "Select the type of marker you want to add on this location.\n\nLat. " + latlng.latitude + "     Lng. " + latlng.longitude, R.color.blue);
-                                            ListView lvoptions = (ListView) d1.findViewById(R.id.dialog_list_listview);
-                                            lvoptions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                                @Override
-                                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                                    if (position == 0) {
+                            if (results[0] > 1000) {
+                                final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Out of range", "Selection is out of 1km range from your location", "OK", R.color.red);
+                                d.show();
 
-                                                        d1.hide();
-                                                        final Intent intent = new Intent(MapsActivity.this, Activity_Add_FarmInformation.class);
-                                                        intent.putExtra("latitude", latlng.latitude);
-                                                        intent.putExtra("longtitude", latlng.longitude);
-                                                        startActivity(intent);
-                                                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                                                    }
-
-                                                    if (position == 1) {
-                                                        d1.hide();
-                                                        final Intent intent = new Intent(MapsActivity.this, Activity_Add_CustomerInformation_Basic.class);
-                                                        intent.putExtra("latitude", latlng.latitude);
-                                                        intent.putExtra("longtitude", latlng.longitude);
-                                                        startActivity(intent);
-                                                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                                                    }
-                                                }
-                                            });
-                                        }
-                                    }, 1200);
-
-                                } catch (Exception e) {
-                                    dialogLocationNotAvailableOkOnly();
-                                }
+                                Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
+                                ok.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        d.hide();
+                                    }
+                                });
                             } else {
-                                dialogLocationNotAvailableOkOnly();
+
+                                String[] options = {"Farm Information", "Customer Information"};
+                                final Dialog d1 = Helper.createCustomThemedListDialogWithPrompt(activity, options, "Add Marker",
+                                        "Select the type of marker you want to add on this location.\n\nLat. " + touchLocation.latitude + "     Lng. " + touchLocation.longitude, R.color.blue);
+                                ListView lvoptions = (ListView) d1.findViewById(R.id.dialog_list_listview);
+                                lvoptions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        if (position == 0) {
+
+                                            d1.hide();
+                                            final Intent intent = new Intent(MapsActivity.this, Activity_Add_FarmInformation.class);
+                                            intent.putExtra("latitude", touchLocation.latitude);
+                                            intent.putExtra("longtitude", touchLocation.longitude);
+                                            startActivity(intent);
+                                            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                                        }
+
+                                        if (position == 1) {
+                                            d1.hide();
+                                            final Intent intent = new Intent(MapsActivity.this, Activity_Add_CustomerInformation_Basic.class);
+                                            intent.putExtra("latitude", touchLocation.latitude);
+                                            intent.putExtra("longtitude", touchLocation.longitude);
+                                            startActivity(intent);
+                                            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                                        }
+                                    }
+                                });
+
                             }
                         }
-                    }, 200);
+                    });
+//
+//                    final Handler handler1 = new Handler();
+//                    handler1.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            final LatLng latlng = fusedLocation.getLastKnowLocation();
+//
+//                            if (checkIfLocationAvailable() || latlng != null) {
+//                                try {
+//                                    //getLastKnownLocation();
+//
+//                                    moveCameraAnimate(map, new LatLng(latlng.latitude, latlng.longitude), 15);
+//
+//                                    final Handler handler = new Handler();
+//                                    handler.postDelayed(new Runnable() {
+//                                        @Override
+//                                        public void run() {
+//
+//                                            String[] options = {"Farm Information", "Customer Information"};
+//                                            final Dialog d1 = Helper.createCustomThemedListDialogWithPrompt(activity, options, "Add Marker",
+//                                                    "Select the type of marker you want to add on this location.\n\nLat. " + latlng.latitude + "     Lng. " + latlng.longitude, R.color.blue);
+//                                            ListView lvoptions = (ListView) d1.findViewById(R.id.dialog_list_listview);
+//                                            lvoptions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                                                @Override
+//                                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                                                    if (position == 0) {
+//
+//                                                        d1.hide();
+//                                                        final Intent intent = new Intent(MapsActivity.this, Activity_Add_FarmInformation.class);
+//                                                        intent.putExtra("latitude", latlng.latitude);
+//                                                        intent.putExtra("longtitude", latlng.longitude);
+//                                                        startActivity(intent);
+//                                                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+//                                                    }
+//
+//                                                    if (position == 1) {
+//                                                        d1.hide();
+//                                                        final Intent intent = new Intent(MapsActivity.this, Activity_Add_CustomerInformation_Basic.class);
+//                                                        intent.putExtra("latitude", latlng.latitude);
+//                                                        intent.putExtra("longtitude", latlng.longitude);
+//                                                        startActivity(intent);
+//                                                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+//                                                    }
+//                                                }
+//                                            });
+//                                        }
+//                                    }, 1200);
+//
+//                                } catch (Exception e) {
+//                                    dialogLocationNotAvailableOkOnly();
+//                                }
+//                            } else {
+//                                dialogLocationNotAvailableOkOnly();
+//                            }
+//                        }
+//                    }, 200);
                 } else {
                     Helper.isLocationAvailable(context, activity);
                 }
