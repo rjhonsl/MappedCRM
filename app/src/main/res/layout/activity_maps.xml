@@ -53,6 +53,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
+
+        <ImageButton
+            android:padding="8dp"
+            android:layout_marginRight="11dp"
+            android:layout_marginTop="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/btnaddMarker"
+            android:background="@drawable/bg_white_box_shadowed"
+            android:src="@drawable/ic_clear_black_24dp"
+            android:id="@+id/btnCloseAddMarker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
     </RelativeLayout>
 
 
@@ -210,6 +223,7 @@
                 <TextView
                     android:text="      Hatchery Reports"
                     android:background="@drawable/bg_material_transparent"
+                    android:enabled="false"
                     android:textSize="16sp"
                     android:id="@+id/txt_Nav_hatchery"
                     android:padding="13dp"

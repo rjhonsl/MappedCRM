@@ -11,7 +11,7 @@
         android:background="@color/accent_material_light">
 
         <TextView
-            android:text=" Customer Information"
+            android:text=" Farm Information"
             android:layout_marginLeft="8dp"
             android:textSize="20sp"
             android:paddingLeft="5dp"

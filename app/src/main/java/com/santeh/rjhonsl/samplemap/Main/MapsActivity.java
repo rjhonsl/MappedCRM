@@ -42,6 +42,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.santeh.rjhonsl.samplemap.APIs.MyVolleyAPI;
@@ -80,7 +82,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     DrawerLayout drawerLayout;
 
-    ImageButton map_add_marker;
+    ImageButton map_add_marker, btn_cancelAddmarker;
     ActionBarDrawerToggle drawerListener;
 
     Marker clickedMarker;
@@ -108,6 +110,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     Bundle extrass;
     Intent passedintent;
+
+    CircleOptions circleOptions_addLocation;
+    Circle mapcircle;
 
     FusedLocation fusedLocation;
 
@@ -148,6 +153,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         nav_maptype = (TextView) findViewById(R.id.txt_Nav_changeMapType);
         nav_settings = (TextView) findViewById(R.id.txt_Nav_settings);
         map_add_marker = (ImageButton) findViewById(R.id.btnaddMarker);
+        btn_cancelAddmarker = (ImageButton) findViewById(R.id.btnCloseAddMarker);
         nav_growout = (TextView) findViewById(R.id.txt_Nav_growOut);
         nav_logout = (TextView) findViewById(R.id.txt_Nav_logout);
         textView = (TextView) findViewById(R.id.latLong);
@@ -236,6 +242,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
         layout.setOrientation(LinearLayout.VERTICAL);
+        btn_cancelAddmarker.setVisibility(View.GONE);
 
         tvBottomPopUp.setBackgroundColor(getResources().getColor(R.color.white_200));
         tvBottomPopUp.setText("Owner Location");
@@ -249,6 +256,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 popUp.dismiss();
 //                Helper.toastShort(activity, clickedMarker.getTitle());
                 double lat = 0,lng = 0;
+                String farmidd = "N/A";
                 String[] splitted = clickedMarker.getTitle().split("#-#");
                 if (!splitted[4].equalsIgnoreCase("") && !splitted[4].equalsIgnoreCase("null")){
                     lat = Double.parseDouble(splitted[4]);
@@ -257,14 +265,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (!splitted[5].equalsIgnoreCase("") && !splitted[5].equalsIgnoreCase("null")){
                     lng = Double.parseDouble(splitted[5]);
                 }
+                farmidd = splitted[6];
 
                 if (lat > 0 && lng > 0){
                     Helper.moveCameraAnimate(maps, new LatLng(lat, lng), 14);
                     maps.clear();
-                    showAllCustomerLocation();
 
+                    showAllCustomerLocation();
                 }else{
-                    Helper.createCustomThemedColorDialogOKOnly(activity, "Oops", "Address of farm owner is currently not available", "OK", R.color.blue);
+                    Helper.createCustomThemedColorDialogOKOnly(activity, "Oops", "Address of farm owner is currently not available. \n\nFarm ID: "+farmidd, "OK", R.color.blue);
                 }
 
 
@@ -433,6 +442,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 });
             }
         });
+        btn_cancelAddmarker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelMarkerAdding();
+            }
+        });
 
 
         map_add_marker.setOnClickListener(new View.OnClickListener() {
@@ -443,13 +458,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (Helper.isLocationEnabled(context)) {
                     fusedLocation.connectToApiClient();
                     final Handler handler = new Handler();
+                    final Handler handler1 = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             curLatlng = fusedLocation.getLastKnowLocation();
-                            Helper.createCustomThemedColorDialogOKOnly(activity, "Add Marker", "Long press any location within 1km to add marker", "OK", R.color.blue);
+                            circleOptions_addLocation = Helper.addCircle(activity, curLatlng, 1, R.color.skyblue_20,
+                                    R.color.skyblue_20, 1000);
+                            mapcircle = maps.addCircle(circleOptions_addLocation);
+                            btn_cancelAddmarker.setVisibility(View.VISIBLE);
+                            moveCameraAnimate(map, new LatLng(curLatlng.latitude, curLatlng.longitude), 15);
+                            handler1.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Helper.createCustomThemedColorDialogOKOnly(activity, "Add Marker", "Long press any location within 1000 meters of your current location to Add a Marker.", "OK", R.color.blue);
+                                }
+                            }, 1200);
+
                         }
                     }, 280);
+
+
+
+
 
                     maps.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
                         @Override
@@ -484,7 +515,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         if (position == 0) {
-
+                                            cancelMarkerAdding();
                                             d1.hide();
                                             final Intent intent = new Intent(MapsActivity.this, Activity_Add_FarmInformation.class);
                                             intent.putExtra("latitude", touchLocation.latitude);
@@ -495,6 +526,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                                         if (position == 1) {
                                             d1.hide();
+                                            cancelMarkerAdding();
                                             final Intent intent = new Intent(MapsActivity.this, Activity_Add_CustomerInformation_Basic.class);
                                             intent.putExtra("latitude", touchLocation.latitude);
                                             intent.putExtra("longtitude", touchLocation.longitude);
@@ -518,7 +550,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //                                try {
 //                                    //getLastKnownLocation();
 //
-//                                    moveCameraAnimate(map, new LatLng(latlng.latitude, latlng.longitude), 15);
+//
 //
 //                                    final Handler handler = new Handler();
 //                                    handler.postDelayed(new Runnable() {
@@ -633,6 +665,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 //        getCurrentLoc();
         // Acquire a reference to the system Location Manager
+    }
+
+    private void cancelMarkerAdding() {
+        removeCircle();
+        btn_cancelAddmarker.setVisibility(View.GONE);
+        maps.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+
+            }
+        });
     }
 
     private void dialogLocationNotAvailableOkOnly() {
@@ -1098,7 +1141,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     LatLng custLatlng = new LatLng(Double.parseDouble(ci.getLatitude() + ""), Double.parseDouble(ci.getLongtitude() + ""));
                     Marker marker = Helper.map_addMarker(maps, custLatlng,
                             R.drawable.ic_place_red_24dp, ci.getFarmname(), ci.getAddress(), ci.getCi_id() + "", ci.getTotalStockOfFarm() + "",
-                            ci.getAllSpecie() + "#-#" + ci.getCust_latitude() + "#-#" + ci.getCust_longtitude());
+                            ci.getAllSpecie() + "#-#" + ci.getCust_latitude() + "#-#" + ci.getCust_longtitude() + "#-#" +ci.getFarmID());
                 }
             } else {
                 final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "MAP", "You have not added a farm yet. \n You can start by pressing the  plus '+' on the upper right side of the screen.", "OK", R.color.skyblue_400);
@@ -1312,5 +1355,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }, 300);
     }
+
+    private void removeCircle(){
+        if(mapcircle!=null){
+            mapcircle.remove();
+        }
+
+    }
+
 
 }

@@ -15,7 +15,7 @@
         >
 
         <ImageButton
-            android:id="@+id/title"
+            android:id="@+id/title_back"
             android:layout_weight="1"
             android:background="@drawable/bg_material_transparent"
             android:src="@drawable/ic_keyboard_arrow_left_white_24dp"

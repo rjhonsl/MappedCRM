@@ -34,6 +34,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -81,51 +82,53 @@ public class Helper {
 
     public static class variables{
         public static String sourceAddress_bizNF                    = "http://santeh.co.nf/phpsql/";
+        public static String sourceAddress_goDaddy                  = "http://santeh-webservice.com/php/android_json_post/";
         public static String sourceAddress_bizNF_downloadable       = "http://santeh.co.nf/downloadable/";
+        public static String sourceAddress_downloadable_downloadable       = "http://santeh-webservice.com/downloadables/";
         public static String sourceAddress_000webhost               = "http://mysanteh.site50.net/santehweb/";
 
         public static final String ACTIVITY_LOG_TYPE_FARM_REPORTING= "1";
         public static final String ACTIVITY_LOG_TYPE_TSR_MONITORING= "2";
         public static final String ACTIVITY_LOG_TYPE_ADMIN_ACTIVITY= "3";
 
-        public static String URL_SELECT_ALL_CUSTINFO                        = sourceAddress_bizNF + "selectAllCustomerInfo.php";
-        public static String URL_SELECT_CURRENT_VERSION_NUMBER              = sourceAddress_bizNF + "selectCurrentVersion.php";
-        public static String URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO      = sourceAddress_bizNF + "selectCustinfoLeftJoinPondinf.php";
-        public static String URL_SELECT_CUSTINFO_BY_ID                      = sourceAddress_bizNF + "selectByID.php";
-        public static String URL_SELECT_PONDINFO_BY_CUSTOMER_ID             = sourceAddress_bizNF + "selectPondByCustomerID.php";
-        public static String URL_SELECT_PONDINFO_BY_CUSTOMERID_AND_PONDID   = sourceAddress_bizNF + "selectPondByCustomerIDandPondID.php";
-        public static String URL_SELECT_ALL_PONDINFO_GROUPBY_CUSTINFO       = sourceAddress_bizNF + "selectAllPondGroupBy.php";
-        public static String URL_SELECT_ALL_PONDINFO                        = sourceAddress_bizNF + "selectAllPond.php";
-        public static String URL_SELECT_ALL_USERS_IN_AREA                   = sourceAddress_bizNF + "selectAlluserInAnArea.php";
-        public static String URL_SELECT_ALL_USERS                           = sourceAddress_bizNF + "selectAllUsers.php";
-        public static String URL_SELECT_ALL_AREA                            = sourceAddress_bizNF + "selectAllArea.php";
-        public static String URL_SELECT_USERS_ACTIVITY_BY_DATE_AND_ID       = sourceAddress_bizNF + "selectUserActivityByID.php";
-        public static String URL_SELECT_POND_WEEKLY_UPDATES_BY_ID           = sourceAddress_bizNF + "selectPondWeeklyUpdateByPondID.php";
-        public static String URL_SELECT_ALL_USERS_ACTIVITY_BY_ID            = sourceAddress_bizNF + "selectAllUserActivityByID.php";
-        public static String URL_SELECT_ALL_PONDINFO_BETWEEN_DATES          = sourceAddress_bizNF + "selectAllPondBetweenDate.php";
-        public static String URL_SELECT_ALL_PONDINFO_LEFTJOIN_CUSTINFO      = sourceAddress_bizNF + "selectAllPondInfoLeftJoinCustInfo.php";
-        public static String URL_SELECT_FARM_BY_FARMID                      = sourceAddress_bizNF + "selectFarmByFarmID.php";
-        public static String URL_SELECT_FARMINFO_LF_PIANDMCI_BY_FARMID      = sourceAddress_bizNF + "selectCustomerInfoLeftJoinPondInfoLeftJoinMciByFarmID.php";
-        public static String URL_SELECT_CUST_LOCAITON_BY_ASSIGNED_AREA      = sourceAddress_bizNF + "selectCustomerLocationByAssingedUser.php";
+        public static String URL_SELECT_ALL_CUSTINFO                        = sourceAddress_goDaddy + "selectAllCustomerInfo.php";
+        public static String URL_SELECT_CURRENT_VERSION_NUMBER              = sourceAddress_goDaddy + "selectCurrentVersion.php";
+        public static String URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO      = sourceAddress_goDaddy + "selectCustinfoLeftJoinPondinf.php";
+        public static String URL_SELECT_CUSTINFO_BY_ID                      = sourceAddress_goDaddy + "selectByID.php";
+        public static String URL_SELECT_PONDINFO_BY_CUSTOMER_ID             = sourceAddress_goDaddy + "selectPondByCustomerID.php";
+        public static String URL_SELECT_PONDINFO_BY_CUSTOMERID_AND_PONDID   = sourceAddress_goDaddy + "selectPondByCustomerIDandPondID.php";
+        public static String URL_SELECT_ALL_PONDINFO_GROUPBY_CUSTINFO       = sourceAddress_goDaddy + "selectAllPondGroupBy.php";
+        public static String URL_SELECT_ALL_PONDINFO                        = sourceAddress_goDaddy + "selectAllPond.php";
+        public static String URL_SELECT_ALL_USERS_IN_AREA                   = sourceAddress_goDaddy + "selectAlluserInAnArea.php";
+        public static String URL_SELECT_ALL_USERS                           = sourceAddress_goDaddy + "selectAllUsers.php";
+        public static String URL_SELECT_ALL_AREA                            = sourceAddress_goDaddy + "selectAllArea.php";
+        public static String URL_SELECT_USERS_ACTIVITY_BY_DATE_AND_ID       = sourceAddress_goDaddy + "selectUserActivityByID.php";
+        public static String URL_SELECT_POND_WEEKLY_UPDATES_BY_ID           = sourceAddress_goDaddy + "selectPondWeeklyUpdateByPondID.php";
+        public static String URL_SELECT_ALL_USERS_ACTIVITY_BY_ID            = sourceAddress_goDaddy + "selectAllUserActivityByID.php";
+        public static String URL_SELECT_ALL_PONDINFO_BETWEEN_DATES          = sourceAddress_goDaddy + "selectAllPondBetweenDate.php";
+        public static String URL_SELECT_ALL_PONDINFO_LEFTJOIN_CUSTINFO      = sourceAddress_goDaddy + "selectAllPondInfoLeftJoinCustInfo.php";
+        public static String URL_SELECT_FARM_BY_FARMID                      = sourceAddress_goDaddy + "selectFarmByFarmID.php";
+        public static String URL_SELECT_FARMINFO_LF_PIANDMCI_BY_FARMID      = sourceAddress_goDaddy + "selectCustomerInfoLeftJoinPondInfoLeftJoinMciByFarmID.php";
+        public static String URL_SELECT_CUST_LOCAITON_BY_ASSIGNED_AREA      = sourceAddress_goDaddy + "selectCustomerLocationByAssingedUser.php";
         public static String URL_SELECT_ALL_POND_WEEKLYUPDATES_INNERJOIN_PONDINFO_GROUPBY_FARMNAME
                 = sourceAddress_bizNF + "selectPondWeeklyUpdate_InnerJoin_Pond_GroupByFarmName.php";
 
-        public static String URL_DELETE_CUSTINFO_BY_ID                  = sourceAddress_bizNF + "deleteByID.php";
-        public static String URL_DELETE_POND_BY_ID                      = sourceAddress_bizNF + "deletePondInfoByID.php";
-        public static String URL_DELETE_POND_WEEKLY_DETAILS_BY_ID       = sourceAddress_bizNF + "deletePondWeeklyDetailsByID.php";
+        public static String URL_DELETE_CUSTINFO_BY_ID                  = sourceAddress_goDaddy + "deleteByID.php";
+        public static String URL_DELETE_POND_BY_ID                      = sourceAddress_goDaddy + "deletePondInfoByID.php";
+        public static String URL_DELETE_POND_WEEKLY_DETAILS_BY_ID       = sourceAddress_goDaddy + "deletePondWeeklyDetailsByID.php";
 
-        public static String URL_INSERT_PONDINFO                        = sourceAddress_bizNF + "insertPondInformation.php";
-        public static String URL_INSERT_LOGINLOCATION                   = sourceAddress_bizNF + "insertLoginLocationOffUser.php";
-        public static String URL_INSERT_USER_ACTIVITY                   = sourceAddress_bizNF + "insertUserActivity.php";
-        public static String URL_INSERT_POND_REPORT                     = sourceAddress_bizNF + "insertPondReport.php";
-        public static String URL_INSERT_MAIN_CUSTOMERINFO               = sourceAddress_bizNF + "insertMainCustomerInfo.php";
-        public static String URL_INSERT_FARM_INFO                       = sourceAddress_bizNF + "insertFarmInformation.php";
+        public static String URL_INSERT_PONDINFO                        = sourceAddress_goDaddy + "insertPondInformation.php";
+        public static String URL_INSERT_LOGINLOCATION                   = sourceAddress_goDaddy + "insertLoginLocationOffUser.php";
+        public static String URL_INSERT_USER_ACTIVITY                   = sourceAddress_goDaddy + "insertUserActivity.php";
+        public static String URL_INSERT_POND_REPORT                     = sourceAddress_goDaddy + "insertPondReport.php";
+        public static String URL_INSERT_MAIN_CUSTOMERINFO               = sourceAddress_goDaddy + "insertMainCustomerInfo.php";
+        public static String URL_INSERT_FARM_INFO                       = sourceAddress_goDaddy + "insertFarmInformation.php";
 
-        public static String URL_UPDATE_PONDINFO_BY_ID                  = sourceAddress_bizNF + "updatePondInformationByID.php";
-        public static String URL_UPDATE_CUSTOMERINFORMATION_BY_ID       = sourceAddress_bizNF + "updateCustomerInformationByID.php";
-        public static String URL_UPDATE_POND_WEEKLY_DETAIL_BY_ID        = sourceAddress_bizNF + "updatePodWeeklyDetails.php";
+        public static String URL_UPDATE_PONDINFO_BY_ID                  = sourceAddress_goDaddy + "updatePondInformationByID.php";
+        public static String URL_UPDATE_CUSTOMERINFORMATION_BY_ID       = sourceAddress_goDaddy + "updateCustomerInformationByID.php";
+        public static String URL_UPDATE_POND_WEEKLY_DETAIL_BY_ID        = sourceAddress_goDaddy + "updatePodWeeklyDetails.php";
 
-        public static String URL_LOGIN  = sourceAddress_bizNF + "login.php";
+        public static String URL_LOGIN                                  = sourceAddress_goDaddy + "login.php";
 
         public static String[] ARRAY_SPECIES = {
                 "Bangus",   //0
@@ -1124,6 +1127,17 @@ public class Helper {
         iconGenerator.setTextAppearance(R.style.IconGeneratorTextView);
         return  iconGenerator.makeIcon(str);
     }
+    public static CircleOptions addCircle(Activity activity, LatLng latlng, float strokeWidth, int strokeColor, int fillColor, int radius){
+
+        CircleOptions circleOptions = new  CircleOptions()
+                .center(new LatLng(latlng.latitude, latlng.longitude))
+                .radius(radius)
+                .strokeColor(activity.getResources().getColor(strokeColor))
+                .fillColor(fillColor)
+                .strokeWidth(strokeWidth);
+        return circleOptions;
+    }
+
 
 
 

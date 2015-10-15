@@ -28,7 +28,7 @@
             android:paddingLeft="0dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:id="@+id/txt_settings_title"
+            android:id="@+id/title_back"
             android:textColor="@color/background_material_light"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"/>

@@ -64,6 +64,14 @@ public class Activity_ManagePonds extends Activity {
         fusedLocation = new FusedLocation(context, activity);
         fusedLocation.connectToApiClient();
 
+        ImageButton btn_title_back = (ImageButton) findViewById(R.id.title_back);
+        btn_title_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         PD = new ProgressDialog(this);
         PD.setMessage("Updating database. Please wait....");
         PD.setCancelable(false);

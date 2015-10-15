@@ -83,6 +83,15 @@ public class Activity_PondWeeklyConsumption extends Activity {
 
         initViewsFromXML();
 
+
+        ImageButton btn_title_back = (ImageButton) findViewById(R.id.title_back);
+        btn_title_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         if (getIntent() != null){
             if (getIntent().hasExtra("pondid")){ pondid = getIntent().getIntExtra("pondid",0); }
             if (getIntent().hasExtra("id")){id = getIntent().getIntExtra("id",0);}
