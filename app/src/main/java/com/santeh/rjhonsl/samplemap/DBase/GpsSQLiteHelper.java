@@ -41,6 +41,7 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(TBL_CREATE_MAINCUSTOMERINFO);
 		Log.d(LOGTAG, "tables has been created: " + String.valueOf(db));
+		//
 
 	}
 
