@@ -31,6 +31,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.maps.model.LatLng;
 import com.santeh.rjhonsl.samplemap.APIs.MyVolleyAPI;
+import com.santeh.rjhonsl.samplemap.DBase.GpsDB_Query;
+import com.santeh.rjhonsl.samplemap.DBase.GpsSQLiteHelper;
 import com.santeh.rjhonsl.samplemap.Obj.CustInfoObject;
 import com.santeh.rjhonsl.samplemap.Parsers.AccountsParser;
 import com.santeh.rjhonsl.samplemap.R;
@@ -74,6 +76,9 @@ public class Activity_LoginScreen extends Activity{
     FusedLocation fusedLocation;
     PackageInfo pInfo = null;
 
+    GpsSQLiteHelper dbHelper;
+    GpsDB_Query db;
+
     float filesize;
 
 
@@ -85,6 +90,10 @@ public class Activity_LoginScreen extends Activity{
         setContentView(R.layout.activity_loginscreen);
         activity = this;
         context = Activity_LoginScreen.this;
+
+        dbHelper = new GpsSQLiteHelper(this);
+        db = new GpsDB_Query(this);
+        db.open();
 
         fusedLocation = new FusedLocation(context, activity);
         fusedLocation.buildGoogleApiClient(context);
@@ -124,7 +133,6 @@ public class Activity_LoginScreen extends Activity{
                 Helper.getMacAddress(context)
                         + "\n" +
                         "update: " + versionCode + "    V." + versionName
-
         );
 
 

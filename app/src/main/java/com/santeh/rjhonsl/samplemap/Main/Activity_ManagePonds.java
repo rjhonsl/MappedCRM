@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -36,7 +37,7 @@ import java.util.Map;
 /**
  * Created by rjhonsl on 8/13/2015.
  */
-public class Activity_ManagePonds extends Activity {
+public class Activity_ManagePonds extends AppCompatActivity {
 
     Activity activity;
     Context context;
@@ -46,6 +47,8 @@ public class Activity_ManagePonds extends Activity {
 
     String farmname = "", latitude = "",  longitude ="";
     ImageButton btnaddpond;
+
+
 
     ListView lvPonds;
     LinearLayout llnoPond;
@@ -71,6 +74,7 @@ public class Activity_ManagePonds extends Activity {
                 finish();
             }
         });
+
 
         PD = new ProgressDialog(this);
         PD.setMessage("Updating database. Please wait....");
