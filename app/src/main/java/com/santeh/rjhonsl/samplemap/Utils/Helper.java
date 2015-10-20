@@ -326,6 +326,16 @@ public class Helper {
             return  ((Var) activity.getApplication()).getCurrentUserFirstname();
         }
 
+
+        public static String getGlobalVar_DateAdded( Activity activity ){
+            return  ((Var) activity.getApplication()).getDateAddedToDB();
+        }
+
+        public static void setGlobalVar_DateAddedToDb(String date, Activity activity ){
+            ((Var) activity.getApplication()).setDateAddedToDB(date);
+        }
+
+
         public static void setGlobalVar_currentFirstname(String firstname, Activity activity ){
             ((Var) activity.getApplication()).setCurrentUserFirstname(firstname);
         }

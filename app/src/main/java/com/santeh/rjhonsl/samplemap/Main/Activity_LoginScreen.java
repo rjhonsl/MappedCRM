@@ -132,7 +132,7 @@ public class Activity_LoginScreen extends Activity{
         txttester.setText(
                 Helper.getMacAddress(context)
                         + "\n" +
-                        "update: " + versionCode + "    V." + versionName
+                        "update: " + versionCode + "    V." + versionName + db.getUserCount()
         );
 
 
@@ -312,9 +312,7 @@ public class Activity_LoginScreen extends Activity{
         Helper.isLocationAvailable(context, activity);
 
         if(!Helper.isNetworkAvailable(activity)) {
-            if (db.getUserCount()<= 0){
 
-            }
             Helper.toastShort(activity, "Internet Connection is not available. Please try again later.");
         }
         else{
@@ -351,7 +349,21 @@ public class Activity_LoginScreen extends Activity{
                                     Helper.variables.setGlobalVar_currentUsername(txtusername.getText().toString(),activity);
                                     Helper.variables.setGlobalVar_currentUserpassword(txtpassword.getText().toString(),activity);
                                     Helper.variables.setGlobalVar_currentAssignedArea(listaccounts.get(0).getAssingedArea(), activity);
+                                    Helper.variables.setGlobalVar_DateAddedToDb(listaccounts.get(0).getDateAddedToDB(), activity);
 
+                                    if (db.getUserCount() <=0 ) {
+                                        db.insertUserAccountInfo(
+                                                Helper.variables.getGlobalVar_currentUserID(activity),
+                                                Helper.variables.getGlobalVar_currentlevel(activity),
+                                                Helper.variables.getGlobalVar_currentUserFirstname(activity),
+                                                Helper.variables.getGlobalVar_currentUserLastname(activity),
+                                                Helper.variables.getGlobalVar_currentUsername(activity),
+                                                Helper.variables.getGlobalVar_currentUserpassword(activity),
+                                                Helper.getMacAddress(activity),
+                                                Helper.variables.getGlobalVar_DateAdded(activity),
+
+                                                );
+                                    }
                                     intent.putExtra("userid", listaccounts.get(0).getUserid());
                                     intent.putExtra("userlevel", listaccounts.get(0).getUserlevel());
                                     intent.putExtra("username", listaccounts.get(0).getUsername());

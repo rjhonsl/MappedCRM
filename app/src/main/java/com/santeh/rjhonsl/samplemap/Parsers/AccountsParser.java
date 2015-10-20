@@ -62,6 +62,11 @@ public class AccountsParser {
                     custInfoObject.setAccountlevelDescription(obj.getString("user_lvl_description"));
                 }
 
+                if (obj.has("user_lvl_description")){
+                    custInfoObject.setAccountlevelDescription(obj.getString("user_lvl_description"));
+
+                }
+
 
                 Log.d("JSON PARSE", "ID: " + custInfoObject.getId() + " " + custInfoObject.getCustomerID() + " " + ar.length());
                 custInfoObjectList.add(custInfoObject);

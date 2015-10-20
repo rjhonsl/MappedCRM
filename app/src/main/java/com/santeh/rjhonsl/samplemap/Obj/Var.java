@@ -23,6 +23,7 @@ public class Var extends Application {
     private String currentUserFirstname;
     private String currentUserLastname;
     private String currentPassword;
+    private String dateAddedToDB;
     private String assignedArea;
 
 
@@ -93,5 +94,13 @@ public class Var extends Application {
 
     public void setAssignedArea(String assignedArea) {
         this.assignedArea = assignedArea;
+    }
+
+    public String getDateAddedToDB() {
+        return dateAddedToDB;
+    }
+
+    public void setDateAddedToDB(String dateAddedToDB) {
+        this.dateAddedToDB = dateAddedToDB;
     }
 }
