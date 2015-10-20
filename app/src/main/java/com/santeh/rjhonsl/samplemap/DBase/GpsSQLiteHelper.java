@@ -10,7 +10,7 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 	private static final String LOGTAG = "DB_GPS";
 	private static final String DATABASE_NAME = "local.db";
 	//each time you change data structure, you must increment this by 1
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 9;
 
 	//Reference for tblmaincustomerinfo
 	public static final String TBLMAINCUSTOMERINFO 				= "tblmaincustomerinfo";
@@ -55,7 +55,7 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 	public static final String CL_AREA_DESCRIPTION	= "area_description";
 	public static final String[] ALL_KEY_AREA		= new String[]{CL_AREA_ID, CL_AREA_DESCRIPTION};
 
-	// reference for tblarea
+	// reference for tblarea_assigned
 	public static final String TBLAREA_ASSIGNED			= "tblarea_assigned";
 
 	public static final String CL_ASSIGNED_ID			= "assigned_id";
@@ -64,6 +64,102 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 	public static final String CL_ASSIGNED_MUNICIPALITY	= "assigned_municpality";
 	public static final String[] ALL_KEY_ASSIGNED 	= new String[]{CL_ASSIGNED_ID, CL_ASSIGNED_USERID, CL_ASSIGNED_AREA, CL_ASSIGNED_MUNICIPALITY};
 
+
+
+	//reference for tblarea_municipality
+	public static final String TBLAREA_MUNICIPALITY	= "tblarea_municipality";
+
+	public static final String CL_MUNICIPALITY_ID			= "municipality_id";
+	public static final String CL_MUNICIPALITY_DESCRIPTION	= "municipality_description";
+	public static final String CL_MUNICIPALITY_PROVINCE		= "municipality_province";
+	public static final String[] ALL_KEY_MUNICIPALITY		= new String[]{CL_MUNICIPALITY_ID, CL_MUNICIPALITY_DESCRIPTION, CL_MUNICIPALITY_PROVINCE};
+
+
+
+	//reference for tblarea
+	public static final String TBLFARMiNFO 				= "tblCustomerInfo";
+
+	public static final String CL_FARMINFO_ID			= "ci_customerId";
+	public static final String CL_FARMINFO_LAT			= "latitude";
+	public static final String CL_FARMINFO_LNG			= "longtitude";
+	public static final String CL_FARMINFO_CONTACT_NAME	= "contact_name";
+	public static final String CL_FARMINFO_COMPANY		= "company";
+	public static final String CL_FARMINFO_FARM_ADDRESS	= "address";
+	public static final String CL_FARMINFO_FARM_NAME	= "farm_name";
+	public static final String CL_FARMINFO_FARM_ID		= "farmid";
+	public static final String CL_FARMINFO_C_NUMBER		= "contact_number";
+	public static final String CL_FARMINFO_CULTYPE		= "culture_type";
+	public static final String CL_FARMINFO_CULTlVL		= "culture_level";
+	public static final String CL_FARMINFO_WATTYPE		= "water_type";
+	public static final String CL_FARMINFO_dateAdded	= "dateAdded";
+	public static final String CL_FARMINFO_addedby		= "addedby";
+	public static final String[] ALL_KEY_fARM		= new String[]{CL_FARMINFO_ID, CL_FARMINFO_LAT,CL_FARMINFO_LNG,CL_FARMINFO_CONTACT_NAME, CL_FARMINFO_COMPANY, CL_FARMINFO_FARM_ADDRESS
+	,CL_FARMINFO_FARM_NAME, CL_FARMINFO_FARM_ID, CL_FARMINFO_C_NUMBER, CL_FARMINFO_CULTYPE, CL_FARMINFO_CULTlVL, CL_FARMINFO_WATTYPE,CL_FARMINFO_dateAdded,  CL_FARMINFO_addedby};
+
+
+
+
+	//reference for tblPond
+	public static final String TBLPOND 				= "tblPond";
+
+	public static final String CL_POND_INDEX			= "id";
+	public static final String CL_POND_PID				= "pondid";
+	public static final String CL_POND_specie			= "specie";
+	public static final String CL_POND_sizeofStock		= "sizeofStock";
+	public static final String CL_POND_survivalrate		= "survivalrate";
+	public static final String CL_POND_dateStocked		= "dateStocked";
+	public static final String CL_POND_quantity			= "quantity";
+	public static final String CL_POND_area				= "area";
+	public static final String CL_POND_culturesystem	= "culturesystem";
+	public static final String CL_POND_remarks			= "remarks";
+	public static final String CL_POND_customerId		= "customerId";
+	public static final String[] ALL_KEY_POND			= new String[]{CL_POND_INDEX, CL_POND_PID, CL_POND_specie, CL_POND_sizeofStock, CL_POND_survivalrate,
+			CL_POND_dateStocked, CL_POND_quantity, CL_POND_area, CL_POND_culturesystem, CL_POND_remarks, CL_POND_customerId};
+
+
+	public static final String TBLPOND_WeeklyUpdates 	= "tblpond_weeklyupdates";
+
+	public static final String CL_WEEKLY_UPDATES_ID				= "wu_id";
+	public static final String CL_WEEKLY_UPDATES_CURRENT_ABW	= "wu_currentabw";
+	public static final String CL_WEEKLY_UPDATES_REMARKS		= "wu_remakrs";
+	public static final String CL_WEEKLY_UPDATES_PONDID			= "wu_pondid";
+	public static final String CL_WEEKLY_UPDATES_DATEADDED 		= "wu_dateAdded";
+	public static final String[] ALL_KEY_WEEKLY_UPDATES			= new String[]{CL_WEEKLY_UPDATES_ID, CL_WEEKLY_UPDATES_CURRENT_ABW,CL_WEEKLY_UPDATES_REMARKS,CL_WEEKLY_UPDATES_PONDID,
+			CL_WEEKLY_UPDATES_DATEADDED};
+
+
+	public static final String TBLUSERS = "tblusers";
+	public static final String CL_USERS_ID				= "users_id";
+	public static final String CL_USERS_userlvl			= "userlvl";
+	public static final String CL_USERS_firstName		= "users_firstname";
+	public static final String CL_USERS_lastName		= "users_lastname";
+	public static final String CL_USERS_username		= "users_username";
+	public static final String CL_USERS_password		= "users_password";
+	public static final String CL_USERS_deviceid		= "users_device_id";
+	public static final String CL_USERS_dateAdded		= "dateAdded";
+	public static final String CL_USERS_isactive		= "isactive";
+	public static final String[] ALL_KEY_USERS	= new String[]{CL_USERS_ID, CL_USERS_userlvl, CL_USERS_firstName, CL_USERS_lastName, CL_USERS_username,
+			CL_USERS_password, CL_USERS_deviceid, CL_USERS_dateAdded , CL_USERS_isactive};
+
+
+	//reference for tblarea
+	public static final String TBLUSER_ACTIVITY 				= "tbluser_activity";
+
+	public static final String CL_USER_ACTIVITY_ID			= "user_act_id";
+	public static final String CL_USER_ACTIVITY_USERID		= "user_act_userid";
+	public static final String CL_USER_ACTIVITY_ACTIONDONE	= "user_act_actiondone";
+	public static final String CL_USER_ACTIVITY_LAT			= "user_act_latitude";
+	public static final String CL_USER_ACTIVITY_LNG			= "user_act_longitude";
+	public static final String CL_USER_ACTIVITY_DATETIME	= "user_act_datetime";
+	public static final String CL_USER_ACTIVITY_ACTIONTYPE	= "user_act_actiontype";
+	public static final String[] ALL_KEY_USERACTIVITY		= new String[]{CL_USER_ACTIVITY_ID, CL_USER_ACTIVITY_USERID, CL_USER_ACTIVITY_ACTIONDONE,
+			CL_USER_ACTIVITY_LAT, CL_USER_ACTIVITY_LNG, CL_USER_ACTIVITY_DATETIME, CL_USER_ACTIVITY_ACTIONTYPE};
+
+
+
+	//////////////////////////////////////////////////////////////////
+	///////////// STRINGS FOR CREATING AND UPDATING TABLE ////////////
+	//////////////////////////////////////////////////////////////////
 
 	//Query to create tables
 	private static final String TBL_CREATE_MAINCUSTOMERINFO =
@@ -114,6 +210,90 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 					CL_ASSIGNED_MUNICIPALITY 	+ " INTEGER " +
 					")";
 
+	private static final String TBL_CREATE_MUNICIPALITY =
+			"CREATE TABLE " + TBLAREA_MUNICIPALITY + " " +
+					"(" +
+					CL_MUNICIPALITY_ID				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+					CL_ASSIGNED_USERID 			+ " INTEGER, " +
+					CL_MUNICIPALITY_DESCRIPTION + " TEXT, " +
+					CL_MUNICIPALITY_PROVINCE 	+ " INTEGER " +
+					")";
+
+
+	private static final String TBL_CREATE_FARMINFO =
+			"CREATE TABLE " + TBLFARMiNFO + " " +
+					"(" +
+					CL_FARMINFO_ID				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+					CL_FARMINFO_LAT 			+ " TEXT, " +
+					CL_FARMINFO_LNG 			+ " TEXT, " +
+					CL_FARMINFO_CONTACT_NAME	+ " TEXT, " +
+					CL_FARMINFO_COMPANY			+ " TEXT, " +
+					CL_FARMINFO_FARM_ADDRESS	+ " TEXT, " +
+					CL_FARMINFO_FARM_NAME		+ " TEXT, " +
+					CL_FARMINFO_FARM_ID			+ " TEXT, " +
+					CL_FARMINFO_C_NUMBER		+ " TEXT, " +
+					CL_FARMINFO_CULTYPE			+ " TEXT, " +
+					CL_FARMINFO_CULTlVL			+ " TEXT, " +
+					CL_FARMINFO_WATTYPE			+ " TEXT, " +
+					CL_FARMINFO_dateAdded		+ " DATE, " +
+					CL_FARMINFO_addedby			+ " INTEGER " +
+					")";
+
+	private static final String TBL_CREATE_POND =
+			"CREATE TABLE " + TBLPOND + " " +
+					"(" +
+					CL_POND_INDEX				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+					CL_POND_PID 				+ " INTEGER, " +
+					CL_POND_specie 				+ " TEXT, " +
+					CL_POND_sizeofStock 		+ " TEXT, " +
+					CL_POND_survivalrate 		+ " INTEGER, " +
+					CL_POND_dateStocked 		+ " DATE, " +
+					CL_POND_quantity 			+ " INTEGER, " +
+					CL_POND_area 				+ " INTEGER, " +
+					CL_POND_culturesystem 		+ " TEXT, " +
+					CL_POND_remarks 			+ " TEXT, " +
+					CL_POND_customerId			+ " INTEGER " +
+					")";
+
+
+	private static final String TBL_CREATE_WEEKLYUPDATES =
+			"CREATE TABLE " + TBLPOND_WeeklyUpdates + " " +
+					"(" +
+					CL_WEEKLY_UPDATES_ID				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+					CL_WEEKLY_UPDATES_CURRENT_ABW 		+ " INTEGER, " +
+					CL_WEEKLY_UPDATES_REMARKS 			+ " TEXT, " +
+					CL_WEEKLY_UPDATES_PONDID 			+ " TEXT, " +
+					CL_WEEKLY_UPDATES_DATEADDED 		+ " INTEGER " +
+					")";
+
+
+	private static final String TBL_CREATE_USERS =
+			"CREATE TABLE " + TBLUSERS + " " +
+					"(" +
+					CL_USERS_ID				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+					CL_USERS_userlvl 		+ " INTEGER, " +
+					CL_USERS_firstName 			+ " TEXT, " +
+					CL_USERS_lastName 			+ " TEXT, " +
+					CL_USERS_username 		+ " TEXT, " +
+					CL_USERS_password 		+ " TEXT, " +
+					CL_USERS_deviceid 		+ " TEXT, " +
+					CL_USERS_dateAdded 		+ " DATE, " +
+					CL_USERS_isactive 		+ " INTEGER " +
+					")";
+
+	private static final String TBL_CREATE_USERS_ACTIVITY =
+			"CREATE TABLE " + TBLUSER_ACTIVITY + " " +
+					"(" +
+					CL_USER_ACTIVITY_ID				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+					CL_USER_ACTIVITY_USERID 		+ " INTEGER, " +
+					CL_USER_ACTIVITY_ACTIONDONE 	+ " TEXT, " +
+					CL_USER_ACTIVITY_LAT 			+ " TEXT, " +
+					CL_USER_ACTIVITY_LNG 			+ " TEXT, " +
+					CL_USER_ACTIVITY_DATETIME 		+ " DATETIME, " +
+					CL_USER_ACTIVITY_ACTIONTYPE 	+ " TEXT" +
+					")";
+
+
 
 
 
@@ -130,9 +310,13 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 		db.execSQL(TBL_CREATE_MAINCUSTOMERINFO);
 		db.execSQL(TBL_CREATE_AREA);
 		db.execSQL(TBL_CREATE_ASSIGNED_AREA);
+		db.execSQL(TBL_CREATE_MUNICIPALITY);
+		db.execSQL(TBL_CREATE_FARMINFO);
+		db.execSQL(TBL_CREATE_POND);
+		db.execSQL(TBL_CREATE_WEEKLYUPDATES);
+		db.execSQL(TBL_CREATE_USERS);
+		db.execSQL(TBL_CREATE_USERS_ACTIVITY);
 		Log.d(LOGTAG, "tables has been created: " + String.valueOf(db));
-		//
-
 	}
 
 	@Override
@@ -140,7 +324,13 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase _db, int oldVersion, int newVersion) {
 		_db.execSQL("DROP TABLE IF EXISTS " + TBLMAINCUSTOMERINFO);
 		_db.execSQL("DROP TABLE IF EXISTS " + TBLAREA);
-		_db.execSQL("DROP TABLE IF EXISTS " + TBL_CREATE_ASSIGNED_AREA);
+		_db.execSQL("DROP TABLE IF EXISTS " + TBLAREA_ASSIGNED);
+		_db.execSQL("DROP TABLE IF EXISTS " + TBLAREA_MUNICIPALITY);
+		_db.execSQL("DROP TABLE IF EXISTS " + TBLFARMiNFO);
+		_db.execSQL("DROP TABLE IF EXISTS " + TBLPOND);
+		_db.execSQL("DROP TABLE IF EXISTS " + TBLPOND_WeeklyUpdates);
+		_db.execSQL("DROP TABLE IF EXISTS " + TBLUSERS);
+		_db.execSQL("DROP TABLE IF EXISTS " + TBLUSER_ACTIVITY);
 
 		Log.d(LOGTAG, "table has been deleted: " + String.valueOf(_db));
 		onCreate(_db);

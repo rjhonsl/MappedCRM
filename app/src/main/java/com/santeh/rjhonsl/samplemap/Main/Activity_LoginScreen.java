@@ -312,6 +312,9 @@ public class Activity_LoginScreen extends Activity{
         Helper.isLocationAvailable(context, activity);
 
         if(!Helper.isNetworkAvailable(activity)) {
+            if (db.getUserCount()<= 0){
+
+            }
             Helper.toastShort(activity, "Internet Connection is not available. Please try again later.");
         }
         else{
