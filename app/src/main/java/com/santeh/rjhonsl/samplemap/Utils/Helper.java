@@ -1023,7 +1023,7 @@ public class Helper {
     }
 
 
-    public static void isLocationAvailable(final Context context, Activity activity){
+    public static void isLocationAvailablePrompt(final Context context, Activity activity){
         LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
         boolean gps_enabled = false;
         boolean network_enabled = false;

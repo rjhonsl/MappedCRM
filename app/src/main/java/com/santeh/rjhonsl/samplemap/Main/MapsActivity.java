@@ -603,7 +603,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //                        }
 //                    }, 200);
                 } else {
-                    Helper.isLocationAvailable(context, activity);
+                    Helper.isLocationAvailablePrompt(context, activity);
                 }
 
             }

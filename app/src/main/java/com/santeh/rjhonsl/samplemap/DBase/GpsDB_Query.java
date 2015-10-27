@@ -49,6 +49,25 @@ public class GpsDB_Query {
 	}
 
 
+	public int ifUserExistinDb(String userID){
+		String query = "SELECT * FROM "+GpsSQLiteHelper.TBLUSERS+" WHERE "+GpsSQLiteHelper.CL_USERS_ID+" = ?;";
+		String[] params = new String[] {userID};
+//		rawQuery("SELECT id, name FROM people WHERE name = ? AND id = ?", new String[] {"David", "2"});
+		Cursor cur = db.rawQuery(query, params);
+		return cur.getCount();
+	}
+
+	public Cursor getUserIdByLogin(String username, String password, String deviceid){
+		String query = "SELECT * FROM "+GpsSQLiteHelper.TBLUSERS+" WHERE "
+				+ GpsSQLiteHelper.CL_USERS_username + " = ? "
+				+ GpsSQLiteHelper.CL_USERS_password + " = ? "
+				+ GpsSQLiteHelper.CL_USERS_deviceid + " = ? "
+				;
+		String[] params = new String[] {username, password, deviceid };
+		return db.rawQuery(query, params);
+
+	}
+
 	public int getUser_Count() {
 		String query = "SELECT * FROM "+GpsSQLiteHelper.TBLUSERS+";";
 		String[] params = new String[] {};
