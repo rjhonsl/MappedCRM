@@ -19,6 +19,8 @@ public class Var extends Application {
 
     public int currentuser;
     public int currentuserLvl;
+
+    public int isactive;
     private String currentUserName;
     private String currentUserFirstname;
     private String currentUserLastname;
@@ -102,5 +104,13 @@ public class Var extends Application {
 
     public void setDateAddedToDB(String dateAddedToDB) {
         this.dateAddedToDB = dateAddedToDB;
+    }
+
+    public int getIsactive() {
+        return isactive;
+    }
+
+    public void setIsactive(int isactive) {
+        this.isactive = isactive;
     }
 }

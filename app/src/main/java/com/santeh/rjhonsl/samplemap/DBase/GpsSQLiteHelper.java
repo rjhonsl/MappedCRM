@@ -10,7 +10,7 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 	private static final String LOGTAG = "DB_GPS";
 	private static final String DATABASE_NAME = "local.db";
 	//each time you change data structure, you must increment this by 1
-	private static final int DATABASE_VERSION = 9;
+	private static final int DATABASE_VERSION = 10;
 
 	//Reference for tblmaincustomerinfo
 	public static final String TBLMAINCUSTOMERINFO 				= "tblmaincustomerinfo";
@@ -40,12 +40,13 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 	public static final String CL_MAINCUSTINFO_Longitude 		= "mci_longitude";
 	public static final String CL_MAINCUSTINFO_DateAdded 		= "mci_dateadded";
 	public static final String CL_MAINCUSTINFO_AddedBy			= "mci_addedby";
+	public static final String CL_MAINCUSTINFO_isposted			= "mci_isposted";
 
 	public static final String[] ALL_KEY_MAINCUSTOMERINFO 		= new String[]{CL_MAINCUSTINFO_ID, CL_MAINCUSTINFO_LastName, CL_MAINCUSTINFO_FirstName, CL_MAINCUSTINFO_MiddleName,
 			CL_MAINCUSTINFO_FarmId, CL_MAINCUSTINFO_HouseNumber, CL_MAINCUSTINFO_Street, CL_MAINCUSTINFO_Subdivision, CL_MAINCUSTINFO_Barangay, CL_MAINCUSTINFO_City, CL_MAINCUSTINFO_Province,
 			CL_MAINCUSTINFO_CBirthday, CL_MAINCUSTINFO_CBirthPlace, CL_MAINCUSTINFO_Telephone, CL_MAINCUSTINFO_Cellphone, CL_MAINCUSTINFO_CivilStatus, CL_MAINCUSTINFO_S_FirstName,
 			CL_MAINCUSTINFO_S_LastName, CL_MAINCUSTINFO_S_MiddleName, CL_MAINCUSTINFO_S_BirthDay, CL_MAINCUSTINFO_HouseStatus, CL_MAINCUSTINFO_Latitude, CL_MAINCUSTINFO_Longitude,
-			CL_MAINCUSTINFO_DateAdded, CL_MAINCUSTINFO_AddedBy};
+			CL_MAINCUSTINFO_DateAdded, CL_MAINCUSTINFO_AddedBy, CL_MAINCUSTINFO_isposted};
 
 
 	//reference for tblarea
@@ -93,8 +94,9 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 	public static final String CL_FARMINFO_WATTYPE		= "water_type";
 	public static final String CL_FARMINFO_dateAdded	= "dateAdded";
 	public static final String CL_FARMINFO_addedby		= "addedby";
+	public static final String CL_FARMINFO_IsPosted		= "isposted";
 	public static final String[] ALL_KEY_fARM		= new String[]{CL_FARMINFO_ID, CL_FARMINFO_LAT,CL_FARMINFO_LNG,CL_FARMINFO_CONTACT_NAME, CL_FARMINFO_COMPANY, CL_FARMINFO_FARM_ADDRESS
-	,CL_FARMINFO_FARM_NAME, CL_FARMINFO_FARM_ID, CL_FARMINFO_C_NUMBER, CL_FARMINFO_CULTYPE, CL_FARMINFO_CULTlVL, CL_FARMINFO_WATTYPE,CL_FARMINFO_dateAdded,  CL_FARMINFO_addedby};
+	,CL_FARMINFO_FARM_NAME, CL_FARMINFO_FARM_ID, CL_FARMINFO_C_NUMBER, CL_FARMINFO_CULTYPE, CL_FARMINFO_CULTlVL, CL_FARMINFO_WATTYPE,CL_FARMINFO_dateAdded,  CL_FARMINFO_addedby, CL_FARMINFO_IsPosted};
 
 
 
@@ -113,8 +115,9 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 	public static final String CL_POND_culturesystem	= "culturesystem";
 	public static final String CL_POND_remarks			= "remarks";
 	public static final String CL_POND_customerId		= "customerId";
+	public static final String CL_POND_isPosted			= "p_isposted";
 	public static final String[] ALL_KEY_POND			= new String[]{CL_POND_INDEX, CL_POND_PID, CL_POND_specie, CL_POND_sizeofStock, CL_POND_survivalrate,
-			CL_POND_dateStocked, CL_POND_quantity, CL_POND_area, CL_POND_culturesystem, CL_POND_remarks, CL_POND_customerId};
+			CL_POND_dateStocked, CL_POND_quantity, CL_POND_area, CL_POND_culturesystem, CL_POND_remarks, CL_POND_customerId, CL_POND_isPosted};
 
 
 	public static final String TBLPOND_WeeklyUpdates 	= "tblpond_weeklyupdates";
@@ -124,8 +127,9 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 	public static final String CL_WEEKLY_UPDATES_REMARKS		= "wu_remakrs";
 	public static final String CL_WEEKLY_UPDATES_PONDID			= "wu_pondid";
 	public static final String CL_WEEKLY_UPDATES_DATEADDED 		= "wu_dateAdded";
+	public static final String CL_WEEKLY_UPDATES_isposted		= "wu_isposted";
 	public static final String[] ALL_KEY_WEEKLY_UPDATES			= new String[]{CL_WEEKLY_UPDATES_ID, CL_WEEKLY_UPDATES_CURRENT_ABW,CL_WEEKLY_UPDATES_REMARKS,CL_WEEKLY_UPDATES_PONDID,
-			CL_WEEKLY_UPDATES_DATEADDED};
+			CL_WEEKLY_UPDATES_DATEADDED, CL_WEEKLY_UPDATES_isposted};
 
 
 	public static final String TBLUSERS = "tblusers";
@@ -189,7 +193,8 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 					CL_MAINCUSTINFO_Latitude 	+ " TEXT, " +
 					CL_MAINCUSTINFO_Longitude 	+ " TEXT, " +
 					CL_MAINCUSTINFO_DateAdded 	+ " DATETIME, " +
-					CL_MAINCUSTINFO_AddedBy		+ " INTEGER " +
+					CL_MAINCUSTINFO_AddedBy		+ " INTEGER, " +
+					CL_MAINCUSTINFO_isposted	+ " INTEGER " +
 					")";
 
 
@@ -236,7 +241,8 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 					CL_FARMINFO_CULTlVL			+ " TEXT, " +
 					CL_FARMINFO_WATTYPE			+ " TEXT, " +
 					CL_FARMINFO_dateAdded		+ " DATE, " +
-					CL_FARMINFO_addedby			+ " INTEGER " +
+					CL_FARMINFO_addedby			+ " INTEGER, " +
+					CL_FARMINFO_IsPosted		+ " INTEGER " +
 					")";
 
 	private static final String TBL_CREATE_POND =
@@ -252,7 +258,8 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 					CL_POND_area 				+ " INTEGER, " +
 					CL_POND_culturesystem 		+ " TEXT, " +
 					CL_POND_remarks 			+ " TEXT, " +
-					CL_POND_customerId			+ " INTEGER " +
+					CL_POND_customerId			+ " INTEGER, " +
+					CL_POND_isPosted			+ " INTEGER " +
 					")";
 
 
@@ -263,7 +270,8 @@ public class GpsSQLiteHelper extends SQLiteOpenHelper {
 					CL_WEEKLY_UPDATES_CURRENT_ABW 		+ " INTEGER, " +
 					CL_WEEKLY_UPDATES_REMARKS 			+ " TEXT, " +
 					CL_WEEKLY_UPDATES_PONDID 			+ " TEXT, " +
-					CL_WEEKLY_UPDATES_DATEADDED 		+ " INTEGER " +
+					CL_WEEKLY_UPDATES_DATEADDED 		+ " INTEGER, " +
+					CL_WEEKLY_UPDATES_isposted 			+ " INTEGER " +
 					")";
 
 

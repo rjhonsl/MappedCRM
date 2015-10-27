@@ -58,6 +58,12 @@ public class AccountsParser {
                     custInfoObject.setDateAddedToDB(obj.getString("dateAdded"));
                 }
 
+                if (obj.has("isactive")){
+                    if(!obj.isNull("isactive")){
+                        custInfoObject.setIsactive(obj.getInt("isactive"));
+                    }
+                }
+
                 if (obj.has("user_lvl_description")){
                     custInfoObject.setAccountlevelDescription(obj.getString("user_lvl_description"));
                 }

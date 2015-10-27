@@ -82,7 +82,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     DrawerLayout drawerLayout;
 
-    ImageButton map_add_marker, btn_cancelAddmarker;
+    ImageButton btn_add_marker, btn_cancelAddmarker;
     ActionBarDrawerToggle drawerListener;
 
     Marker clickedMarker;
@@ -152,7 +152,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         nav_sperms = (TextView) findViewById(R.id.txt_Nav_sperms);
         nav_maptype = (TextView) findViewById(R.id.txt_Nav_changeMapType);
         nav_settings = (TextView) findViewById(R.id.txt_Nav_settings);
-        map_add_marker = (ImageButton) findViewById(R.id.btnaddMarker);
+        btn_add_marker = (ImageButton) findViewById(R.id.btnaddMarker);
         btn_cancelAddmarker = (ImageButton) findViewById(R.id.btnCloseAddMarker);
         nav_growout = (TextView) findViewById(R.id.txt_Nav_growOut);
         nav_logout = (TextView) findViewById(R.id.txt_Nav_logout);
@@ -450,12 +450,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
 
-        map_add_marker.setOnClickListener(new View.OnClickListener() {
+        btn_add_marker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                setUpMap();
 
                 if (Helper.isLocationEnabled(context)) {
+
                     fusedLocation.connectToApiClient();
                     final Handler handler = new Handler();
                     final Handler handler1 = new Handler();
@@ -463,9 +464,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         @Override
                         public void run() {
                             curLatlng = fusedLocation.getLastKnowLocation();
-                            circleOptions_addLocation = Helper.addCircle(activity, curLatlng, 1, R.color.skyblue_20,
-                                    R.color.skyblue_20, 1000);
-                            mapcircle = maps.addCircle(circleOptions_addLocation);
+                            if (mapcircle == null || !mapcircle.isVisible()){
+                                circleOptions_addLocation = Helper.addCircle(activity, curLatlng, 1, R.color.skyblue_20,
+                                        R.color.skyblue_20, 1000);
+                                mapcircle = maps.addCircle(circleOptions_addLocation);
+                            }
                             btn_cancelAddmarker.setVisibility(View.VISIBLE);
                             moveCameraAnimate(map, new LatLng(curLatlng.latitude, curLatlng.longitude), 15);
                             handler1.postDelayed(new Runnable() {
@@ -479,7 +482,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }, 280);
 
 
-
+                    if (btn_add_marker.isEnabled()) {
+                        btn_add_marker.setEnabled(false);
+                    }
 
 
                     maps.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -539,6 +544,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             }
                         }
                     });
+
+
 //
 //                    final Handler handler1 = new Handler();
 //                    handler1.postDelayed(new Runnable() {
@@ -670,6 +677,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void cancelMarkerAdding() {
         removeCircle();
         btn_cancelAddmarker.setVisibility(View.GONE);
+        btn_add_marker.setEnabled(true);
         maps.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
@@ -1359,6 +1367,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void removeCircle(){
         if(mapcircle!=null){
             mapcircle.remove();
+            mapcircle = null;
         }
 
     }

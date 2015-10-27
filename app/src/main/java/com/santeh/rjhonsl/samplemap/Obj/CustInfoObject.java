@@ -61,6 +61,7 @@ public class CustInfoObject {
 	private int week;
 
 	private int isVisited;
+	private int isactive;
 
 	private String customerID;
 	private String mainCustomerId;
@@ -688,5 +689,13 @@ public class CustInfoObject {
 
 	public void setMainCustomerId(String mainCustomerId) {
 		this.mainCustomerId = mainCustomerId;
+	}
+
+	public int getIsactive() {
+		return isactive;
+	}
+
+	public void setIsactive(int isactive) {
+		this.isactive = isactive;
 	}
 }
