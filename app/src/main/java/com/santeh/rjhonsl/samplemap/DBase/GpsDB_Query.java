@@ -59,13 +59,12 @@ public class GpsDB_Query {
 
 	public Cursor getUserIdByLogin(String username, String password, String deviceid){
 		String query = "SELECT * FROM "+GpsSQLiteHelper.TBLUSERS+" WHERE "
-				+ GpsSQLiteHelper.CL_USERS_username + " = ? "
-				+ GpsSQLiteHelper.CL_USERS_password + " = ? "
+				+ GpsSQLiteHelper.CL_USERS_username + " = ? AND "
+				+ GpsSQLiteHelper.CL_USERS_password + " = ? AND "
 				+ GpsSQLiteHelper.CL_USERS_deviceid + " = ? "
 				;
 		String[] params = new String[] {username, password, deviceid };
 		return db.rawQuery(query, params);
-
 	}
 
 	public int getUser_Count() {

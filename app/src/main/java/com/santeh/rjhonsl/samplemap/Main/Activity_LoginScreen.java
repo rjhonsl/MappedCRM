@@ -321,6 +321,8 @@ public class Activity_LoginScreen extends Activity{
                 if(!Helper.isNetworkAvailable(activity)) { Helper.toastShort(activity, "Internet connection is needed to start using the app."); }
                 else{ updatingUserDB(); }
             }else { //if there is an existing account in local db
+                txtprogressdialog_message.setText("Logging in...");
+                PD.show();
                 Cursor cur =  db.getUserIdByLogin(txtusername.getText().toString(), txtpassword.getText().toString(), Helper.getMacAddress(context));
                 if (cur.getCount() > 0 ){
                     for (int i = 0; i < cur.getCount() ; i++) {
@@ -337,12 +339,12 @@ public class Activity_LoginScreen extends Activity{
                         }
 
                         Intent intent = new Intent(Activity_LoginScreen.this, MapsActivity.class);
-                        intent.putExtra("userid", listaccounts.get(0).getUserid());
-                        intent.putExtra("userlevel", listaccounts.get(0).getUserlevel());
-                        intent.putExtra("username", listaccounts.get(0).getUsername());
-                        intent.putExtra("firstname", listaccounts.get(0).getFirstname());
-                        intent.putExtra("lastname", listaccounts.get(0).getLastname());
-                        intent.putExtra("userdescription", listaccounts.get(0).getAccountlevelDescription());
+                        intent.putExtra("userid", Helper.variables.getGlobalVar_currentUserID(activity));
+                        intent.putExtra("userlevel", Helper.variables.getGlobalVar_currentlevel(activity));
+                        intent.putExtra("username", Helper.variables.getGlobalVar_currentUsername(activity));
+                        intent.putExtra("firstname",Helper.variables.getGlobalVar_currentUserFirstname(activity));
+                        intent.putExtra("lastname", Helper.variables.getGlobalVar_currentUserLastname(activity));
+                        intent.putExtra("userdescription", Helper.variables.getGlobalVar_currentAssignedArea(activity));
                         intent.putExtra("fromActivity", "login");
                         intent.putExtra("lat",fusedLocation.getLastKnowLocation().latitude+"");
                         intent.putExtra("long",fusedLocation.getLastKnowLocation().longitude+"");
@@ -497,7 +499,7 @@ public class Activity_LoginScreen extends Activity{
 
     public void checkVersionUpdates(){
         if(!Helper.isNetworkAvailable(activity)) {
-            Helper.toastShort(activity, "Internet Connection is not available. Please try again later.");
+//            Helper.toastShort(activity, "Internet Connection is not available. Please try again later.");
         }
         else{
             txtprogressdialog_message.setText("Checking if app is up to date...");
