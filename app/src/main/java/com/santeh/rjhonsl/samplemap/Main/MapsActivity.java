@@ -230,6 +230,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         map.getUiSettings().setZoomControlsEnabled(true);
         map.setMyLocationEnabled(true);
         maps = map;
+
         ((Var) this.getApplication()).setGoogleMap(map);
 
         txtusername.setText(Helper.variables.getGlobalVar_currentUserFirstname(activity) + " " + Helper.variables.getGlobalVar_currentUserLastname(activity));
@@ -308,7 +309,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return false;
             }
         });
-        if (Helper.variables.getGlobalVar_currentlevel(activity) > 1){
+        if (Helper.variables.getGlobalVar_currentLevel(activity) > 1){
             nav_usermonitoring.setVisibility(View.GONE);
         }else{
             nav_usermonitoring.setVisibility(View.VISIBLE);
@@ -324,6 +325,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     if (checkIfLocationAvailable()){
                         moveCameraAnimate(map, fusedLocation.getLastKnowLocation(), zoom);
+                        insertloginlocation();
                         initMarkers();
                     }
                     else{
@@ -854,7 +856,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                 firstname = extrass.getString("firstname");
                                                 lastname = extrass.getString("lastname");
                                                 userdescription = extrass.getString("userdescription");
-                                                insertloginlocation();
+//                                                insertloginlocation();
                                             }
                                             activeSelection = "farm";
                                                 updateDisplay();
@@ -883,11 +885,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
-                params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
                 params.put("deviceid", Helper.getMacAddress(context));
                 params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
-                params.put("userlvl", Helper.variables.getGlobalVar_currentlevel(activity)+"");
+                params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
 
 //
                 return params;
@@ -947,11 +949,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
-                params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
                 params.put("deviceid", Helper.getMacAddress(context));
                 params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
-                params.put("userlvl", Helper.variables.getGlobalVar_currentlevel(activity)+"");
+                params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
                 params.put("farmid", farmid+"");
 
 //
@@ -1017,11 +1019,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
-                params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
                 params.put("deviceid", Helper.getMacAddress(context));
                 params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
-                params.put("userlvl", Helper.variables.getGlobalVar_currentlevel(activity)+"");
+                params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
 //
                 return params;
             }
@@ -1095,11 +1097,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
-                params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
                 params.put("deviceid", Helper.getMacAddress(context));
                 params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
-                params.put("userlvl", Helper.variables.getGlobalVar_currentlevel(activity)+"");
+                params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
                 params.put("farmid", farmid+"");
 //
                 return params;

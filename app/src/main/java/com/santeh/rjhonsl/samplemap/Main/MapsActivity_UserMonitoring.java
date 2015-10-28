@@ -332,8 +332,8 @@ public class MapsActivity_UserMonitoring extends AppCompatActivity implements On
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
-                    params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                    params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                    params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
                     params.put("deviceid", Helper.getMacAddress(context));
                     params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
                     params.put("idofuser", passedUserid+"");

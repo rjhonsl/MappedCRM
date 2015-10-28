@@ -412,8 +412,8 @@ public class Activity_PondWeeklyConsumption extends Activity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
-                params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
                 params.put("deviceid", Helper.getMacAddress(context));
                 params.put("pondindex", id+"");
                 return params;
@@ -458,8 +458,8 @@ public class Activity_PondWeeklyConsumption extends Activity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
-                params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
                 params.put("deviceid", Helper.getMacAddress(context));
                 params.put("abw", abw2);
                 params.put("remarks", remarks2);
@@ -501,8 +501,8 @@ public class Activity_PondWeeklyConsumption extends Activity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
-                params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
-                params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
                 params.put("deviceid", Helper.getMacAddress(context));
                 params.put("pondindex", idToBeDeleted+"");
                 params.put("abw",       abw1+"");

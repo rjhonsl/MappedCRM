@@ -13,7 +13,9 @@ public class GpsDB_Query {
 	SQLiteOpenHelper dbhelper;
 	SQLiteDatabase db;
 
-
+	/********************************************
+	 * 				DEFAULTS					*
+	 ********************************************/
 	public GpsDB_Query(Context context){
 		//Log.d("DBSource", "db connect");
 		dbhelper = new GpsSQLiteHelper(context);
@@ -31,9 +33,10 @@ public class GpsDB_Query {
 
 
 
-	//DB HANDLER CLASS
+	/********************************************
+	 * 				INSERTS						*
+	 ********************************************/
 	public void insertUserAccountInfo(int userid, int userlvl, String firstname, String lastname, String username, String password, String deviceID, String dateAdded, int isActive){
-
 		ContentValues values = new ContentValues();
 		values.put(GpsSQLiteHelper.CL_USERS_ID, userid);
 		values.put(GpsSQLiteHelper.CL_USERS_userlvl, userlvl);
@@ -45,18 +48,41 @@ public class GpsDB_Query {
 		values.put(GpsSQLiteHelper.CL_USERS_dateAdded, dateAdded );
 		values.put(GpsSQLiteHelper.CL_USERS_isactive, isActive);
 		db.insert(GpsSQLiteHelper.TBLUSERS, null, values);
-		db.close(); // Closing database connection
+	}
+
+	public long insertUserActivityData(int userid, String actiondone, String lat, String lng, String dateTime, String actionType){
+
+		ContentValues values = new ContentValues();
+//		values.put(GpsSQLiteHelper.CL_USER_ACTIVITY_ID, null);
+		values.put(GpsSQLiteHelper.CL_USER_ACTIVITY_USERID, userid);
+		values.put(GpsSQLiteHelper.CL_USER_ACTIVITY_ACTIONDONE, actiondone);
+		values.put(GpsSQLiteHelper.CL_USER_ACTIVITY_LAT, lat);
+		values.put(GpsSQLiteHelper.CL_USER_ACTIVITY_LNG, lng);
+		values.put(GpsSQLiteHelper.CL_USER_ACTIVITY_DATETIME, dateTime);
+		values.put(GpsSQLiteHelper.CL_USER_ACTIVITY_ACTIONTYPE, actionType);
+
+		return  db.insert(GpsSQLiteHelper.TBLUSER_ACTIVITY, null, values);
 	}
 
 
-	public int ifUserExistinDb(String userID){
+
+	/********************************************
+	 * 				VALIDATIONS					*
+	 ********************************************/
+	public int selectUserinDB(String userID){
 		String query = "SELECT * FROM "+GpsSQLiteHelper.TBLUSERS+" WHERE "+GpsSQLiteHelper.CL_USERS_ID+" = ?;";
 		String[] params = new String[] {userID};
 //		rawQuery("SELECT id, name FROM people WHERE name = ? AND id = ?", new String[] {"David", "2"});
 		Cursor cur = db.rawQuery(query, params);
 		return cur.getCount();
 	}
+	
+	
 
+
+	/********************************************
+	 * 				SELECTS						*
+	 ********************************************/
 	public Cursor getUserIdByLogin(String username, String password, String deviceid){
 		String query = "SELECT * FROM "+GpsSQLiteHelper.TBLUSERS+" WHERE "
 				+ GpsSQLiteHelper.CL_USERS_username + " = ? AND "
@@ -130,5 +156,25 @@ public class GpsDB_Query {
 		Cursor cur = db.rawQuery(query, params);
 		return cur.getCount();
 	}
+
+
+	/********************************************
+	 * 				UPDATES						*
+	 ********************************************/
+	public int updateRowOneUser(String userid, String lvl, String firstname, String lastname, String username, String password, String deviceid, String dateAdded) {
+		String where = GpsSQLiteHelper.CL_USERS_ID + " = " + userid;
+
+		ContentValues newValues = new ContentValues();
+		newValues.put(GpsSQLiteHelper.CL_USERS_userlvl, lvl);
+		newValues.put(GpsSQLiteHelper.CL_USERS_firstName, firstname);
+		newValues.put(GpsSQLiteHelper.CL_USERS_lastName, lastname);
+		newValues.put(GpsSQLiteHelper.CL_USERS_username, username);
+		newValues.put(GpsSQLiteHelper.CL_USERS_password, password);
+		newValues.put(GpsSQLiteHelper.CL_USERS_deviceid, deviceid);
+		newValues.put(GpsSQLiteHelper.CL_USERS_dateAdded, dateAdded);
+
+		return 	db.update(GpsSQLiteHelper.TBLUSERS, newValues, where, null);
+	}
+
 
 }

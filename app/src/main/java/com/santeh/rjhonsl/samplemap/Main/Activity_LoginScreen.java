@@ -16,8 +16,10 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -314,12 +316,15 @@ public class Activity_LoginScreen extends Activity{
         if(Helper.isNetworkAvailable(activity)) { // if network was available
 
             updatingUserDB();
+            txtprogressdialog_message.setText("Logging in...");
 
         }else{//if there was no network
             if ( db.getUser_Count()  <=  0 ) { //if user db was null
                 //require user to connect to internet
                 if(!Helper.isNetworkAvailable(activity)) { Helper.toastShort(activity, "Internet connection is needed to start using the app."); }
-                else{ updatingUserDB(); }
+                else{
+                    txtprogressdialog_message.setText("Preparing app please wait...");
+                    updatingUserDB(); }
             }else { //if there is an existing account in local db
                 txtprogressdialog_message.setText("Logging in...");
                 PD.show();
@@ -338,19 +343,32 @@ public class Activity_LoginScreen extends Activity{
                             Helper.variables.setGlobalVar_currentIsActive(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_USERS_isactive)), activity);
                         }
 
-                        Intent intent = new Intent(Activity_LoginScreen.this, MapsActivity.class);
-                        intent.putExtra("userid", Helper.variables.getGlobalVar_currentUserID(activity));
-                        intent.putExtra("userlevel", Helper.variables.getGlobalVar_currentlevel(activity));
-                        intent.putExtra("username", Helper.variables.getGlobalVar_currentUsername(activity));
-                        intent.putExtra("firstname",Helper.variables.getGlobalVar_currentUserFirstname(activity));
-                        intent.putExtra("lastname", Helper.variables.getGlobalVar_currentUserLastname(activity));
-                        intent.putExtra("userdescription", Helper.variables.getGlobalVar_currentAssignedArea(activity));
-                        intent.putExtra("fromActivity", "login");
-                        intent.putExtra("lat",fusedLocation.getLastKnowLocation().latitude+"");
-                        intent.putExtra("long",fusedLocation.getLastKnowLocation().longitude+"");
+                        if (Helper.variables.getGlobalVar_currentisActive(activity) == 1){
+
+                            final Intent intent = new Intent(Activity_LoginScreen.this, MapsActivity.class);
+                            intent.putExtra("userid", Helper.variables.getGlobalVar_currentUserID(activity));
+                            intent.putExtra("userlevel", Helper.variables.getGlobalVar_currentLevel(activity));
+                            intent.putExtra("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                            intent.putExtra("firstname",Helper.variables.getGlobalVar_currentUserFirstname(activity));
+                            intent.putExtra("lastname", Helper.variables.getGlobalVar_currentUserLastname(activity));
+                            intent.putExtra("userdescription", Helper.variables.getGlobalVar_currentAssignedArea(activity));
+                            intent.putExtra("fromActivity", "login");
+                            intent.putExtra("lat", fusedLocation.getLastKnowLocation().latitude + "");
+                            intent.putExtra("long", fusedLocation.getLastKnowLocation().longitude + "");
+
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    PD.hide();
+                                    startActivity(intent);
+                                }
+                            }, 800);
+                        }else{
+                            Helper.toastShort(activity, "Account is not available. Please contact admin.");
+                        }
 
 
-                        startActivity(intent);
 
                     }
                 }
@@ -361,7 +379,6 @@ public class Activity_LoginScreen extends Activity{
     }
 
     private void updatingUserDB() {
-        txtprogressdialog_message.setText("Preparing your device...");
         PD.show();
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, Helper.variables.URL_LOGIN,
@@ -375,15 +392,6 @@ public class Activity_LoginScreen extends Activity{
                             Helper.toastShort(activity, "Username and password does not seem to match");
                         } else {
                             listaccounts = AccountsParser.parseFeed(response);
-                            if (listaccounts.size() > 0){
-                                accountDetail = ""+
-                                        listaccounts.get(0).getUserid()+" "+
-                                        listaccounts.get(0).getUserlevel()+" " +
-                                        listaccounts.get(0).getUsername() + " " +
-                                        listaccounts.get(0).getFirstname() + " " +
-                                        listaccounts.get(0).getAccountlevelDescription() + " " +
-                                        listaccounts.get(0).getLastname();
-                            }
 
 //                                            Helper.toastShort(activity, "Success: "+accountDetail);
                             Intent intent = new Intent(Activity_LoginScreen.this, MapsActivity.class);
@@ -391,23 +399,35 @@ public class Activity_LoginScreen extends Activity{
                             Helper.variables.setGlobalVar_currentUserID(listaccounts.get(0).getUserid(), activity);
                             Helper.variables.setGlobalVar_currentFirstname(listaccounts.get(0).getFirstname(), activity);
                             Helper.variables.setGlobalVar_currentLastname(listaccounts.get(0).getLastname(), activity);
-                            Helper.variables.setGlobalVar_currentUsername(txtusername.getText().toString(),activity);
-                            Helper.variables.setGlobalVar_currentUserpassword(txtpassword.getText().toString(),activity);
+                            Helper.variables.setGlobalVar_currentUsername(txtusername.getText().toString(), activity);
+                            Helper.variables.setGlobalVar_currentUserpassword(txtpassword.getText().toString(), activity);
                             Helper.variables.setGlobalVar_currentAssignedArea(listaccounts.get(0).getAssingedArea(), activity);
                             Helper.variables.setGlobalVar_DateAddedToDb(listaccounts.get(0).getDateAddedToDB(), activity);
                             Helper.variables.setGlobalVar_currentIsActive(listaccounts.get(0).getIsactive(), activity);
+                            Helper.variables.setGlobalVar_deviceID(listaccounts.get(0).getDeviceid(), activity);
 
-                            if (db.ifUserExistinDb(Helper.variables.getGlobalVar_currentUserID(activity) +"") > 0  ){
-//                                    Helper.toastShort(activity, "User already exist");
+
+                            if (db.selectUserinDB(Helper.variables.getGlobalVar_currentUserID(activity) + "") > 0  ) {
+                                Log.d("LOCAL DB", "UPDATING USER");
+                                int x = db.updateRowOneUser(
+                                        Helper.variables.getGlobalVar_currentUserID(activity) + "",
+                                        Helper.variables.getGlobalVar_currentLevel(activity) + "",
+                                        Helper.variables.getGlobalVar_currentUserFirstname(activity) + "",
+                                        Helper.variables.getGlobalVar_currentUserLastname(activity) + "",
+                                        Helper.variables.getGlobalVar_currentUserName(activity) + "",
+                                        Helper.variables.getGlobalVar_currentUserPassword(activity) + "",
+                                        Helper.variables.getGlobalVar_currentDeviceID(activity) + "",
+                                        Helper.variables.getGlobalVar_DateAdded(activity) + "");
+                                Log.d("LOCAL DB", "UPDATE FINISHED" + x);
                             }else{
                                 db.insertUserAccountInfo(
                                     Helper.variables.getGlobalVar_currentUserID(activity),
-                                    Helper.variables.getGlobalVar_currentlevel(activity),
+                                    Helper.variables.getGlobalVar_currentLevel(activity),
                                     Helper.variables.getGlobalVar_currentUserFirstname(activity),
                                     Helper.variables.getGlobalVar_currentUserLastname(activity),
-                                    Helper.variables.getGlobalVar_currentUsername(activity),
-                                    Helper.variables.getGlobalVar_currentUserpassword(activity),
-                                    Helper.getMacAddress(activity),
+                                    Helper.variables.getGlobalVar_currentUserName(activity),
+                                    Helper.variables.getGlobalVar_currentUserPassword(activity),
+                                    Helper.variables.getGlobalVar_currentDeviceID(activity),
                                     Helper.variables.getGlobalVar_DateAdded(activity),
                                     Helper.variables.getGlobalVar_currentisActive(activity)
                                 );
@@ -559,10 +579,10 @@ public class Activity_LoginScreen extends Activity{
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("deviceid", Helper.getMacAddress(activity)+"");
-                    params.put("username", Helper.variables.getGlobalVar_currentUsername(activity)+"");
-                    params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity)+"");
+                    params.put("username", Helper.variables.getGlobalVar_currentUserName(activity)+"");
+                    params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity)+"");
                     params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
-                    params.put("userlvl", Helper.variables.getGlobalVar_currentlevel(activity)+"");
+                    params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
 
                     return params;
                 }

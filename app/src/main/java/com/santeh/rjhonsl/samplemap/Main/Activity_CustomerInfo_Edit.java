@@ -301,8 +301,8 @@ public class Activity_CustomerInfo_Edit extends Activity{
                     params.put("cultureType", edtCultureSystem.getText().toString());
                     params.put("cultureLevel", edtLevelOfCulture.getText().toString());
                     params.put("waterType", edtWaterType.getText().toString());
-                    params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
-                    params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                    params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                    params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
                     params.put("deviceid", Helper.getMacAddress(activity));
 
                     return params;

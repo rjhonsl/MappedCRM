@@ -1,7 +1,5 @@
 package com.santeh.rjhonsl.samplemap.Parsers;
 
-import android.util.Log;
-
 import com.santeh.rjhonsl.samplemap.Obj.CustInfoObject;
 
 import org.json.JSONArray;
@@ -64,6 +62,12 @@ public class AccountsParser {
                     }
                 }
 
+                if (obj.has("users_device_id")){
+                    if(!obj.isNull("users_device_id")){
+                        custInfoObject.setDeviceId(obj.getString("users_device_id"));
+                    }
+                }
+
                 if (obj.has("user_lvl_description")){
                     custInfoObject.setAccountlevelDescription(obj.getString("user_lvl_description"));
                 }
@@ -74,7 +78,6 @@ public class AccountsParser {
                 }
 
 
-                Log.d("JSON PARSE", "ID: " + custInfoObject.getId() + " " + custInfoObject.getCustomerID() + " " + ar.length());
                 custInfoObjectList.add(custInfoObject);
 
             }

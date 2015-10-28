@@ -348,8 +348,8 @@ public class Activity_EditPonds extends FragmentActivity  implements DatePickerD
                 params.put("sizeofStock", String.valueOf(edtABW.getText()));
                 params.put("survivalrate", String.valueOf(edtSurvivalRate.getText()));
 
-                params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
-                params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
                 params.put("deviceid", Helper.getMacAddress(activity));
                 return params;
             }

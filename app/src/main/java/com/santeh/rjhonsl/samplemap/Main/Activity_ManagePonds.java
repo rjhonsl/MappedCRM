@@ -341,8 +341,8 @@ public class Activity_ManagePonds extends AppCompatActivity {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("id", String.valueOf(pondIndexID));
-                    params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
-                    params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
+                    params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
+                    params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
                     params.put("deviceid", Helper.getMacAddress(activity));
                     return params;
                 }

@@ -27,6 +27,7 @@ public class Var extends Application {
     private String currentPassword;
     private String dateAddedToDB;
     private String assignedArea;
+    private String deviceID;
 
 
     public String getCurrentPassword() {
@@ -112,5 +113,13 @@ public class Var extends Application {
 
     public void setIsactive(int isactive) {
         this.isactive = isactive;
+    }
+
+    public String getDeviceID() {
+        return deviceID;
+    }
+
+    public void setDeviceID(String deviceID) {
+        this.deviceID = deviceID;
     }
 }

@@ -256,10 +256,10 @@ public class Activity_ViewCustomerInfo extends Activity {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("keyword", keyword);
                 params.put("deviceid", Helper.getMacAddress(activity));
-                params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
-                params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
                 params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
-                params.put("userlvl", Helper.variables.getGlobalVar_currentlevel(activity)+"");
+                params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
 
                 return params;
             }

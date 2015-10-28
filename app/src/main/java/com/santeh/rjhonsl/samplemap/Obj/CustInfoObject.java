@@ -34,6 +34,7 @@ public class CustInfoObject {
 
 
 	private String username;
+	private String deviceid;
 	private String firstname;
 	private String lastname;
 	private String middleName;
@@ -697,5 +698,13 @@ public class CustInfoObject {
 
 	public void setIsactive(int isactive) {
 		this.isactive = isactive;
+	}
+
+	public String getDeviceid() {
+		return deviceid;
+	}
+
+	public void setDeviceId(String deviceid) {
+		this.deviceid = deviceid;
 	}
 }

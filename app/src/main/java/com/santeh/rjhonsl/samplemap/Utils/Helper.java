@@ -308,12 +308,12 @@ public class Helper {
             return  ((Var) activity.getApplication()).getCurrentuser();
         }
 
-        public static int getGlobalVar_currentlevel( Activity activity ){
+        public static int getGlobalVar_currentLevel(Activity activity){
             return  ((Var) activity.getApplication()).getCurrentuserLvl();
         }
 
 
-        public static String getGlobalVar_currentUsername( Activity activity ){
+        public static String getGlobalVar_currentUserName(Activity activity){
             return  ((Var) activity.getApplication()).getCurrentUserName();
         }
 
@@ -350,7 +350,7 @@ public class Helper {
         }
 
 
-        public static String getGlobalVar_currentUserpassword( Activity activity ){
+        public static String getGlobalVar_currentUserPassword(Activity activity){
             return  ((Var) activity.getApplication()).getCurrentPassword();
         }
 
@@ -373,6 +373,14 @@ public class Helper {
 
         public static void setGlobalVar_currentIsActive(int isactive, Activity activity ){
             ((Var) activity.getApplication()).setIsactive(isactive);
+        }
+
+        public static String getGlobalVar_currentDeviceID(Activity activity){
+            return  ((Var) activity.getApplication()).getDeviceID();
+        }
+
+        public static void setGlobalVar_deviceID(String deviceID, Activity activity ){
+            ((Var) activity.getApplication()).setDeviceID(deviceID);
         }
 
 

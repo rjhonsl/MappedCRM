@@ -208,9 +208,9 @@ public class Activity_Add_FarmInformation extends Activity {
                     params.put("waterType",   txtWaterType.getText().toString());
 
                     params.put("dateAdded", Helper.convertLongtoDateString(System.currentTimeMillis()));
-                    params.put("username", Helper.variables.getGlobalVar_currentUsername(activity));
+                    params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
                     params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
-                    params.put("password", Helper.variables.getGlobalVar_currentUserpassword(activity));
+                    params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
                     params.put("deviceid", Helper.getMacAddress(activity));
 
 
