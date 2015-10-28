@@ -47,6 +47,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.santeh.rjhonsl.samplemap.APIs.MyVolleyAPI;
+import com.santeh.rjhonsl.samplemap.DBase.GpsDB_Query;
 import com.santeh.rjhonsl.samplemap.Obj.CustInfoObject;
 import com.santeh.rjhonsl.samplemap.Obj.Var;
 import com.santeh.rjhonsl.samplemap.Parsers.CustAndPondParser;
@@ -115,6 +116,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Circle mapcircle;
 
     FusedLocation fusedLocation;
+    GpsDB_Query db;
 
 
     @Override
@@ -130,6 +132,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         passedintent = getIntent();
         extrass = getIntent().getExtras();
+        db = new GpsDB_Query(this);
+        db.open();
 
         popUp = new PopupWindow(this);
         layout = new LinearLayout(this);
@@ -1185,6 +1189,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onPause() {
         super.onPause();
+        db.close();
         Log.d("PROCESS", "Onpause");
     }
 
@@ -1276,6 +1281,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onResume();
         fusedLocation.connectToApiClient();
         Log.d("PROCESS", "REsume");
+        db.open();
 
         if(activeFilter==0){
             activeFilter = 0;

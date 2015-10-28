@@ -16,18 +16,12 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.santeh.rjhonsl.samplemap.APIs.MyVolleyAPI;
+import com.santeh.rjhonsl.samplemap.DBase.GpsDB_Query;
+import com.santeh.rjhonsl.samplemap.DBase.GpsSQLiteHelper;
 import com.santeh.rjhonsl.samplemap.R;
 import com.santeh.rjhonsl.samplemap.Utils.FusedLocation;
 import com.santeh.rjhonsl.samplemap.Utils.Helper;
 import com.santeh.rjhonsl.samplemap.Utils.Logging;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by rjhonsl on 7/28/2015.
@@ -52,6 +46,9 @@ public class Activity_Add_FarmInformation extends Activity {
     ImageButton titleback;
     FusedLocation fusedLocation;
 
+    GpsDB_Query db;
+    GpsSQLiteHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +56,10 @@ public class Activity_Add_FarmInformation extends Activity {
         context1 = this;
         context = Activity_Add_FarmInformation.this;
         activity = this;
+
+        dbHelper = new GpsSQLiteHelper(this);
+        db = new GpsDB_Query(this);
+        db.open();
 
         fusedLocation = new FusedLocation(context, activity);
         fusedLocation.buildGoogleApiClient(context);
@@ -108,10 +109,19 @@ public class Activity_Add_FarmInformation extends Activity {
 
         initOnClickListeners();
 
-
-
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        db.close();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        db.open();
+    }
 
     public void insertCustomerInfo() {
         fusedLocation.connectToApiClient();
@@ -142,85 +152,129 @@ public class Activity_Add_FarmInformation extends Activity {
             });
         }
         else{
+            PD.setMessage("Saving farm information...");
             PD.show();
 
-            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
 
-                            fusedLocation.connectToApiClient();
-                            if (response.substring(1,2).equalsIgnoreCase("1")) {
+            final long id = db.insertFarmInformation(
+                    String.valueOf(curlatitude),
+                    String.valueOf(curlongtitude),
+                    txtContactName.getText().toString(),
+                    txtCompany.getText().toString(),
+                    txtAddress.getText().toString(),
+                    txtFarmname.getText().toString(),
+                    txtFarmID.getText().toString(),
+                    txtContactNumber.getText().toString(),
+                    txtCultureType.getText().toString(),
+                    txtCultureLevel.getText().toString(),
+                    txtWaterType.getText().toString(),
+                    Helper.getDateDBformat(),
+                    Helper.variables.getGlobalVar_currentUserID(activity) + "");
+            if (id != -1){
+                PD.dismiss();
+                Dialog d = Helper.createCustomThemedColorDialogOKOnly(Activity_Add_FarmInformation.this, "SUCCESS",
+                        "You have successfully added " + txtContactName.getText().toString() + " to database", "OK", R.color.blue);
+                TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
+                d.setCancelable(false);
+                d.show();
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(activity, MapsActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("fromActivity", "addfarminfo");
 
-//                                Log.d("LOGGING", "" + activity.toString() + " " + context.toString() + " " + Helper.variables.getGlobalVar_currentUserID(activity) + ""
-//                                        + " " + fusedLocation.getLastKnowLocation().latitude + " " + fusedLocation.getLastKnowLocation().longitude);
-                                Logging.loguserAction(activity, context,
-                                        Helper.userActions.TSR.ADD_FARM, Helper.variables.ACTIVITY_LOG_TYPE_TSR_MONITORING);
+                        Logging.loguserAction(activity, activity.getBaseContext(),
+                                Helper.userActions.TSR.ADD_FARM +":"+ Helper.variables.getGlobalVar_currentUserID(activity)+"-"+id + "-"+txtFarmID,
+                                Helper.variables.ACTIVITY_LOG_TYPE_TSR_MONITORING);
 
+                        startActivity(intent);
+                        finish(); // call this to finish the current activity
+                    }
+                });
+            }else{
+                PD.dismiss();
+                Helper.createCustomThemedColorDialogOKOnly(activity, "Error", "Saving Failed! Please try again.", "OK", R.color.red);
+            }
 
-                                PD.dismiss();
-                                Dialog d = Helper.createCustomThemedColorDialogOKOnly(Activity_Add_FarmInformation.this, "SUCCESS",
-                                        "You have successfully added " + txtContactName.getText().toString() + " to database", "OK", R.color.blue);
-                                TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
-                                d.setCancelable(false);
-                                d.show();
-                                ok.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        finish();
-                                        Intent intent = new Intent(activity, MapsActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        intent.putExtra("fromActivity", "addfarminfo");
-                                        startActivity(intent);
-                                        finish(); // call this to finish the current activity
-
-                                    }
-                                });
-
-
-                            }else {
-                                Helper.createCustomThemedColorDialogOKOnly(activity, "Error", "Something happened. Please try again." , "OK", R.color.red);
-                                PD.dismiss();
-                            }
-
-
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    PD.dismiss();
-                    Helper.toastShort(activity, "Failed to connect to server.");
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("latitude", String.valueOf(curlatitude));
-                    params.put("longtitude", String.valueOf(curlongtitude));
-                    params.put("contactName", txtContactName.getText().toString());
-                    params.put("company", txtCompany.getText().toString());
-                    params.put("address", txtAddress.getText().toString());
-                    params.put("farmName", txtFarmname.getText().toString());
-                    params.put("farmID",  txtFarmID.getText().toString());
-                    params.put("contactNumber", txtContactNumber.getText().toString());
-                    params.put("cultureType", txtCultureType.getText().toString());
-                    params.put("cultureLevel", txtCultureLevel.getText().toString());
-                    params.put("waterType",   txtWaterType.getText().toString());
-
-                    params.put("dateAdded", Helper.convertLongtoDateString(System.currentTimeMillis()));
-                    params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
-                    params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
-                    params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
-                    params.put("deviceid", Helper.getMacAddress(activity));
-
-
-                    return params;
-                }
-            };
-
-            // Adding request to request queue
-            MyVolleyAPI api = new MyVolleyAPI();
-            api.addToReqQueue(postRequest, Activity_Add_FarmInformation.this);
+//
+//            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+//                    new Response.Listener<String>() {
+//                        @Override
+//                        public void onResponse(String response) {
+//
+//                            fusedLocation.connectToApiClient();
+//                            if (response.substring(1,2).equalsIgnoreCase("1")) {
+//
+////                                Log.d("LOGGING", "" + activity.toString() + " " + context.toString() + " " + Helper.variables.getGlobalVar_currentUserID(activity) + ""
+////                                        + " " + fusedLocation.getLastKnowLocation().latitude + " " + fusedLocation.getLastKnowLocation().longitude);
+//                                Logging.loguserAction(activity, context,
+//                                        Helper.userActions.TSR.ADD_FARM, Helper.variables.ACTIVITY_LOG_TYPE_TSR_MONITORING);
+//
+//
+//                                PD.dismiss();
+//                                Dialog d = Helper.createCustomThemedColorDialogOKOnly(Activity_Add_FarmInformation.this, "SUCCESS",
+//                                        "You have successfully added " + txtContactName.getText().toString() + " to database", "OK", R.color.blue);
+//                                TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
+//                                d.setCancelable(false);
+//                                d.show();
+//                                ok.setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        finish();
+//                                        Intent intent = new Intent(activity, MapsActivity.class);
+//                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                        intent.putExtra("fromActivity", "addfarminfo");
+//                                        startActivity(intent);
+//                                        finish(); // call this to finish the current activity
+//
+//                                    }
+//                                });
+//
+//
+//                            }else {
+//                                Helper.createCustomThemedColorDialogOKOnly(activity, "Error", "Something happened. Please try again." , "OK", R.color.red);
+//                                PD.dismiss();
+//                            }
+//
+//
+//                        }
+//                    }, new Response.ErrorListener() {
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//                    PD.dismiss();
+//                    Helper.toastShort(activity, "Failed to connect to server.");
+//                }
+//            }) {
+//                @Override
+//                protected Map<String, String> getParams() {
+//                    Map<String, String> params = new HashMap<String, String>();
+//                    params.put("latitude", String.valueOf(curlatitude));
+//                    params.put("longtitude", String.valueOf(curlongtitude));
+//                    params.put("contactName", txtContactName.getText().toString());
+//                    params.put("company", txtCompany.getText().toString());
+//                    params.put("address", txtAddress.getText().toString());
+//                    params.put("farmName", txtFarmname.getText().toString());
+//                    params.put("farmID",  txtFarmID.getText().toString());
+//                    params.put("contactNumber", txtContactNumber.getText().toString());
+//                    params.put("cultureType", txtCultureType.getText().toString());
+//                    params.put("cultureLevel", txtCultureLevel.getText().toString());
+//                    params.put("waterType",   txtWaterType.getText().toString());
+//
+//                    params.put("dateAdded", Helper.convertLongtoDateString(System.currentTimeMillis()));
+//                    params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+//                    params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
+//                    params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
+//                    params.put("deviceid", Helper.getMacAddress(activity));
+//
+//
+//                    return params;
+//                }
+//            };
+//
+//            // Adding request to request queue
+//            MyVolleyAPI api = new MyVolleyAPI();
+//            api.addToReqQueue(postRequest, Activity_Add_FarmInformation.this);
         }
 
 

@@ -99,7 +99,7 @@ public class Activity_Add_CustomerInformation_ContactInfo extends FragmentActivi
                     intent.putExtra("farmid",   farmid+"");
                     intent.putExtra("fname",    fname+"");
                     intent.putExtra("lname",    lname+"");
-                    intent.putExtra("mname",    fname+"");
+                    intent.putExtra("mname",    mname+"");
                     intent.putExtra("birthday", birthday+"");
                     intent.putExtra("birthplace", birthplace+"");
 

@@ -958,6 +958,22 @@ public class Helper {
     }
 
 
+    public static String convertLongtoDate_DB_Format(long dateInMillis){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(dateInMillis);
+        return formatter.format(calendar.getTime());
+    }
+
+    public static String getDateTimeDBformat(){
+        return Helper.convertLongtoDateTime_DB_Format(System.currentTimeMillis());
+    }
+
+    public static String getDateDBformat(){
+        return Helper.convertLongtoDate_DB_Format(System.currentTimeMillis());
+    }
+
+
     public static int[] convertLongtoDateFormat(long dateinMilis) {
 //        Calendar calendar = null;
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

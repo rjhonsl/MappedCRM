@@ -194,6 +194,7 @@
 
                 <EditText android:layout_width="fill_parent"
                           android:id="@+id/edt_province"
+                          android:inputType="textCapWords"
                           android:layout_height="wrap_content"/>
 
             </LinearLayout>

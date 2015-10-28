@@ -6,24 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
-import com.santeh.rjhonsl.samplemap.APIs.MyVolleyAPI;
+import com.santeh.rjhonsl.samplemap.DBase.GpsDB_Query;
 import com.santeh.rjhonsl.samplemap.R;
 import com.santeh.rjhonsl.samplemap.Utils.Helper;
 import com.santeh.rjhonsl.samplemap.Utils.Logging;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by rjhonsl on 10/7/2015.
@@ -50,6 +44,7 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity{
 
     Dialog PD;
     TextView dialogmessage;
+    GpsDB_Query db;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -61,7 +56,8 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity{
 
         PD = Helper.initProgressDialog(activity);
         dialogmessage = (TextView) PD.findViewById(R.id.progress_message);
-
+        db = new GpsDB_Query(this);
+        db.open();
 
 
         btnBack = (ImageButton) findViewById(R.id.btn_back);
@@ -218,104 +214,148 @@ public class Activity_Add_CustomerInformation_Summary extends FragmentActivity{
         PD.show();
         dialogmessage.setText("Updating. Please wait...");
 
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+        long result = db.insertMainCustomerInformation(
+                Helper.variables.getGlobalVar_currentUserID(activity),
+                lname, mname, fname, farmid, housenumber, street, subdivision, barangay, city, province, birthday, birthplace, telephone,
+                cellphone, civilstatus, s_fname, s_lname, s_mname, s_birthday, housestat, lat+"", lng+""
+        );
 
-                        String responseCode = Helper.extractResponseCode(response);
-                        PD.hide();
+        Log.d("LOCAL DB", "Insert MainCustomer Info" + result);
+        if (result != -1){
+            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Save", "Saving successful. ", "OK", R.color.amber_600);
+            PD.dismiss();
 
+            Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(activity, MapsActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("fromActivity", "addcustomerinfo");
+                    startActivity(intent);
+                    finish(); // call this to finish the current activity
+                }
+            });
 
-                        if (responseCode.equalsIgnoreCase("1")){
+            Logging.loguserAction(activity, activity.getBaseContext(),
+                    Helper.userActions.TSR.ADD_MAIN_CUSTOMERINFO+":"+result+"-"+Helper.variables.getGlobalVar_currentUserID(activity)+"-"+fname+lname,
+                    Helper.variables.ACTIVITY_LOG_TYPE_TSR_MONITORING);
 
-                            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Save", "Saving successful. ", "OK", R.color.amber_600);
+        }else {
+            PD.dismiss();
+            Helper.createCustomThemedColorDialogOKOnly(activity, "Error", "Saving of Customer Information Failed. Please Try again.", "OK", R.color.red);
+        }
 
-                            Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
-                            ok.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent intent = new Intent(activity, MapsActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent.putExtra("fromActivity", "addcustomerinfo");
-                                    startActivity(intent);
-                                    finish(); // call this to finish the current activity
-
-                                    //ugygff
-                                }
-                            });
-
-                            Logging.loguserAction(activity, activity.getBaseContext(), Helper.userActions.TSR.ADD_MAIN_CUSTOMERINFO, Helper.variables.ACTIVITY_LOG_TYPE_TSR_MONITORING);
-
-
-                        }else {
-                            Helper.toastLong(activity, response);
-
-                        }
-
-                    }
-
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                PD.dismiss();
-
-                final Dialog d = Helper.createCustomDialogOKOnly(activity, "OOPS",
-                        "Something went wrong. error( "+ error +" )", "OK");
-                TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
-                d.setCancelable(false);
-                d.show();
-                ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-//                                    finish();
-                        d.hide();
-                    }
-                });
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-
-                params.put("deviceid", Helper.getMacAddress(activity));
-                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
-                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
-                params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
-                params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
-
-                params.put("mci_lname", lname+"");
-                params.put("mci_fname", fname+"");
-                params.put("mci_mname", mname+"");
-                params.put("mci_farmid", farmid+"");
-                params.put("mci_housenumber", housenumber+"");
-                params.put("mci_street", street+"");
-                params.put("mci_subdivision", subdivision+"");
-                params.put("mci_barangay", barangay+"");
-                params.put("mci_city", city+"");
-                params.put("mci_province", province+"");
-                params.put("mci_customerbirthday", birthday+"");
-                params.put("mci_birthplace", birthplace+"");
-                params.put("mci_telephone", telephone+"");
-                params.put("mci_cellphone", cellphone+"");
-                params.put("mci_civilstatus", civilstatus+"");
-                params.put("mci_s_fname", s_fname+"");
-                params.put("mci_s_lname", s_lname+"");
-                params.put("mci_s_mname", s_mname+"");
-                params.put("mci_s_birthday", s_birthday+"");
-                params.put("mci_housestatus", housestat+"");
-                params.put("mci_latitude", lat+""); // sample test
-                params.put("mci_longitude", lng+"");
-
-
-                return params;
-            }
-        };
-
-        // Adding request to request queue
-        MyVolleyAPI api = new MyVolleyAPI();
-        api.addToReqQueue(postRequest, context);
+//
+//        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                        String responseCode = Helper.extractResponseCode(response);
+//                        PD.hide();
+//
+//
+//                        if (responseCode.equalsIgnoreCase("1")){
+//
+//                            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Save", "Saving successful. ", "OK", R.color.amber_600);
+//
+//                            Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
+//                            ok.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    Intent intent = new Intent(activity, MapsActivity.class);
+//                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                    intent.putExtra("fromActivity", "addcustomerinfo");
+//                                    startActivity(intent);
+//                                    finish(); // call this to finish the current activity
+//
+//                                    //ugygff
+//                                }
+//                            });
+//
+//                            Logging.loguserAction(activity, activity.getBaseContext(), Helper.userActions.TSR.ADD_MAIN_CUSTOMERINFO, Helper.variables.ACTIVITY_LOG_TYPE_TSR_MONITORING);
+//
+//
+//                        }else {
+//                            Helper.toastLong(activity, response);
+//
+//                        }
+//
+//                    }
+//
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                PD.dismiss();
+//
+//                final Dialog d = Helper.createCustomDialogOKOnly(activity, "OOPS",
+//                        "Something went wrong. error( "+ error +" )", "OK");
+//                TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
+//                d.setCancelable(false);
+//                d.show();
+//                ok.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+////                                    finish();
+//                        d.hide();
+//                    }
+//                });
+//            }
+//        }) {
+//            @Override
+//            protected Map<String, String> getParams() {
+//                Map<String, String> params = new HashMap<String, String>();
+//
+//                params.put("deviceid", Helper.getMacAddress(activity));
+//                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+//                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
+//                params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
+//                params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
+//
+//                params.put("mci_lname", lname+"");
+//                params.put("mci_fname", fname+"");
+//                params.put("mci_mname", mname+"");
+//                params.put("mci_farmid", farmid+"");
+//                params.put("mci_housenumber", housenumber+"");
+//                params.put("mci_street", street+"");
+//                params.put("mci_subdivision", subdivision+"");
+//                params.put("mci_barangay", barangay+"");
+//                params.put("mci_city", city+"");
+//                params.put("mci_province", province+"");
+//                params.put("mci_customerbirthday", birthday+"");
+//                params.put("mci_birthplace", birthplace+"");
+//                params.put("mci_telephone", telephone+"");
+//                params.put("mci_cellphone", cellphone+"");
+//                params.put("mci_civilstatus", civilstatus+"");
+//                params.put("mci_s_fname", s_fname+"");
+//                params.put("mci_s_lname", s_lname+"");
+//                params.put("mci_s_mname", s_mname+"");
+//                params.put("mci_s_birthday", s_birthday+"");
+//                params.put("mci_housestatus", housestat+"");
+//                params.put("mci_latitude", lat+""); // sample test
+//                params.put("mci_longitude", lng+"");
+//
+//
+//                return params;
+//            }
+//        };
+//
+//        // Adding request to request queue
+//        MyVolleyAPI api = new MyVolleyAPI();
+//        api.addToReqQueue(postRequest, context);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        db.open();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        db.close();
+    }
 }
 

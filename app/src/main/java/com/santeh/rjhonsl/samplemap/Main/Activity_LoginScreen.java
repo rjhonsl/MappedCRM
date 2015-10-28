@@ -478,11 +478,13 @@ public class Activity_LoginScreen extends Activity{
         super.onResume();
         Helper.isLocationAvailablePrompt(context, activity);
         fusedLocation.connectToApiClient();
+        db.open();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        db.close();
     }
 
 
