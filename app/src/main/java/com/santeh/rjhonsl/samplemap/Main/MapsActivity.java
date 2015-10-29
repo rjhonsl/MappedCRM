@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,6 +49,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.santeh.rjhonsl.samplemap.APIs.MyVolleyAPI;
 import com.santeh.rjhonsl.samplemap.DBase.GpsDB_Query;
+import com.santeh.rjhonsl.samplemap.DBase.GpsSQLiteHelper;
 import com.santeh.rjhonsl.samplemap.Obj.CustInfoObject;
 import com.santeh.rjhonsl.samplemap.Obj.Var;
 import com.santeh.rjhonsl.samplemap.Parsers.CustAndPondParser;
@@ -57,6 +59,7 @@ import com.santeh.rjhonsl.samplemap.Utils.GPSTracker;
 import com.santeh.rjhonsl.samplemap.Utils.Helper;
 import com.santeh.rjhonsl.samplemap.Utils.Logging;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -188,41 +191,39 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void initMarkers() {
         Bundle extras = getIntent().getExtras();
 
-        if (extras != null) {
+        if (extras != null) {  //if extras is not nul
             if (extras.getString("fromActivity") != null){
                 String from = extras.getString("fromActivity");
 
-                if (from.equalsIgnoreCase("viewCustinfo")) {
-                    if (extras.getString("lat")!=null && extras.get("long")!= null) {
+                if (from.equalsIgnoreCase("viewCustinfo")) { //if from Activity View Customer Info
+                    if (extras.getString("lat")!=null && extras.get("long")!= null) {//if lat & long is not null// passed from intent
                         LatLng latLng = new LatLng(
                                 Double.parseDouble(extras.getString("lat")),
                                 Double.parseDouble(extras.getString("long"))  );
 
-                        if(((Var) this.getApplication()).getGoogleMap() != null){
+                        if(((Var) this.getApplication()).getGoogleMap() != null){ //if google maps is ready
                             moveCameraAnimate(((Var) this.getApplication()).getGoogleMap(), latLng, 14);
                             maps.setInfoWindowAdapter(new FarmInfoWindow());
                             maps.clear();
+
                             Helper.map_addMarker(((Var) this.getApplication()).getGoogleMap(), latLng, R.drawable.ic_place_red_24dp,
                                     extras.getString("contactName"), extras.getString("address"), extras.getInt("id")+"",null, null);
+
                         PD.dismiss();
                         }
-                        else{
+                        else{//google map not ready
                             Helper.toastShort(activity, "Can't find current location. Please try again later.");
                         }
 
                     }
-                    
-                }else{
+                }else{//if not from view Customer Info
                     showAllRelatedMarkers();
                 }
-
             }
-            else {
-                    showAllRelatedMarkers();
-            }
-
+            else {//if opened from login screen
+                    showAllRelatedMarkers();  }
         }
-        else{
+        else{//if opened from login screen
             showAllRelatedMarkers();
         }
     }
@@ -323,10 +324,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                try{
-//            Helper.toastLong(activity, extrass.getString("lat") + " " + extrass.getString("long") );
-
-
+            try{
                     if (checkIfLocationAvailable()){
                         moveCameraAnimate(map, fusedLocation.getLastKnowLocation(), zoom);
                         insertloginlocation();
@@ -338,9 +336,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         curLong = 121.029335;
                         zoom = 9;
                     }
-
                 }catch(Exception e){
                     Helper.toastShort(activity, "Location is not available: "+e);
+                    Log.e("Error", e.toString());
                 }
             }
         }, 500);
@@ -812,7 +810,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String url =  "";
         if (passedintent != null){
             if (passedintent.hasExtra("fromActivity")){
-
                 if (passedintent.getStringExtra("fromActivity").equalsIgnoreCase("login")
                         || passedintent.getStringExtra("fromActivity").equalsIgnoreCase("addfarminfo") ){
                     url  = Helper.variables.URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO;
@@ -828,81 +825,125 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     activeSelection = "farm";
                 }
             }else{
-                url  = Helper.variables.URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO;
+                    url  = Helper.variables.URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO;
                 Log.d("URL", "fromActivity null");
             }
         }else{
-            url  = Helper.variables.URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO;
+                    url  = Helper.variables.URL_SELECT_ALL_CUSTINFO_LEFTJOIN_PONDINFO;
             Log.d("URL", "passed intent null");
         }
 
-        final String finalUrl = url;
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(final String response) {
 
-///                        Helper.toastLong(activity, response);
-                        if (response.substring(1, 2).equalsIgnoreCase("0")) {
-                            PD.dismiss();
-                            updateDisplay();
-                        } else {
-                            PD.dismiss();
-                            custInfoObjectList = CustAndPondParser.parseFeed(response);
-//                            Helper.toastShort(activity, "after parse feed");
-                            if (custInfoObjectList != null) {
-                                if (custInfoObjectList.size() > 0) {
-                                    if (passedintent != null) {
-                                        if (passedintent.hasExtra("fromActivity")) {
-                                            if (passedintent.getStringExtra("fromActivity").equalsIgnoreCase("login")) {
-                                                userid = extrass.getInt("userid");
-                                                userlevel = extrass.getInt("userlevel");
-                                                username = extrass.getString("username");
-                                                firstname = extrass.getString("firstname");
-                                                lastname = extrass.getString("lastname");
-                                                userdescription = extrass.getString("userdescription");
-//                                                insertloginlocation();
-                                            }
-                                            activeSelection = "farm";
-                                                updateDisplay();
-                                        } else {
-                                            updateDisplay();
-                                        }
-                                    } else {
-                                        updateDisplay();
-                                    }
+        int userlvl = Helper.variables.getGlobalVar_currentLevel(activity);//get current userlvl
+        if (userlvl == 1 || userlvl == 2 || userlvl == 3){ //if user is not TSR/Technician
+            if (Helper.isNetworkAvailable(context)){ //if internet is availble
+                final String finalUrl = url;
+                StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(final String response) {
+                                if (response.substring(1, 2).equalsIgnoreCase("0")) {
+                                    PD.dismiss(); updateDisplay();
                                 } else {
-                                    updateDisplay();
+                                    PD.dismiss();
+                                    custInfoObjectList = CustAndPondParser.parseFeed(response);
+                                    if (custInfoObjectList != null) {
+                                        if (custInfoObjectList.size() > 0) {
+                                            if (passedintent != null) {
+                                                if (passedintent.hasExtra("fromActivity")) {
+                                                    if (passedintent.getStringExtra("fromActivity").equalsIgnoreCase("login")) {
+                                                        userid = extrass.getInt("userid");
+                                                        userlevel = extrass.getInt("userlevel");
+                                                        username = extrass.getString("username");
+                                                        firstname = extrass.getString("firstname");
+                                                        lastname = extrass.getString("lastname");
+                                                        userdescription = extrass.getString("userdescription");
+//                                                insertloginlocation();
+                                                    }
+                                                    activeSelection = "farm";
+                                                    updateDisplay();
+                                                } else { updateDisplay(); }
+                                            } else { updateDisplay(); }
+                                        } else {updateDisplay(); }
+                                    } else {updateDisplay();}
                                 }
-                            } else {
-                                updateDisplay();
                             }
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                PD.dismiss();
+                                Helper.toastShort(MapsActivity.this, "Something happened. Please try again later");
+                            }
+                        }) {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        PD.dismiss();
-                        Helper.toastShort(MapsActivity.this, "Something happened. Please try again later");
+                    protected Map<String, String> getParams() {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                        params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
+                        params.put("deviceid", Helper.getMacAddress(context));
+                        params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
+                        params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
+
+                        return params;
                     }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
-                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
-                params.put("deviceid", Helper.getMacAddress(context));
-                params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
-                params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
+                };
 
-//
-                return params;
+                MyVolleyAPI api = new MyVolleyAPI();
+                api.addToReqQueue(postRequest, MapsActivity.this);
             }
-        };
 
-        MyVolleyAPI api = new MyVolleyAPI();
-        api.addToReqQueue(postRequest, MapsActivity.this);
+        }else if(userlvl == 0 || userlvl == 4) {//if user is tsr/technician... then query local database
+            Cursor cur = db.getAll_FARMINFO_LEFTJOIN_PONDINFO(Helper.variables.getGlobalVar_currentUserID(activity)+"");
+            if(cur != null) {
+                if(cur.getCount() > 0) {
+                    custInfoObjectList = new ArrayList<>();
+                    while (cur.moveToNext()) {
+                        CustInfoObject custInfoObject = new CustInfoObject();
+
+                        custInfoObject.setCi_id(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_ID)));
+                        custInfoObject.setLatitude(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_LAT)));
+                        custInfoObject.setLongtitude(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_LNG)));
+                        custInfoObject.setContact_name(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_CONTACT_NAME)));
+                        custInfoObject.setCompany(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_COMPANY)));
+                        custInfoObject.setAddress(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_FARM_ADDRESS)));
+                        custInfoObject.setFarmname(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_FARM_NAME)));
+                        custInfoObject.setCounter(0);
+                        custInfoObject.setFarmID(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_FARM_ID)));
+                        custInfoObject.setContact_number(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_C_NUMBER)));
+                        custInfoObject.setCultureType(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_CULTYPE)));
+                        custInfoObject.setCulturelevel(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_CULTlVL)));
+                        custInfoObject.setWaterType(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_WATTYPE)));
+                        custInfoObject.setDateAddedToDB(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_dateAdded)));
+                        custInfoObject.setAllSpecie(cur.getString(cur.getColumnIndex("allSpecie"))); //(obj.getString("allSpecie"));
+
+                        custInfoObject.setId(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_INDEX)));
+                        custInfoObject.setTotalStockOfFarm(cur.getInt(cur.getColumnIndex("Totalquantity")));//(obj.getInt("Totalquantity"));
+                        custInfoObject.setSizeofStock(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_sizeofStock)));
+                        custInfoObject.setPondID(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_PID)));
+                        custInfoObject.setQuantity(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_quantity)));
+                        custInfoObject.setArea(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_area)));
+                        custInfoObject.setSpecie(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_specie)));
+                        custInfoObject.setDateStocked(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_dateStocked)));
+                        custInfoObject.setCulturesystem(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_culturesystem)));
+                        custInfoObject.setRemarks(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_remarks)));
+                        custInfoObject.setCustomerID(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_customerId)));
+                        custInfoObject.setSurvivalrate_per_pond(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_survivalrate)));
+
+                        custInfoObjectList.add(custInfoObject);
+                    }
+                    updateDisplay();
+                    PD.dismiss();
+                }else{
+                    PD.dismiss();
+                    prompt_noFarm();
+                }
+            }else{
+                PD.dismiss();
+                prompt_noFarm();
+            }
+        }
+
     }
 
 
@@ -1009,9 +1050,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                 custInfoObjectList.get(i).getFirstname() + " " + custInfoObjectList.get(i).getLastname(), //Firstname and LastName
                                                 address, custInfoObjectList.get(i).getFarmID(), custInfoObjectList.get(i).getMainCustomerId(), "0");
                                     }
-                                }else{Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "You have not added any customer address" , "OK", R.color.red);}
-                            }else{ Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "You have not added any customer address", "OK", R.color.red);}
-                        } else {Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "You have not added any customer address", "OK", R.color.red);}
+                                }else{
+                                    prompt_noCustomerLocation();
+                                }
+                            }else{
+                                prompt_noCustomerLocation();
+                            }
+                        } else {
+                            prompt_noCustomerLocation();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -1039,6 +1086,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    private void prompt_noCustomerLocation() {
+        Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "You have not added any customer address", "OK", R.color.red);
+    }
 
 
     public void showAllRelatedFarmsOfCustomer(final String farmid, final String ownerName){
@@ -1159,31 +1209,26 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             ci.getAllSpecie() + "#-#" + ci.getCust_latitude() + "#-#" + ci.getCust_longtitude() + "#-#" +ci.getFarmID());
                 }
             } else {
-                final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "MAP", "You have not added a farm yet. \n You can start by pressing the  plus '+' on the upper right side of the screen.", "OK", R.color.skyblue_400);
-                Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
-                d.show();
-
-                ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        d.hide();
-                    }
-                });
+                prompt_noFarm();
             }
 
         } else {
-            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "MAP", "You have not added a farm yet. \n You can start by pressing the  plus '+' on the upper right side of the screen.", "OK", R.color.skyblue_400);
-            Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
-            d.show();
-
-            ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    d.hide();
-                }
-            });
+            prompt_noFarm();
         }
 
+    }
+
+    private void prompt_noFarm() {
+        final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "MAP", "You have not added a farm yet. \n You can start by pressing the  plus '+' on the upper right side of the screen.", "OK", R.color.skyblue_400);
+        Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
+        d.show();
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                d.hide();
+            }
+        });
     }
 
 

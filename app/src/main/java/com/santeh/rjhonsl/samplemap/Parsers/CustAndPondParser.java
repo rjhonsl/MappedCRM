@@ -299,7 +299,8 @@ public class CustAndPondParser {
 
 				if (obj.has("mci_farmid")){
 					if (!obj.isNull("mci_farmid")) {
-					custInfoObject.setFarmID(obj.getString("mci_farmid"));}
+					custInfoObject.setFarmID(obj.getString("mci_farmid"));
+					}
 				}
 
 				if (obj.has("mci_street")){
@@ -401,32 +402,6 @@ public class CustAndPondParser {
 					}
 				}
 
-//				Log.d("JSON PARSE",
-//						"ID: "+custInfoObject.getId()+
-//						"Latitude: "+custInfoObject.getLatitude()+
-//						"Longtitude: "+custInfoObject.getLongtitude()+
-//						"contact name: "+custInfoObject.getContact_name()+
-//						"company: "+custInfoObject.getCompany()+
-//						"address: "+custInfoObject.getAddress()+
-//						"farm_name: "+custInfoObject.getFarmname()+
-//						"farmid: "+custInfoObject.getFarmID()+
-//						"contact number: "+custInfoObject.getContact_number()+
-//						"culture type: "+custInfoObject.getCultureType()+
-//						"culture level: "+custInfoObject.getCulturelevel()+
-//						"watertype: "+custInfoObject.getWaterType()+
-//						"date added: "+custInfoObject.getDateAddedToDB()+
-//
-//						"sizeofstock: "+custInfoObject.getSizeofStock()+
-//						"pond id: "+custInfoObject.getPondID()+
-//						"quantity: "+custInfoObject.getQuantity()+
-//						"area: "+custInfoObject.getArea()+
-//						"specie: "+custInfoObject.getSpecie()+
-//						"datestocked: "+custInfoObject.getDateStocked()+
-//						"culture system: "+custInfoObject.getCulturesystem()+
-//						"remarks: "+custInfoObject.getRemarks()+
-//						"custoemrId: "+custInfoObject.getCustomerID()+
-//						"survivalRate: " + custInfoObject.getSurvivalrate_per_pond()
-//				);
 				custInfoObjectList.add(custInfoObject);
 
 			}

@@ -188,6 +188,30 @@ public class GpsDB_Query {
 		return db.rawQuery(query, params);
 	}
 
+	public Cursor getAll_FARMINFO_LEFTJOIN_PONDINFO(String userid){
+		String query = "SELECT \n" +
+				"tblCustomerInfo.*, \n" +
+				"tblPond.*, \n" +
+				"SUM(tblPond.quantity) AS Totalquantity, \n" +
+
+				"(SELECT DISTINCT GROUP_CONCAT( DISTINCT tblPond.specie ) \n" +
+				"FROM tblPond WHERE tblPond.customerId = tblCustomerInfo.ci_customerId ORDER BY tblPond.specie ASC) AS allSpecie \n" +
+
+				"FROM tblCustomerInfo \n" +
+
+				"LEFT JOIN  tblPond \n" +
+				"ON tblPond.customerId = tblCustomerInfo.ci_customerId \n" +
+
+				"WHERE tblCustomerInfo.addedby = ? \n" +
+
+				"GROUP BY "+GpsSQLiteHelper.CL_FARMINFO_ID+"  \n" +
+				"ORDER BY "+GpsSQLiteHelper.CL_FARMINFO_ID+"  ASC;"
+				;
+		String[] params =  new String[] {userid};
+		return db.rawQuery(query, params);
+	}
+
+
 	public int getUser_Count() {
 		String query = "SELECT * FROM "+GpsSQLiteHelper.TBLUSERS+";";
 		String[] params = new String[] {};
