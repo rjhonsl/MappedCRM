@@ -143,7 +143,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         fusedLocation = new FusedLocation(context, activity);
         fusedLocation.buildGoogleApiClient(context);
         fusedLocation.connectToApiClient();
-
+        activeSelection = "farm";
         lastlatlng = fusedLocation.getLastKnowLocation();
 
 
@@ -460,7 +460,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
 //                setUpMap();
-
+                fusedLocation.disconnectFromApiClient();
                 if (Helper.isLocationEnabled(context)) {
 
                     fusedLocation.connectToApiClient();
@@ -629,6 +629,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+
                 String[] details = marker.getTitle().split("#-#");
                 if (activeSelection.equalsIgnoreCase("farm")) {
                     String ID = marker.getId(), curId = "";
@@ -936,8 +937,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                 R.drawable.ic_place_red_24dp, ci.getFarmname(), ci.getAddress(), ci.getCi_id() + "", ci.getTotalStockOfFarm() + "",
                                                 ci.getAllSpecie() + "#-#" + ci.getCust_latitude() + "#-#" + ci.getCust_longtitude());
                                     }
-                                }
-                            }
+                                }else {maps.clear();}
+                            }else{maps.clear();}
 
 
                         }
@@ -1215,6 +1216,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             String[] details = marker.getTitle().split("#-#");
 
             tvTitle.setText(details[1]);
+
             if (details[2].equalsIgnoreCase("") || details[2].equalsIgnoreCase("null")){
                 txtStock.setText("n/a");
             } else{

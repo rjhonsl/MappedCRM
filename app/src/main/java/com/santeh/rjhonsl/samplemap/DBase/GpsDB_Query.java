@@ -66,6 +66,37 @@ public class GpsDB_Query {
 		return  db.insert(GpsSQLiteHelper.TBLUSER_ACTIVITY, null, values);
 	}
 
+	public long insertWeeklyUpdates(String abw, String remakrs, String pondid, String dateAdded){
+
+		ContentValues values = new ContentValues();
+		values.put(GpsSQLiteHelper.CL_WEEKLY_UPDATES_CURRENT_ABW, abw);
+		values.put(GpsSQLiteHelper.CL_WEEKLY_UPDATES_REMARKS, remakrs);
+		values.put(GpsSQLiteHelper.CL_WEEKLY_UPDATES_PONDID, pondid);
+		values.put(GpsSQLiteHelper.CL_WEEKLY_UPDATES_DATEADDED, dateAdded);
+		values.put(GpsSQLiteHelper.CL_WEEKLY_UPDATES_isposted, 0);
+
+		return  db.insert(GpsSQLiteHelper.TBLPOND_WeeklyUpdates, null, values);
+	}
+
+	public long insertPondData(String pondid, String specie, String sizeofStock, String survivalRate, String dateStocked, String quantity, String area, String culturesystem, String remarks, String customerid) {
+
+		ContentValues values = new ContentValues();
+		values.put(GpsSQLiteHelper.CL_POND_PID, pondid);
+		values.put(GpsSQLiteHelper.CL_POND_specie, specie);
+		values.put(GpsSQLiteHelper.CL_POND_sizeofStock, sizeofStock);
+		values.put(GpsSQLiteHelper.CL_POND_survivalrate, survivalRate);
+		values.put(GpsSQLiteHelper.CL_POND_dateStocked, dateStocked);
+		values.put(GpsSQLiteHelper.CL_POND_quantity, quantity);
+		values.put(GpsSQLiteHelper.CL_POND_area, area);
+		values.put(GpsSQLiteHelper.CL_POND_culturesystem, culturesystem);
+		values.put(GpsSQLiteHelper.CL_POND_remarks, remarks);
+		values.put(GpsSQLiteHelper.CL_POND_customerId, customerid);
+		values.put(GpsSQLiteHelper.CL_POND_isPosted, 0);
+		long id = db.insert(GpsSQLiteHelper.TBLPOND, null, values);
+		insertWeeklyUpdates(sizeofStock, remarks, pondid, dateStocked);
+		return id;
+	}
+
 
 	public long insertMainCustomerInformation(int userid, String lname, String mname, String fname, String farmid, String housenumber, String street,
 											  String subdivision, String barangay, String city, String province, String birthday, String birthplace, String telephone,

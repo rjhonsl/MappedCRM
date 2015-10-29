@@ -73,6 +73,7 @@ public class Helper {
             public static String DELETE_POND="Delete Pond Information";
             public static String Edit_POND  ="Modify Pond Information";
             public static String ADD_MAIN_CUSTOMERINFO ="Add Customer Address Information";
+            public static String ADD_WEEKLYREPORT ="Add Weekly Report";
 
             public static String USER_LOGIN = "Login";
 

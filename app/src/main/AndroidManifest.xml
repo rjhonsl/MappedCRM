@@ -95,23 +95,22 @@
 
         <activity android:name=".Main.Activity_LoginScreen"
                   android:label="Santeh CRM">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <activity android:name=".Main.MapsActivity_UserMonitoring"
                   android:label="User Activities">
-
         </activity>
 
         <activity android:name=".Main.Activity_UserMonitoring_ViewByUser">
         </activity>
 
         <activity android:name=".Main.Activity_AddPond">
+
+
         </activity>
 
         <activity android:name=".Main.Activity_EditPonds">

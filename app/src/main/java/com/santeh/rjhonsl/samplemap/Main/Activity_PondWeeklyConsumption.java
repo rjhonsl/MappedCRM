@@ -21,10 +21,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.santeh.rjhonsl.samplemap.APIs.MyVolleyAPI;
 import com.santeh.rjhonsl.samplemap.Adapter.Adapter_Growouts_PondWeekLyConsumption;
+import com.santeh.rjhonsl.samplemap.DBase.GpsDB_Query;
 import com.santeh.rjhonsl.samplemap.Obj.CustInfoObject;
 import com.santeh.rjhonsl.samplemap.Parsers.PondWeeklyUpdateParser;
 import com.santeh.rjhonsl.samplemap.R;
 import com.santeh.rjhonsl.samplemap.Utils.Helper;
+import com.santeh.rjhonsl.samplemap.Utils.Logging;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,12 +72,16 @@ public class Activity_PondWeeklyConsumption extends Activity {
     private String remarks;
     int startWeek, currentweek;
 
+    GpsDB_Query db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_growout_weeklyreport);
         activity = this;
         context = Activity_PondWeeklyConsumption.this;
+        db = new GpsDB_Query(this);
+        db.open();
 
         PD = new ProgressDialog(this);
         PD.setMessage("Updating database. Please wait....");
@@ -431,45 +437,84 @@ public class Activity_PondWeeklyConsumption extends Activity {
     private void AddReport(final String abw2, String url, final String remarks2){
         PD.setMessage("Saving Report. Please wait... ");
         PD.show();
+//        params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+//                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
+//                params.put("deviceid", Helper.getMacAddress(context));
+//                params.put("abw", abw2);
+//                params.put("remarks", remarks2);
+//                params.put("pondindex", id+"");
 
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        pondweeklyList = new ArrayList<>();
-                        PD.dismiss();
+        final long result = db.insertWeeklyUpdates(abw2, remarks2, id+"", Helper.getDateDBformat());
 
-//                        Helper.createCustomThemedColorDialogOKOnly(activity, "Responze", response, "OK", R.color.red);
-                        if (!response.substring(1,2).equalsIgnoreCase("0")) {
-                            Helper.toastShort(activity, "Report Added Successfully!");
-                            getpondData(id, Helper.variables.URL_SELECT_POND_WEEKLY_UPDATES_BY_ID);
-                        }else { Helper.toastShort(activity, "No records"); }
-                    }
+        if (result != -1){
+            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(Activity_PondWeeklyConsumption.this,
+                    "Success", "Saving successful", "OK", R.color.skyblue_500);
+            TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
+            d.show();
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    d.hide();
+                    PD.dismiss();
+                    Logging.loguserAction(activity, activity.getBaseContext(),
+                            Helper.userActions.TSR.ADD_WEEKLYREPORT + ":" + result + "-" + Helper.variables.getGlobalVar_currentUserID(activity) + "-" + abw2 +"-" +remarks2,
+                            Helper.variables.ACTIVITY_LOG_TYPE_TSR_MONITORING);
 
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                PD.dismiss();
-                Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Error", "Something unexpected happened: " + error.toString(), "OK", R.color.red);
-                d.show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                    finish();
 
-                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
-                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
-                params.put("deviceid", Helper.getMacAddress(context));
-                params.put("abw", abw2);
-                params.put("remarks", remarks2);
-                params.put("pondindex", id+"");
-                return params;
-            }
-        };
-
-        MyVolleyAPI api = new MyVolleyAPI();
-        api.addToReqQueue(postRequest, context);
+                }
+            });
+        }else{
+            final Dialog d = Helper.createCustomThemedColorDialogOKOnly(Activity_PondWeeklyConsumption.this,
+                    "Error", "Reporting failed. Please Try Again. ", "OK", R.color.red);
+            TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
+            d.show();
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    d.hide();
+                    PD.dismiss();
+                }
+            });
+        }
+//        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        pondweeklyList = new ArrayList<>();
+//                        PD.dismiss();
+//
+////                        Helper.createCustomThemedColorDialogOKOnly(activity, "Responze", response, "OK", R.color.red);
+//                        if (!response.substring(1,2).equalsIgnoreCase("0")) {
+//                            Helper.toastShort(activity, "Report Added Successfully!");
+//                            getpondData(id, Helper.variables.URL_SELECT_POND_WEEKLY_UPDATES_BY_ID);
+//                        }else { Helper.toastShort(activity, "No records"); }
+//                    }
+//
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                PD.dismiss();
+//                Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "Error", "Something unexpected happened: " + error.toString(), "OK", R.color.red);
+//                d.show();
+//            }
+//        }) {
+//            @Override
+//            protected Map<String, String> getParams() {
+//                Map<String, String> params = new HashMap<String, String>();
+//
+//                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+//                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
+//                params.put("deviceid", Helper.getMacAddress(context));
+//                params.put("abw", abw2);
+//                params.put("remarks", remarks2);
+//                params.put("pondindex", id+"");
+//                return params;
+//            }
+//        };
+//
+//        MyVolleyAPI api = new MyVolleyAPI();
+//        api.addToReqQueue(postRequest, context);
     }
 
 
@@ -518,12 +563,14 @@ public class Activity_PondWeeklyConsumption extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        db.open();
     }
 
 
     @Override
     protected void onPause() {
         super.onPause();
+        db.close();
     }
 
 
