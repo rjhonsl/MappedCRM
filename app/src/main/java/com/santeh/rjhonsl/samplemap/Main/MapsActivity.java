@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,7 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -40,7 +40,6 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
@@ -68,7 +67,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     ProgressDialog PD;
     boolean isDrawerOpen = false;
-    private boolean mPaused;
 
 
     PopupWindow popUp;
@@ -76,9 +74,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     TextView tvBottomPopUp;
     ViewGroup.LayoutParams params;
     LinearLayout mainLayout;
-    boolean ifViewVisible = true;
 
-    private LocationSource.OnLocationChangedListener mListener;
     Location mLastLocation;
 
     String username, firstname, lastname, userdescription;
@@ -98,19 +94,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Activity activity;
     Context context;
     GoogleApiClient mGoogleApiClient;
-    GoogleMap maps, googleMap;
+    GoogleMap maps;
 
     LatLng curLatlng, lastlatlng;
 
-    TextView textView, tvlat, tvlong;
+    TextView textView;
     TextView nav_fingerlings, nav_customerAddress, nav_sperms, nav_logout, nav_maptype, nav_displayAllMarkers, nav_settings, nav_growout,nav_usermonitoring, txtusername;
 
-    EditText editSearch;
-    String Stritem, activeSelection;
+    String activeSelection;
 
 
     List<CustInfoObject> custInfoObjectList;
-    List<CustInfoObject> searchedIDlist = null;
 
     Bundle extrass;
     Intent passedintent;
@@ -120,7 +114,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     FusedLocation fusedLocation;
     GpsDB_Query db;
-
+    int userlvl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +131,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         extrass = getIntent().getExtras();
         db = new GpsDB_Query(this);
         db.open();
+
+        userlvl = Helper.variables.getGlobalVar_currentLevel(activity);
 
         popUp = new PopupWindow(this);
         layout = new LinearLayout(this);
@@ -250,10 +246,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         layout.setOrientation(LinearLayout.VERTICAL);
         btn_cancelAddmarker.setVisibility(View.GONE);
 
-        tvBottomPopUp.setBackgroundColor(getResources().getColor(R.color.white_200));
+
+        tvBottomPopUp.setBackgroundColor(ContextCompat.getColor(context, R.color.white_200));
         tvBottomPopUp.setText("Owner Location");
         layout.addView(tvBottomPopUp, params);
-        layout.setBackgroundColor(getResources().getColor(R.color.white_200));
+        layout.setBackgroundColor(ContextCompat.getColor(context, R.color.white_200));
         popUp.setContentView(layout);
 
         tvBottomPopUp.setOnClickListener(new View.OnClickListener() {
@@ -262,7 +259,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 popUp.dismiss();
 //                Helper.toastShort(activity, clickedMarker.getTitle());
                 double lat = 0,lng = 0;
-                String farmidd = "N/A";
+                String farmidd;
                 String[] splitted = clickedMarker.getTitle().split("#-#");
                 if (!splitted[4].equalsIgnoreCase("") && !splitted[4].equalsIgnoreCase("null")){
                     lat = Double.parseDouble(splitted[4]);
@@ -271,6 +268,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (!splitted[5].equalsIgnoreCase("") && !splitted[5].equalsIgnoreCase("null")){
                     lng = Double.parseDouble(splitted[5]);
                 }
+
                 farmidd = splitted[6];
 
                 if (lat > 0 && lng > 0){
@@ -279,7 +277,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     showAllCustomerLocation();
                 }else{
-                    Helper.createCustomThemedColorDialogOKOnly(activity, "Oops", "Address of farm owner is currently not available. \n\nFarm ID: "+farmidd, "OK", R.color.blue);
+                    Helper.createCustomThemedColorDialogOKOnly(activity, "Oops", "Address of farm owner is currently not available. \n\nFarm ID: "+farmidd+
+                            splitted[0] +" " + splitted[1] +" " +splitted[2] +" " +splitted[3] +" " +splitted[4] +" " +splitted[5] +" " +splitted[6] +" "
+                            , "OK", R.color.blue);
                 }
 
 
@@ -630,7 +630,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 String[] details = marker.getTitle().split("#-#");
                 if (activeSelection.equalsIgnoreCase("farm")) {
-                    String ID = marker.getId(), curId = "";
+                    String  curId = "";
                     for (int i = 0; i < marker.getTitle().length(); i++) {
                         char c = marker.getTitle().charAt(i);
                         if (c == '-') {
@@ -640,7 +640,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
 
 
-//                    Helper.toastShort(activity, "."+marker.getTitle()+"."+details[0]);
                     LatLng location = marker.getPosition();
 
                     Intent intent = new Intent(MapsActivity.this, Activity_ManagePonds.class);
@@ -650,7 +649,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     intent.putExtra("longitude", location.longitude + "");
                     startActivity(intent);
                 } else if (activeSelection.equalsIgnoreCase("customer")) {
-                    showAllRelatedFarmsOfCustomer(details[0], details[2]);
+                    showAllRelatedFarmsOfCustomer(details[0]);
                 }
 
             }
@@ -691,19 +690,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-    private void dialogLocationNotAvailableOkOnly() {
-        final Dialog d = Helper.createCustomDialogOKOnly(MapsActivity.this,
-                "LOCATION SERVICE",
-                "Location is not available. Please turn your Location(GPS) Service ON and stand in an area with no obstruction for better accuracy.",
-                "OK");
-        TextView ok = (TextView) d.findViewById(R.id.btn_dialog_okonly_OK);
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                d.hide();
-            }
-        });
-    }
 
     private boolean checkIfLocationAvailable() {
         GPSTracker gpstracker = new GPSTracker(this);
@@ -713,15 +699,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void moveCameraAnimate(final GoogleMap map, final LatLng latlng, final int zoom) {
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, zoom));
     }
-
-    public void getDistance(LatLng oldposition, LatLng newPosition) {
-        float[] results = new float[1];
-
-        Location.distanceBetween(oldposition.latitude, oldposition.longitude,
-                newPosition.latitude, newPosition.longitude, results);
-
-    }
-
 
 
     private void closeDrawer() {
@@ -807,7 +784,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void showAllRelatedMarkers() {
         PD.setMessage("Please wait...");
         PD.show();
-        String url =  "";
+        String url;
         if (passedintent != null){
             if (passedintent.hasExtra("fromActivity")){
                 if (passedintent.getStringExtra("fromActivity").equalsIgnoreCase("login")
@@ -834,10 +811,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
 
-        int userlvl = Helper.variables.getGlobalVar_currentLevel(activity);//get current userlvl
+        //get current userlvl
         if (userlvl == 1 || userlvl == 2 || userlvl == 3){ //if user is not TSR/Technician
             if (Helper.isNetworkAvailable(context)){ //if internet is availble
-                final String finalUrl = url;
                 StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {
                             @Override
@@ -878,7 +854,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         }) {
                     @Override
                     protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
+                        Map<String, String> params = new HashMap<>();
                         params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
                         params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
                         params.put("deviceid", Helper.getMacAddress(context));
@@ -901,6 +877,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     while (cur.moveToNext()) {
                         CustInfoObject custInfoObject = new CustInfoObject();
 
+
+                        /** FARM INFO **/
                         custInfoObject.setCi_id(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_ID)));
                         custInfoObject.setLatitude(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_LAT)));
                         custInfoObject.setLongtitude(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_LNG)));
@@ -917,6 +895,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         custInfoObject.setDateAddedToDB(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_dateAdded)));
                         custInfoObject.setAllSpecie(cur.getString(cur.getColumnIndex("allSpecie"))); //(obj.getString("allSpecie"));
 
+                        /** POND INFO **/
                         custInfoObject.setId(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_INDEX)));
                         custInfoObject.setTotalStockOfFarm(cur.getInt(cur.getColumnIndex("Totalquantity")));//(obj.getInt("Totalquantity"));
                         custInfoObject.setSizeofStock(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_sizeofStock)));
@@ -929,6 +908,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         custInfoObject.setRemarks(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_remarks)));
                         custInfoObject.setCustomerID(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_customerId)));
                         custInfoObject.setSurvivalrate_per_pond(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_survivalrate)));
+
+
 
                         custInfoObjectList.add(custInfoObject);
                     }
@@ -994,7 +975,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
                 params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
                 params.put("deviceid", Helper.getMacAddress(context));
@@ -1016,74 +997,123 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void showAllCustomerLocation(){
         PD.setMessage("Please wait...");
         PD.show();
-        String url = Helper.variables.URL_SELECT_CUST_LOCAITON_BY_ASSIGNED_AREA;
+        String url = Helper.variables.URL_SELECT_CUST_LOCATION_BY_ASSIGNED_AREA;
 
-        final String finalUrl = url;
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(final String response) {
+        if (userlvl == 1 || userlvl == 2 || userlvl == 3){
+            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(final String response) {
 
-                        PD.dismiss();
+                            PD.dismiss();
 
-                        if (!response.substring(1, 2).equalsIgnoreCase("0")) {
-                            custInfoObjectList = CustAndPondParser.parseFeed(response);
-
-                            if (custInfoObjectList!=null){
-                                if (custInfoObjectList.size() > 0){
-                                    for (int i = 0; i < custInfoObjectList.size(); i++) {
-
-                                        String address = custInfoObjectList.get(i).getHouseNumber()+"";
-
-                                        if(custInfoObjectList.get(i).getStreet().equalsIgnoreCase("")){
-                                            address = address + " " + custInfoObjectList.get(i).getStreet();
-                                        }
-                                        if(custInfoObjectList.get(i).getSubdivision().equalsIgnoreCase("")){
-                                            address = address + ", " + custInfoObjectList.get(i).getSubdivision();
-                                        }
-                                        address = address + " " + custInfoObjectList.get(i).getBarangay() + ", " + custInfoObjectList.get(i).getBarangay() + ", " + custInfoObjectList.get(i).getCity() + ", " + custInfoObjectList.get(i).getProvince();
-
-                                        maps.setInfoWindowAdapter(new CustomerInfoWindow());
-                                        activeSelection = "customer";
-                                        Helper.map_addMarker(maps, new LatLng(Double.parseDouble(custInfoObjectList.get(i).getCust_latitude()), Double.parseDouble(custInfoObjectList.get(i).getCust_longtitude())),
-                                                R.drawable.ic_housemarker_24dp,
-                                                custInfoObjectList.get(i).getFirstname() + " " + custInfoObjectList.get(i).getLastname(), //Firstname and LastName
-                                                address, custInfoObjectList.get(i).getFarmID(), custInfoObjectList.get(i).getMainCustomerId(), "0");
-                                    }
-                                }else{
-                                    prompt_noCustomerLocation();
-                                }
-                            }else{
+                            if (!response.substring(1, 2).equalsIgnoreCase("0")) {
+                                custInfoObjectList = CustAndPondParser.parseFeed(response);
+                                showCustomerLocation();
+                            } else {
                                 prompt_noCustomerLocation();
                             }
-                        } else {
-                            prompt_noCustomerLocation();
                         }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            PD.dismiss();
+                            Helper.toastShort(MapsActivity.this,"Something happened. Please try again later");
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                    params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
+                    params.put("deviceid", Helper.getMacAddress(context));
+                    params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
+                    params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
+                    return params;
+                }
+            };
+            MyVolleyAPI api = new MyVolleyAPI();
+            api.addToReqQueue(postRequest, MapsActivity.this);
+
+        }else if(userlvl == 0 || userlvl == 4) {
+            Cursor cur = db.getCUST_LOCATION_BY_ASSIGNED_AREA(Helper.variables.getGlobalVar_currentUserID(activity)+"");
+            if(cur != null) {
+                if(cur.getCount() > 0) {
+                    custInfoObjectList = new ArrayList<>();
+                    while (cur.moveToNext()) {
+                        CustInfoObject custInfoObject = new CustInfoObject();
+
+                        custInfoObject.setMainCustomerId(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_ID))+"" );
+                        custInfoObject.setLastname(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_LastName)));
+                        custInfoObject.setFirstname(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_FirstName)));
+                        custInfoObject.setMiddleName(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_MiddleName)));
+                        custInfoObject.setFarmID(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_FarmId)));
+                        custInfoObject.setStreet(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Street)));
+                        custInfoObject.setHouseNumber(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_HouseNumber)));
+                        custInfoObject.setSubdivision(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Subdivision)));
+                        custInfoObject.setBarangay(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Barangay)));
+                        custInfoObject.setCity(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_City)));
+                        custInfoObject.setProvince(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Province)));
+                        custInfoObject.setBirthday(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_CBirthday)));
+                        custInfoObject.setBirthPlace(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_CBirthPlace)));
+                        custInfoObject.setTelephone(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Telephone)));
+                        custInfoObject.setCellphone(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Cellphone)));
+                        custInfoObject.setCivilStatus(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_CivilStatus)));
+                        custInfoObject.setSpouse_lname(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_S_LastName)));
+                        custInfoObject.setSpouse_fname(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_S_FirstName)));
+                        custInfoObject.setSpouse_mname(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_S_MiddleName)));
+                        custInfoObject.setSpouse_birthday(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_S_BirthDay)));
+                        custInfoObject.setHouseStatus(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_HouseStatus)));
+                        custInfoObject.setCust_longtitude(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Longitude)));
+                        custInfoObject.setCust_latitude(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Latitude)));
+                        custInfoObject.setDateAddedToDB(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_DateAdded)));
+                        custInfoObject.setAddedBy(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_AddedBy)));
+
+                        custInfoObjectList.add(custInfoObject);
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        PD.dismiss();
-                        Helper.toastShort(MapsActivity.this,"Something happened. Please try again later");
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
-                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
-                params.put("deviceid", Helper.getMacAddress(context));
-                params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
-                params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
-//
-                return params;
+                    showCustomerLocation();
+                    PD.dismiss();
+                }else{
+                    PD.dismiss();
+                    prompt_noCustomerLocation();
+                }
+            }else{
+                PD.dismiss();
+                prompt_noCustomerLocation();
             }
-        };
+        }
 
-        MyVolleyAPI api = new MyVolleyAPI();
-        api.addToReqQueue(postRequest, MapsActivity.this);
+    }
 
+    private void showCustomerLocation() {
+        if (custInfoObjectList!=null){
+            if (custInfoObjectList.size() > 0){
+                for (int i = 0; i < custInfoObjectList.size(); i++) {
+
+                    String address = custInfoObjectList.get(i).getHouseNumber()+"";
+
+                    if(!custInfoObjectList.get(i).getStreet().equalsIgnoreCase(" --- ")){
+                        address = address + " " + custInfoObjectList.get(i).getStreet();
+                    }
+                    if(!custInfoObjectList.get(i).getSubdivision().equalsIgnoreCase(" --- ")){
+                        address = address + ", " + custInfoObjectList.get(i).getSubdivision();
+                    }
+                    address = address + "" + ", " + custInfoObjectList.get(i).getBarangay() + ", " + custInfoObjectList.get(i).getCity() + ", " + custInfoObjectList.get(i).getProvince();
+
+                    maps.setInfoWindowAdapter(new CustomerInfoWindow());
+                    activeSelection = "customer";
+                    Helper.map_addMarker(maps, new LatLng(Double.parseDouble(custInfoObjectList.get(i).getCust_latitude()), Double.parseDouble(custInfoObjectList.get(i).getCust_longtitude())),
+                            R.drawable.ic_housemarker_24dp,
+                            custInfoObjectList.get(i).getFirstname() + " " + custInfoObjectList.get(i).getLastname(), //Firstname and LastName
+                            address, custInfoObjectList.get(i).getFarmID(), custInfoObjectList.get(i).getMainCustomerId(), "0");
+                }
+            }else{
+                prompt_noCustomerLocation();
+            }
+        }else{
+            prompt_noCustomerLocation();
+        }
     }
 
     private void prompt_noCustomerLocation() {
@@ -1091,12 +1121,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    public void showAllRelatedFarmsOfCustomer(final String farmid, final String ownerName){
+    public void showAllRelatedFarmsOfCustomer(final String farmid){
         PD.setMessage("Please wait...");
         PD.show();
         String url = Helper.variables.URL_SELECT_FARM_BY_FARMID;
 
-        final String finalUrl = url;
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -1151,7 +1180,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
                 params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
                 params.put("deviceid", Helper.getMacAddress(context));
@@ -1204,7 +1233,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     ci = custInfoObjectList.get(i);
                     maps.setInfoWindowAdapter(new FarmInfoWindow());
                     LatLng custLatlng = new LatLng(Double.parseDouble(ci.getLatitude() + ""), Double.parseDouble(ci.getLongtitude() + ""));
-                    Marker marker = Helper.map_addMarker(maps, custLatlng,
+                    Helper.map_addMarker(maps, custLatlng,
                             R.drawable.ic_place_red_24dp, ci.getFarmname(), ci.getAddress(), ci.getCi_id() + "", ci.getTotalStockOfFarm() + "",
                             ci.getAllSpecie() + "#-#" + ci.getCust_latitude() + "#-#" + ci.getCust_longtitude() + "#-#" +ci.getFarmID());
                 }
@@ -1332,9 +1361,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         if(activeFilter==0){
             activeFilter = 0;
-        }
-        else{
-
         }
     }
 

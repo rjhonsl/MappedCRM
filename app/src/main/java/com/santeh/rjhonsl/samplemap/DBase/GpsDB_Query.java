@@ -211,6 +211,15 @@ public class GpsDB_Query {
 		return db.rawQuery(query, params);
 	}
 
+	public Cursor getCUST_LOCATION_BY_ASSIGNED_AREA(String userid){
+		String query =
+				"Select tblmaincustomerinfo.* from tblmaincustomerinfo\n" +
+				"WHERE tblmaincustomerinfo.mci_addedby= ? ;";
+
+		String[] params =  new String[] {userid};
+		return db.rawQuery(query, params);
+	}
+
 
 	public int getUser_Count() {
 		String query = "SELECT * FROM "+GpsSQLiteHelper.TBLUSERS+";";

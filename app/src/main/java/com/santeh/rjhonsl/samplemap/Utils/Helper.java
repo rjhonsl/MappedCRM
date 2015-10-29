@@ -110,7 +110,7 @@ public class Helper {
         public static String URL_SELECT_ALL_PONDINFO_LEFTJOIN_CUSTINFO      = sourceAddress_goDaddy + "selectAllPondInfoLeftJoinCustInfo.php";
         public static String URL_SELECT_FARM_BY_FARMID                      = sourceAddress_goDaddy + "selectFarmByFarmID.php";
         public static String URL_SELECT_FARMINFO_LF_PIANDMCI_BY_FARMID      = sourceAddress_goDaddy + "selectCustomerInfoLeftJoinPondInfoLeftJoinMciByFarmID.php";
-        public static String URL_SELECT_CUST_LOCAITON_BY_ASSIGNED_AREA      = sourceAddress_goDaddy + "selectCustomerLocationByAssingedUser.php";
+        public static String URL_SELECT_CUST_LOCATION_BY_ASSIGNED_AREA      = sourceAddress_goDaddy + "selectCustomerLocationByAssingedUser.php";
         public static String URL_SELECT_ALL_POND_WEEKLYUPDATES_INNERJOIN_PONDINFO_GROUPBY_FARMNAME
                 = sourceAddress_bizNF + "selectPondWeeklyUpdate_InnerJoin_Pond_GroupByFarmName.php";
 

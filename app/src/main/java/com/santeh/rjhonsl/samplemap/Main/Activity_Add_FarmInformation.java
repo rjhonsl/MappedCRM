@@ -185,7 +185,7 @@ public class Activity_Add_FarmInformation extends Activity {
                         intent.putExtra("fromActivity", "addfarminfo");
 
                         Logging.loguserAction(activity, activity.getBaseContext(),
-                                Helper.userActions.TSR.ADD_FARM +":"+ Helper.variables.getGlobalVar_currentUserID(activity)+"-"+id + "-"+txtFarmID,
+                                Helper.userActions.TSR.ADD_FARM +":"+ Helper.variables.getGlobalVar_currentUserID(activity)+"-"+id + "-"+txtFarmID.getText().toString(),
                                 Helper.variables.ACTIVITY_LOG_TYPE_TSR_MONITORING);
 
                         startActivity(intent);
