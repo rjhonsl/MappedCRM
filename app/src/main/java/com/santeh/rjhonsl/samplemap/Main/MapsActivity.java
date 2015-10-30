@@ -198,7 +198,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 Double.parseDouble(extras.getString("long"))  );
 
                         if(((Var) this.getApplication()).getGoogleMap() != null){ //if google maps is ready
-                            moveCameraAnimate(((Var) this.getApplication()).getGoogleMap(), latLng, 14);
+                            moveCameraAnimate(((Var) this.getApplication()).getGoogleMap(), latLng, 15);
                             maps.setInfoWindowAdapter(new FarmInfoWindow());
                             maps.clear();
 
@@ -272,7 +272,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 farmidd = splitted[6];
 
                 if (lat > 0 && lng > 0){
-                    Helper.moveCameraAnimate(maps, new LatLng(lat, lng), 14);
+                    Helper.moveCameraAnimate(maps, new LatLng(lat, lng), 15);
                     maps.clear();
 
                     showAllCustomerLocation();
@@ -626,7 +626,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
-            public void onInfoWindowClick(Marker marker) {
+            public void onInfoWindowClick(final Marker marker) {
 
 
 
@@ -658,7 +658,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             if (position == 0) {
+
+
                                 final Intent intent = new Intent(MapsActivity.this, Activity_CustomerDetails.class);
+                                intent.putExtra("id", details[2]);
                                 final Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
                                     @Override
@@ -896,6 +899,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
         }else if(userlvl == 0 || userlvl == 4) {//if user is tsr/technician... then query local database
+            Log.d("DEBUG", "Before get Cursor from db");
+            activeSelection = "farm";
             Cursor cur = db.getAll_FARMINFO_LEFTJOIN_PONDINFO_LEFTJOIN_CUSTOMERINFO(Helper.variables.getGlobalVar_currentUserID(activity) + "");
             getFarmPondCustFromDB(cur);
         }
@@ -903,9 +908,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void getFarmPondCustFromDB(Cursor cur) {
+        Log.d("DEBUG", "before cur not null");
         if(cur != null) {
             if(cur.getCount() > 0) {
                 custInfoObjectList = new ArrayList<>();
+                Log.d("DEBUG", "after new array list");
                 while (cur.moveToNext()) {
                     CustInfoObject custInfoObject = new CustInfoObject();
                     /** FARM INFO **/
@@ -969,7 +976,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     custInfoObjectList.add(custInfoObject);
                 }
 
-
+                Log.d("DEBUG", "before active selection"+ activeSelection);
                 if (activeSelection=="farm"){
                     updateDisplay();
                 }
@@ -1016,7 +1023,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                             LatLng custLatlng = new LatLng(Double.parseDouble(ci.getLatitude() + ""), Double.parseDouble(ci.getLongtitude() + ""));
                                             Helper.map_addMarker(maps, custLatlng,
                                                     R.drawable.ic_place_red_24dp, ci.getFarmname(), ci.getAddress(), ci.getCi_id() + "", ci.getTotalStockOfFarm() + "",
-                                                    ci.getAllSpecie() + "#-#" + ci.getCust_latitude() + "#-#" + ci.getCust_longtitude());
+                                                    ci.getAllSpecie() + "#-#" + ci.getCust_latitude() + "#-#" + ci.getCust_longtitude() + "#-#" + ci.getMainCustomerId());
                                         }
                                     }else {maps.clear();}
                                 }else{maps.clear();}
@@ -1163,6 +1170,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     address = address + "" + ", " + custInfoObjectList.get(i).getBarangay() + ", " + custInfoObjectList.get(i).getCity() + ", " + custInfoObjectList.get(i).getProvince();
 
                     maps.setInfoWindowAdapter(new CustomerInfoWindow());
+                    Log.d("DEBUG", "SHOW all custlocation - Active selection customer");
                     activeSelection = "customer";
                     Helper.map_addMarker(maps, new LatLng(Double.parseDouble(custInfoObjectList.get(i).getCust_latitude()), Double.parseDouble(custInfoObjectList.get(i).getCust_longtitude())),
                             R.drawable.ic_housemarker_24dp,
@@ -1213,6 +1221,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
                     params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
                     params.put("farmid", farmid+"");
+//
                     return params;
                 }
             };
@@ -1222,15 +1231,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }else if(userlvl == 0 || userlvl == 4) {
             Cursor cur = db.getFARM_POND_CUSTOMER_BY_FARMID(Helper.variables.getGlobalVar_currentUserID(activity)+"", farmid);
             getFarmPondCustFromDB(cur);
+            Log.d("SHOW MARKER", "showAllCustomerFarmByFarmID");
             showAllCustomerFarmByFarmID();
+
         }
 
     }
 
     private void showAllCustomerFarmByFarmID() {
         if (custInfoObjectList!=null){
-            if (custInfoObjectList.size() > 0){
+            if (custInfoObjectList.size() > 0) {
 
+                Log.d("DEBUG", "Show all custinfo by farmID - active selection customer");
                 activeSelection = "customer";
                 String farmnames[] = new String[custInfoObjectList.size()];
                 for (int i = 0; i < custInfoObjectList.size(); i++) {
@@ -1248,7 +1260,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         double lng = Double.parseDouble(custInfoObjectList.get(position).getLongtitude() + "");
                         LatLng latLng = new LatLng(lat, lng);
 //                                            Helper.toastShort(activity, custInfoObjectList.get(position).getFarmID() + " " + custInfoObjectList.get(position).getLongtitude() + " " + custInfoObjectList.get(position).getLatitude());
-                        Helper.moveCameraAnimate(maps,latLng, 15);
+                        Helper.moveCameraAnimate(maps, latLng, 15);
                         maps.clear();
                         activeSelection = "farm";
                         showAllCustomerFarmByID(custInfoObjectList.get(position).getFarmID());
@@ -1259,10 +1271,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }else{ Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "No farm related to selected customer. Please check Farm ID", "OK", R.color.red);}
     }
 
+
     private void insertloginlocation(){
         fusedLocation.connectToApiClient();
         if (Helper.isIntentKeywordNotNull("fromActivity", passedintent)){
           if (extrass.getString("fromActivity").equalsIgnoreCase("login")) {
+              Log.d("EXTRAS", "fromactivity = login");
 
               userid = extrass.getInt("userid");
               userlevel = extrass.getInt("userlevel");
@@ -1276,14 +1290,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                   passedintent = null;
               }
           }
+
         }
+
     }
 
 
 
     protected void updateDisplay() {
+        Log.d("UPDATE DISPLAY", "CUSTINFOOBJECT");
         if (custInfoObjectList != null) {
+            Log.d("UPDATE DISPLAY", "not null");
             if (custInfoObjectList.size() > 0) {
+                Log.d("UPDATE DISPLAY", "not zero");
                 for (int i = 0; i < custInfoObjectList.size(); i++) {
                     final CustInfoObject ci;
                     ci = custInfoObjectList.get(i);
@@ -1314,6 +1333,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onPause() {
         super.onPause();
         db.close();
+        Log.d("PROCESS", "Onpause");
     }
 
 

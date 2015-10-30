@@ -39,6 +39,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
+import com.santeh.rjhonsl.samplemap.Obj.CustInfoObject;
 import com.santeh.rjhonsl.samplemap.Obj.Var;
 import com.santeh.rjhonsl.samplemap.R;
 
@@ -382,6 +383,15 @@ public class Helper {
 
         public static void setGlobalVar_deviceID(String deviceID, Activity activity ){
             ((Var) activity.getApplication()).setDeviceID(deviceID);
+        }
+
+
+        public static CustInfoObject getGlobalVar_CustInfoInterface(Activity activity){
+            return  ((Var) activity.getApplication()).getCustInfoObject();
+        }
+
+        public static void setGlobalVar_CustInfoInterface(Activity activity, CustInfoObject obj){
+            ((Var) activity.getApplication()).setCustInfoObject(obj);
         }
 
 

@@ -29,6 +29,8 @@ public class Var extends Application {
     private String assignedArea;
     private String deviceID;
 
+    private CustInfoObject custInfoObject;
+
 
     public String getCurrentPassword() {
         return currentPassword;
@@ -121,5 +123,13 @@ public class Var extends Application {
 
     public void setDeviceID(String deviceID) {
         this.deviceID = deviceID;
+    }
+
+    public CustInfoObject getCustInfoObject() {
+        return custInfoObject;
+    }
+
+    public void setCustInfoObject(CustInfoObject custInfoObject) {
+        this.custInfoObject = custInfoObject;
     }
 }

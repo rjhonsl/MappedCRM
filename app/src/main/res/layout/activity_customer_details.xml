@@ -56,6 +56,54 @@
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:padding="10dp"
+                          android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="18dp"
+                          android:textColor="@color/gray_900"
+                          android:text="Farm ID" />
+
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:paddingTop="3dp"
+                    >
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical"
+                                  android:layout_weight="1">
+
+
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:textColor="@color/gray_500"
+                                  android:id="@+id/txtFarmid"
+                                  android:text="FF0001" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:paddingTop="10dp"
+                          android:paddingBottom="10dp"
+                          android:orientation="vertical">
+                <View android:layout_width="fill_parent" android:layout_height="1dp"
+                      android:background="@color/gray_500"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:padding="10dp"
                 android:orientation="vertical">
 
                 <TextView android:layout_width="wrap_content"
@@ -68,7 +116,6 @@
                 <LinearLayout android:layout_width="fill_parent"
                               android:layout_height="wrap_content"
                               android:orientation="horizontal"
-                              android:paddingTop="3dp"
                     >
 
                     <LinearLayout android:layout_width="wrap_content"
@@ -82,7 +129,7 @@
                                   android:textColor="@color/gray_500"
                                   android:id="@+id/txtFirstName"
                                   android:paddingRight="10dp"
-                                  android:text="Juanita Constancia" />
+                                  android:text="Juan" />
 
                     </LinearLayout>
 
@@ -243,6 +290,89 @@
 
 
 
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:padding="10dp"
+                          android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="18dp"
+                          android:textColor="@color/gray_900"
+                          android:text="House Status" />
+
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:paddingTop="3dp"
+                    >
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="@color/gray_500"
+                              android:id="@+id/txtHouseStatus"
+                              android:paddingRight="10dp"
+                              android:text="Owned" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+
+
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:paddingTop="10dp"
+                          android:paddingBottom="10dp"
+                          android:orientation="vertical">
+                <View android:layout_width="fill_parent" android:layout_height="1dp"
+                        android:background="@color/gray_500"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                                         android:layout_height="wrap_content"
+                                         android:padding="10dp"
+                                         android:orientation="vertical">
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="18dp"
+                      android:textColor="@color/gray_900"
+                      android:text="Telephone" />
+
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:paddingTop="3dp"  >
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical"
+                                  android:layout_weight="1">
+
+
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:textColor="@color/gray_500"
+                                  android:id="@+id/txtTelephone"
+                                  android:text="7111111" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
 
 
             <LinearLayout android:layout_width="fill_parent"
@@ -254,14 +384,13 @@
                           android:layout_height="wrap_content"
                           android:textSize="18dp"
                           android:textColor="@color/gray_900"
-                          android:text="Farm ID" />
+                          android:text="Cellphone" />
 
 
                 <LinearLayout android:layout_width="fill_parent"
                               android:layout_height="wrap_content"
                               android:orientation="horizontal"
-                              android:paddingTop="3dp"
-                    >
+                              android:paddingTop="3dp"  >
 
                     <LinearLayout android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
@@ -272,8 +401,8 @@
                         <TextView android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
                                   android:textColor="@color/gray_500"
-                                  android:id="@+id/txtFarmid"
-                                  android:text="FF0001" />
+                                  android:id="@+id/txtCellphone"
+                                  android:text="09159231467" />
 
                     </LinearLayout>
 
@@ -282,6 +411,110 @@
             </LinearLayout>
 
 
+
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:paddingTop="10dp"
+                          android:paddingBottom="10dp"
+                          android:orientation="vertical">
+                <View android:layout_width="fill_parent" android:layout_height="1dp"
+                      android:background="@color/gray_500"
+                    />
+            </LinearLayout>
+
+
+
+
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:padding="10dp"
+                          android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="18dp"
+                          android:textColor="@color/gray_900"
+                          android:text="Spouse Full Name" />
+
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:paddingTop="3dp"  >
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical"
+                                  android:layout_weight="1">
+
+
+                        <LinearLayout android:layout_width="fill_parent"
+                                      android:layout_height="wrap_content"
+                                      android:orientation="horizontal"
+                            >
+                            <TextView android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:textColor="@color/gray_500"
+                                      android:id="@+id/txt_S_FirstName"
+                                      android:paddingRight="10dp"
+                                      android:text="Juanita" />
+
+                            <TextView android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:textColor="@color/gray_500"
+                                      android:id="@+id/txt_S_MiddleName"
+                                      android:paddingRight="10dp"
+                                      android:text="M." />
+
+                            <TextView android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:textColor="@color/gray_500"
+                                      android:id="@+id/txt_S_LastName"
+                                      android:text="Villafuerte" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:padding="10dp"
+                          android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="18dp"
+                          android:textColor="@color/gray_900"
+                          android:text="Spouse Birthday" />
+
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:paddingTop="3dp"
+                    >
+
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="@color/gray_500"
+                              android:id="@+id/txt_S_Birthday"
+                              android:paddingRight="10dp"
+                              android:text="September 10, 2015" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
 
 
 
