@@ -628,7 +628,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onInfoWindowClick(Marker marker) {
 
-                String[] details = marker.getTitle().split("#-#");
+
+
+                final String[] details = marker.getTitle().split("#-#");
                 if (activeSelection.equalsIgnoreCase("farm")) {
                     String  curId = "";
                     for (int i = 0; i < marker.getTitle().length(); i++) {
@@ -639,7 +641,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         curId = curId + c;
                     }
 
-
                     LatLng location = marker.getPosition();
 
                     Intent intent = new Intent(MapsActivity.this, Activity_ManagePonds.class);
@@ -649,7 +650,32 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     intent.putExtra("longitude", location.longitude + "");
                     startActivity(intent);
                 } else if (activeSelection.equalsIgnoreCase("customer")) {
-                    showAllRelatedFarmsOfCustomer(details[0]);
+
+                    String[] options = new String[] {"Customer Details","Owned Farms"};
+                    final Dialog d = Helper.createCustomThemedListDialog(activity,options, "Options", R.color.blue);
+                    ListView lv = (ListView) d.findViewById(R.id.dialog_list_listview);
+                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            if (position == 0) {
+                                final Intent intent = new Intent(MapsActivity.this, Activity_CustomerDetails.class);
+                                final Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        startActivity(intent);
+                                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                                    }
+                                }, 100);
+                                d.hide();
+                            } else if (position == 1){
+                                Log.d("SHOW MARKER", "getListOfFarms");
+                                getListOfFarms(details[0]);
+                                d.hide();
+                            }
+                        }
+                    });
+
                 }
 
             }
@@ -870,126 +896,161 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
         }else if(userlvl == 0 || userlvl == 4) {//if user is tsr/technician... then query local database
-            Cursor cur = db.getAll_FARMINFO_LEFTJOIN_PONDINFO(Helper.variables.getGlobalVar_currentUserID(activity)+"");
-            if(cur != null) {
-                if(cur.getCount() > 0) {
-                    custInfoObjectList = new ArrayList<>();
-                    while (cur.moveToNext()) {
-                        CustInfoObject custInfoObject = new CustInfoObject();
-
-
-                        /** FARM INFO **/
-                        custInfoObject.setCi_id(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_ID)));
-                        custInfoObject.setLatitude(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_LAT)));
-                        custInfoObject.setLongtitude(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_LNG)));
-                        custInfoObject.setContact_name(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_CONTACT_NAME)));
-                        custInfoObject.setCompany(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_COMPANY)));
-                        custInfoObject.setAddress(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_FARM_ADDRESS)));
-                        custInfoObject.setFarmname(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_FARM_NAME)));
-                        custInfoObject.setCounter(0);
-                        custInfoObject.setFarmID(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_FARM_ID)));
-                        custInfoObject.setContact_number(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_C_NUMBER)));
-                        custInfoObject.setCultureType(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_CULTYPE)));
-                        custInfoObject.setCulturelevel(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_CULTlVL)));
-                        custInfoObject.setWaterType(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_WATTYPE)));
-                        custInfoObject.setDateAddedToDB(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_dateAdded)));
-                        custInfoObject.setAllSpecie(cur.getString(cur.getColumnIndex("allSpecie"))); //(obj.getString("allSpecie"));
-
-                        /** POND INFO **/
-                        custInfoObject.setId(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_INDEX)));
-                        custInfoObject.setTotalStockOfFarm(cur.getInt(cur.getColumnIndex("Totalquantity")));//(obj.getInt("Totalquantity"));
-                        custInfoObject.setSizeofStock(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_sizeofStock)));
-                        custInfoObject.setPondID(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_PID)));
-                        custInfoObject.setQuantity(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_quantity)));
-                        custInfoObject.setArea(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_area)));
-                        custInfoObject.setSpecie(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_specie)));
-                        custInfoObject.setDateStocked(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_dateStocked)));
-                        custInfoObject.setCulturesystem(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_culturesystem)));
-                        custInfoObject.setRemarks(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_remarks)));
-                        custInfoObject.setCustomerID(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_customerId)));
-                        custInfoObject.setSurvivalrate_per_pond(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_survivalrate)));
-
-
-
-                        custInfoObjectList.add(custInfoObject);
-                    }
-                    updateDisplay();
-                    PD.dismiss();
-                }else{
-                    PD.dismiss();
-                    prompt_noFarm();
-                }
-            }else{
-                PD.dismiss();
-                prompt_noFarm();
-            }
+            Cursor cur = db.getAll_FARMINFO_LEFTJOIN_PONDINFO_LEFTJOIN_CUSTOMERINFO(Helper.variables.getGlobalVar_currentUserID(activity) + "");
+            getFarmPondCustFromDB(cur);
         }
 
     }
 
+    private void getFarmPondCustFromDB(Cursor cur) {
+        if(cur != null) {
+            if(cur.getCount() > 0) {
+                custInfoObjectList = new ArrayList<>();
+                while (cur.moveToNext()) {
+                    CustInfoObject custInfoObject = new CustInfoObject();
+                    /** FARM INFO **/
+                    custInfoObject.setCi_id(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_ID)));
+                    custInfoObject.setLatitude(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_LAT)));
+                    custInfoObject.setLongtitude(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_LNG)));
+                    custInfoObject.setContact_name(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_CONTACT_NAME)));
+                    custInfoObject.setCompany(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_COMPANY)));
+                    custInfoObject.setAddress(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_FARM_ADDRESS)));
+                    custInfoObject.setFarmname(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_FARM_NAME)));
+                    custInfoObject.setCounter(0);
+                    custInfoObject.setFarmID(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_FARM_ID)));
+                    custInfoObject.setContact_number(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_C_NUMBER)));
+                    custInfoObject.setCultureType(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_CULTYPE)));
+                    custInfoObject.setCulturelevel(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_CULTlVL)));
+                    custInfoObject.setWaterType(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_WATTYPE)));
+                    custInfoObject.setDateAddedToDB(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_FARMINFO_dateAdded)));
+                    custInfoObject.setAllSpecie(cur.getString(cur.getColumnIndex("allSpecie"))); //(obj.getString("allSpecie"));
+
+                    /** POND INFO **/
+                    custInfoObject.setId(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_INDEX)));
+                    custInfoObject.setTotalStockOfFarm(cur.getInt(cur.getColumnIndex("Totalquantity")));//(obj.getInt("Totalquantity"));
+                    custInfoObject.setSizeofStock(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_sizeofStock)));
+                    custInfoObject.setPondID(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_PID)));
+                    custInfoObject.setQuantity(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_quantity)));
+                    custInfoObject.setArea(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_area)));
+                    custInfoObject.setSpecie(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_specie)));
+                    custInfoObject.setDateStocked(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_dateStocked)));
+                    custInfoObject.setCulturesystem(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_culturesystem)));
+                    custInfoObject.setRemarks(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_remarks)));
+                    custInfoObject.setCustomerID(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_customerId)));
+                    custInfoObject.setSurvivalrate_per_pond(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_POND_survivalrate)));
+
+                    /** ADDRESS **/
+                    custInfoObject.setMainCustomerId(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_ID))+"" );
+                    custInfoObject.setLastname(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_LastName)));
+                    custInfoObject.setFirstname(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_FirstName)));
+                    custInfoObject.setMiddleName(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_MiddleName)));
+                    custInfoObject.setFarmID(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_FarmId)));
+                    custInfoObject.setStreet(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Street)));
+                    custInfoObject.setHouseNumber(cur.getInt(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_HouseNumber)));
+                    custInfoObject.setSubdivision(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Subdivision)));
+                    custInfoObject.setBarangay(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Barangay)));
+                    custInfoObject.setCity(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_City)));
+                    custInfoObject.setProvince(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Province)));
+                    custInfoObject.setBirthday(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_CBirthday)));
+                    custInfoObject.setBirthPlace(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_CBirthPlace)));
+                    custInfoObject.setTelephone(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Telephone)));
+                    custInfoObject.setCellphone(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Cellphone)));
+                    custInfoObject.setCivilStatus(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_CivilStatus)));
+                    custInfoObject.setSpouse_lname(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_S_LastName)));
+                    custInfoObject.setSpouse_fname(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_S_FirstName)));
+                    custInfoObject.setSpouse_mname(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_S_MiddleName)));
+                    custInfoObject.setSpouse_birthday(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_S_BirthDay)));
+                    custInfoObject.setHouseStatus(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_HouseStatus)));
+                    custInfoObject.setCust_longtitude(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Longitude)));
+                    custInfoObject.setCust_latitude(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_Latitude)));
+                    custInfoObject.setDateAddedToDB(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_DateAdded)));
+                    custInfoObject.setAddedBy(cur.getString(cur.getColumnIndex(GpsSQLiteHelper.CL_MAINCUSTINFO_AddedBy)));
+
+                    custInfoObjectList.add(custInfoObject);
+                }
+
+
+                if (activeSelection=="farm"){
+                    updateDisplay();
+                }
+                PD.dismiss();
+            }else{
+                PD.dismiss();
+                prompt_noFarm();
+            }
+        }else{
+            PD.dismiss();
+            prompt_noFarm();
+        }
+    }
+
 
     public void showAllCustomerFarmByID(final String farmid) {
-        PD.setMessage("Please wait...");
-        PD.show();
-        StringRequest postRequest = new StringRequest(Request.Method.POST, Helper.variables.URL_SELECT_FARMINFO_LF_PIANDMCI_BY_FARMID,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(final String response) {
-
-                        if (response.substring(1, 2).equalsIgnoreCase("0")) {
-                            PD.dismiss();
-                            updateDisplay();
-                        } else {
-                            PD.dismiss();
-                            custInfoObjectList = CustAndPondParser.parseFeed(response);
-                            if (custInfoObjectList != null) {
-                                if (custInfoObjectList.size() > 0) {
-
-                                    maps.clear();
-                                    activeSelection = "farm";
-
-                                    maps.setInfoWindowAdapter(new FarmInfoWindow());
-
-                                    for (int i = 0; i < custInfoObjectList.size(); i++) {
-                                        final CustInfoObject ci;
-                                        ci = custInfoObjectList.get(i);
-                                        Log.d("MARKER", "ADDING FARM MARKER"+1);
-                                        LatLng custLatlng = new LatLng(Double.parseDouble(ci.getLatitude() + ""), Double.parseDouble(ci.getLongtitude() + ""));
-                                        Helper.map_addMarker(maps, custLatlng,
-                                                R.drawable.ic_place_red_24dp, ci.getFarmname(), ci.getAddress(), ci.getCi_id() + "", ci.getTotalStockOfFarm() + "",
-                                                ci.getAllSpecie() + "#-#" + ci.getCust_latitude() + "#-#" + ci.getCust_longtitude());
-                                    }
-                                }else {maps.clear();}
-                            }else{maps.clear();}
 
 
+        if (userlvl == 1 || userlvl == 2 || userlvl == 3){
+            PD.setMessage("Please wait...");
+            PD.show();
+            StringRequest postRequest = new StringRequest(Request.Method.POST, Helper.variables.URL_SELECT_FARMINFO_LF_POND_AND_MCI_BY_FARMID,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(final String response) {
+
+                            if (response.substring(1, 2).equalsIgnoreCase("0")) {
+                                PD.dismiss();
+                                updateDisplay();
+                            } else {
+                                PD.dismiss();
+                                custInfoObjectList = CustAndPondParser.parseFeed(response);
+                                if (custInfoObjectList != null) {
+                                    if (custInfoObjectList.size() > 0) {
+
+                                        maps.clear();
+                                        activeSelection = "farm";
+                                        maps.setInfoWindowAdapter(new FarmInfoWindow());
+
+                                        for (int i = 0; i < custInfoObjectList.size(); i++) {
+                                            final CustInfoObject ci;
+                                            ci = custInfoObjectList.get(i);
+                                            Log.d("MARKER", "ADDING FARM MARKER"+1);
+                                            LatLng custLatlng = new LatLng(Double.parseDouble(ci.getLatitude() + ""), Double.parseDouble(ci.getLongtitude() + ""));
+                                            Helper.map_addMarker(maps, custLatlng,
+                                                    R.drawable.ic_place_red_24dp, ci.getFarmname(), ci.getAddress(), ci.getCi_id() + "", ci.getTotalStockOfFarm() + "",
+                                                    ci.getAllSpecie() + "#-#" + ci.getCust_latitude() + "#-#" + ci.getCust_longtitude());
+                                        }
+                                    }else {maps.clear();}
+                                }else{maps.clear();}
+                            }
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        PD.dismiss();
-                        Helper.toastShort(MapsActivity.this, "Something happened. Please try again later");
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
-                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
-                params.put("deviceid", Helper.getMacAddress(context));
-                params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
-                params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
-                params.put("farmid", farmid+"");
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            PD.dismiss();
+                            Helper.toastShort(MapsActivity.this, "Something happened. Please try again later");
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                    params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
+                    params.put("deviceid", Helper.getMacAddress(context));
+                    params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
+                    params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
+                    params.put("farmid", farmid+"");
 
 //
-                return params;
-            }
-        };
+                    return params;
+                }
+            };
 
-        MyVolleyAPI api = new MyVolleyAPI();
-        api.addToReqQueue(postRequest, MapsActivity.this);
+            MyVolleyAPI api = new MyVolleyAPI();
+            api.addToReqQueue(postRequest, MapsActivity.this);
+        }else if(userlvl == 0 || userlvl == 4) {
+            updateDisplay();
+        }
+
     }
 
 
@@ -1108,12 +1169,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             custInfoObjectList.get(i).getFirstname() + " " + custInfoObjectList.get(i).getLastname(), //Firstname and LastName
                             address, custInfoObjectList.get(i).getFarmID(), custInfoObjectList.get(i).getMainCustomerId(), "0");
                 }
-            }else{
-                prompt_noCustomerLocation();
-            }
-        }else{
-            prompt_noCustomerLocation();
-        }
+            }else{ prompt_noCustomerLocation();}
+        }else{ prompt_noCustomerLocation();}
     }
 
     private void prompt_noCustomerLocation() {
@@ -1121,87 +1178,91 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    public void showAllRelatedFarmsOfCustomer(final String farmid){
+    public void getListOfFarms(final String farmid){
         PD.setMessage("Please wait...");
         PD.show();
         String url = Helper.variables.URL_SELECT_FARM_BY_FARMID;
+        if (userlvl == 1 || userlvl == 2 || userlvl == 3){
+            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(final String response) {
 
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(final String response) {
+                            PD.dismiss();
 
-                        PD.dismiss();
+                            if (!response.substring(1, 2).equalsIgnoreCase("0")) {
+                                custInfoObjectList = CustAndPondParser.parseFeed(response);
 
-                        if (!response.substring(1, 2).equalsIgnoreCase("0")) {
-                            custInfoObjectList = CustAndPondParser.parseFeed(response);
+                                showAllCustomerFarmByFarmID();
+                            } else {Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "No farm related to selected customer. Please check Farm ID", "OK", R.color.red);}
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            PD.dismiss();
+                            Helper.toastShort(MapsActivity.this,"Something happened. Please try again later");
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
+                    params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
+                    params.put("deviceid", Helper.getMacAddress(context));
+                    params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
+                    params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
+                    params.put("farmid", farmid+"");
+                    return params;
+                }
+            };
 
-                            if (custInfoObjectList!=null){
-                                if (custInfoObjectList.size() > 0){
-                                    activeSelection = "customer";
-                                    String farmnames[] = new String[custInfoObjectList.size()];
-                                    for (int i = 0; i < custInfoObjectList.size(); i++) {
-                                        farmnames[i] = custInfoObjectList.get(i).getFarmname();
-                                    }
+            MyVolleyAPI api = new MyVolleyAPI();
+            api.addToReqQueue(postRequest, MapsActivity.this);
+        }else if(userlvl == 0 || userlvl == 4) {
+            Cursor cur = db.getFARM_POND_CUSTOMER_BY_FARMID(Helper.variables.getGlobalVar_currentUserID(activity)+"", farmid);
+            getFarmPondCustFromDB(cur);
+            showAllCustomerFarmByFarmID();
+        }
 
-                                    final Dialog d = Helper.createCustomThemedListDialog(activity, farmnames, "Farm(s)", R.color.darkgreen_800);
-                                    d.show();
-                                    ListView lv = (ListView) d.findViewById(R.id.dialog_list_listview);
-                                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                        @Override
-                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                            maps.setInfoWindowAdapter(new FarmInfoWindow());
-                                            double lat = Double.parseDouble(custInfoObjectList.get(position).getLatitude() + "");
-                                            double lng = Double.parseDouble(custInfoObjectList.get(position).getLongtitude() + "");
-                                            LatLng latLng = new LatLng(lat, lng);
-//                                            Helper.toastShort(activity, custInfoObjectList.get(position).getFarmID() + " " + custInfoObjectList.get(position).getLongtitude() + " " + custInfoObjectList.get(position).getLatitude());
-                                            Helper.moveCameraAnimate(maps,latLng, 14 );
-
-                                            showAllCustomerFarmByID(custInfoObjectList.get(position).getFarmID());
-                                            d.hide();
-                                        }
-                                    });
-
-//                                    Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", response, "OK", R.color.red);
-
-//                                 //ass
-//                                    12344;
-                                }else{Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "No farm related to selected customer. Please check Farm ID" , "OK", R.color.red);}
-                            }else{ Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "No farm related to selected customer. Please check Farm ID", "OK", R.color.red);}
-                        } else {Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "No farm related to selected customer. Please check Farm ID", "OK", R.color.red);}
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        PD.dismiss();
-                        Helper.toastShort(MapsActivity.this,"Something happened. Please try again later");
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("username", Helper.variables.getGlobalVar_currentUserName(activity));
-                params.put("password", Helper.variables.getGlobalVar_currentUserPassword(activity));
-                params.put("deviceid", Helper.getMacAddress(context));
-                params.put("userid", Helper.variables.getGlobalVar_currentUserID(activity)+"");
-                params.put("userlvl", Helper.variables.getGlobalVar_currentLevel(activity)+"");
-                params.put("farmid", farmid+"");
-//
-                return params;
-            }
-        };
-
-        MyVolleyAPI api = new MyVolleyAPI();
-        api.addToReqQueue(postRequest, MapsActivity.this);
     }
 
+    private void showAllCustomerFarmByFarmID() {
+        if (custInfoObjectList!=null){
+            if (custInfoObjectList.size() > 0){
+
+                activeSelection = "customer";
+                String farmnames[] = new String[custInfoObjectList.size()];
+                for (int i = 0; i < custInfoObjectList.size(); i++) {
+                    farmnames[i] = custInfoObjectList.get(i).getFarmname();
+                }
+
+                final Dialog d = Helper.createCustomThemedListDialog(activity, farmnames, "Farm(s)", R.color.darkgreen_800);
+                d.show();
+                ListView lv = (ListView) d.findViewById(R.id.dialog_list_listview);
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        maps.setInfoWindowAdapter(new FarmInfoWindow());
+                        double lat = Double.parseDouble(custInfoObjectList.get(position).getLatitude() + "");
+                        double lng = Double.parseDouble(custInfoObjectList.get(position).getLongtitude() + "");
+                        LatLng latLng = new LatLng(lat, lng);
+//                                            Helper.toastShort(activity, custInfoObjectList.get(position).getFarmID() + " " + custInfoObjectList.get(position).getLongtitude() + " " + custInfoObjectList.get(position).getLatitude());
+                        Helper.moveCameraAnimate(maps,latLng, 15);
+                        maps.clear();
+                        activeSelection = "farm";
+                        showAllCustomerFarmByID(custInfoObjectList.get(position).getFarmID());
+                        d.hide();
+                    }
+                });
+            }else{Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "No farm related to selected customer. Please check Farm ID" , "OK", R.color.red);}
+        }else{ Helper.createCustomThemedColorDialogOKOnly(activity, "Warning", "No farm related to selected customer. Please check Farm ID", "OK", R.color.red);}
+    }
 
     private void insertloginlocation(){
         fusedLocation.connectToApiClient();
         if (Helper.isIntentKeywordNotNull("fromActivity", passedintent)){
           if (extrass.getString("fromActivity").equalsIgnoreCase("login")) {
-              Log.d("EXTRAS", "fromactivity = login");
 
               userid = extrass.getInt("userid");
               userlevel = extrass.getInt("userlevel");
@@ -1215,19 +1276,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                   passedintent = null;
               }
           }
-
         }
-
     }
 
 
 
     protected void updateDisplay() {
-        Log.d("UPDATE DISPLAY", "CUSTINFOOBJECT");
         if (custInfoObjectList != null) {
-            Log.d("UPDATE DISPLAY", "not null");
             if (custInfoObjectList.size() > 0) {
-                Log.d("UPDATE DISPLAY", "not zero");
                 for (int i = 0; i < custInfoObjectList.size(); i++) {
                     final CustInfoObject ci;
                     ci = custInfoObjectList.get(i);
@@ -1237,21 +1293,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             R.drawable.ic_place_red_24dp, ci.getFarmname(), ci.getAddress(), ci.getCi_id() + "", ci.getTotalStockOfFarm() + "",
                             ci.getAllSpecie() + "#-#" + ci.getCust_latitude() + "#-#" + ci.getCust_longtitude() + "#-#" +ci.getFarmID());
                 }
-            } else {
-                prompt_noFarm();
-            }
-
-        } else {
-            prompt_noFarm();
-        }
-
+            } else {prompt_noFarm();}
+        } else {prompt_noFarm(); }
     }
 
     private void prompt_noFarm() {
         final Dialog d = Helper.createCustomThemedColorDialogOKOnly(activity, "MAP", "You have not added a farm yet. \n You can start by pressing the  plus '+' on the upper right side of the screen.", "OK", R.color.skyblue_400);
         Button ok = (Button) d.findViewById(R.id.btn_dialog_okonly_OK);
         d.show();
-
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1265,88 +1314,63 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onPause() {
         super.onPause();
         db.close();
-        Log.d("PROCESS", "Onpause");
     }
 
 
-    //clasfarfowWindow
+    //class for infoWindow
     class FarmInfoWindow implements GoogleMap.InfoWindowAdapter {
-
         private final View myContentsView;
-
         FarmInfoWindow() {
             myContentsView = getLayoutInflater().inflate(R.layout.infowindow_farminfo, null);
         }
-
-
         @Override
         public View getInfoWindow(Marker marker) {
-
             TextView tvTitle = ((TextView) myContentsView.findViewById(R.id.title));
             TextView tvSnippet = ((TextView) myContentsView.findViewById(R.id.addres));
             TextView txtStock = ((TextView) myContentsView.findViewById(R.id.stocks));
             TextView txtSpecie = ((TextView) myContentsView.findViewById(R.id.specie));
-//            id + "-" + farmname +"-"+ totalstock + "-" + specie
             String[] details = marker.getTitle().split("#-#");
 
             tvTitle.setText(details[1]);
 
             if (details[2].equalsIgnoreCase("") || details[2].equalsIgnoreCase("null")){
                 txtStock.setText("n/a");
-            } else{
-                txtStock.setText("" + details[2]);
-            }
+            } else{txtStock.setText("" + details[2]);}
 
             if (details[3].equalsIgnoreCase("") || details[3].equalsIgnoreCase("null")){
-                txtSpecie.setText("n/a");
-            } else{
-                txtSpecie.setText("" + details[3]);
-            }
-
-
+                txtSpecie.setText("n/a"); } else{ txtSpecie.setText("" + details[3]); }
             tvSnippet.setText(marker.getSnippet());
-
 
             return myContentsView;
         }
 
-
         @Override
         public View getInfoContents(Marker marker) {
-
             return null;
         }
     }
 
 
     class CustomerInfoWindow implements GoogleMap.InfoWindowAdapter {
-
         private final View myContentsView;
-
         CustomerInfoWindow() {
             myContentsView = getLayoutInflater().inflate(R.layout.infowindow_customer_address, null);
         }
 
-
         @Override
         public View getInfoWindow(Marker marker) {
-
             TextView tvSnippet = ((TextView) myContentsView.findViewById(R.id.address));
             TextView tvTitle = ((TextView) myContentsView.findViewById(R.id.title));
-
             String[] details = marker.getTitle().split("#-#");
 
             tvSnippet.setText(marker.getSnippet());
             tvTitle.setText(details[1]+"");
-
-
             return myContentsView;
         }
 
 
         @Override
         public View getInfoContents(Marker marker) {
-
             return null;
         }
     }
@@ -1356,9 +1380,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onResume() {
         super.onResume();
         fusedLocation.connectToApiClient();
-        Log.d("PROCESS", "REsume");
         db.open();
-
         if(activeFilter==0){
             activeFilter = 0;
         }

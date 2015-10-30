@@ -188,10 +188,11 @@ public class GpsDB_Query {
 		return db.rawQuery(query, params);
 	}
 
-	public Cursor getAll_FARMINFO_LEFTJOIN_PONDINFO(String userid){
+	public Cursor getAll_FARMINFO_LEFTJOIN_PONDINFO_LEFTJOIN_CUSTOMERINFO(String userid){
 		String query = "SELECT \n" +
 				"tblCustomerInfo.*, \n" +
 				"tblPond.*, \n" +
+				"tblmaincustomerinfo.*, \n" +
 				"SUM(tblPond.quantity) AS Totalquantity, \n" +
 
 				"(SELECT DISTINCT GROUP_CONCAT( DISTINCT tblPond.specie ) \n" +
@@ -202,12 +203,44 @@ public class GpsDB_Query {
 				"LEFT JOIN  tblPond \n" +
 				"ON tblPond.customerId = tblCustomerInfo.ci_customerId \n" +
 
+				"LEFT JOIN  tblmaincustomerinfo \n" +
+				"ON tblCustomerInfo.farmid = tblmaincustomerinfo.mci_farmid \n"+
+
 				"WHERE tblCustomerInfo.addedby = ? \n" +
 
 				"GROUP BY "+GpsSQLiteHelper.CL_FARMINFO_ID+"  \n" +
 				"ORDER BY "+GpsSQLiteHelper.CL_FARMINFO_ID+"  ASC;"
 				;
 		String[] params =  new String[] {userid};
+		return db.rawQuery(query, params);
+	}
+
+
+	public Cursor getFARM_POND_CUSTOMER_BY_FARMID(String userid, String farmid){
+		String query = "SELECT \n" +
+				"tblCustomerInfo.*, \n" +
+				"tblPond.*, \n" +
+				"tblmaincustomerinfo.*, \n" +
+				"SUM(tblPond.quantity) AS Totalquantity, \n" +
+
+				"(SELECT DISTINCT GROUP_CONCAT( DISTINCT tblPond.specie ) \n" +
+				"FROM tblPond WHERE tblPond.customerId = tblCustomerInfo.ci_customerId ORDER BY tblPond.specie ASC) AS allSpecie \n" +
+
+				"FROM tblCustomerInfo \n" +
+
+				"LEFT JOIN  tblPond \n" +
+				"ON tblPond.customerId = tblCustomerInfo.ci_customerId \n" +
+
+				"LEFT JOIN  tblmaincustomerinfo \n" +
+				"ON tblCustomerInfo.farmid = tblmaincustomerinfo.mci_farmid \n"+
+
+				"WHERE tblCustomerInfo.addedby = ? \n" +
+				"AND tblCustomerInfo.farmid = ? \n" +
+
+				"GROUP BY "+GpsSQLiteHelper.CL_FARMINFO_ID+"  \n" +
+				"ORDER BY "+GpsSQLiteHelper.CL_FARMINFO_ID+"  ASC;"
+				;
+		String[] params =  new String[] {userid, farmid};
 		return db.rawQuery(query, params);
 	}
 

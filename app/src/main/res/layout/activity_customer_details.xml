@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_titlebar"
+        android:background="#009688"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        >
+
+        <ImageButton
+            android:layout_weight="1"
+            android:background="@drawable/bg_material_transparent"
+            android:src="@drawable/ic_filler24dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="Customer Details"
+            android:gravity="center"
+            android:id="@+id/title"
+            android:textSize="19sp"
+            android:layout_weight="12"
+            android:textColor="@color/background_material_light"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:layout_weight="1"
+            android:background="@drawable/bg_material_transparent"
+            android:src="@drawable/ic_filler24dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <ScrollView android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_titlebar"
+                android:layout_above="@+id/ll_bottombutton">
+
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:orientation="vertical"
+                      android:paddingTop="10dp"
+                      android:paddingBottom="10dp"
+                      android:paddingLeft="10dp"
+                      android:paddingRight="10dp">
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:padding="10dp"
+                android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="18dp"
+                          android:textColor="@color/gray_900"
+                          android:text="Full Name" />
+
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:paddingTop="3dp"
+                    >
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical"
+                        >
+
+
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:textColor="@color/gray_500"
+                                  android:id="@+id/txtFirstName"
+                                  android:paddingRight="10dp"
+                                  android:text="Juanita Constancia" />
+
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical"
+                        >
+
+
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:textColor="@color/gray_700"
+                                  android:id="@+id/txtMiddleName"
+                                  android:paddingRight="10dp"
+                                  android:text="M." />
+
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical"
+                                  >
+
+
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:textColor="@color/gray_600"
+                                  android:id="@+id/txtLastName"
+                                  android:text="Villa Fuerte" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:padding="10dp"
+                          android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="18dp"
+                          android:textColor="@color/gray_900"
+                          android:text="Birthday/Birth Place" />
+
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:paddingTop="3dp"
+                    >
+
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:textColor="@color/gray_500"
+                                  android:id="@+id/txtBirthday"
+                                  android:paddingRight="10dp"
+                                  android:text="September 10, 2015" />
+
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:textColor="@color/gray_500"
+                                  android:paddingRight="10dp"
+                                  android:text="-" />
+
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:textColor="@color/gray_500"
+                                  android:id="@+id/txtBirthPlace"
+                                  android:paddingRight="10dp"
+                                  android:text="Caloocan City" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:padding="10dp"
+                          android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="18dp"
+                          android:textColor="@color/gray_900"
+                          android:text="Address" />
+
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:paddingTop="3dp"
+                    >
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="@color/gray_500"
+                              android:id="@+id/txtHouseNumber"
+                              android:paddingRight="10dp"
+                              android:text="123" />
+
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="@color/gray_500"
+                              android:id="@+id/txtStreet"
+                              android:paddingRight="10dp"
+                              android:text="Sampaguita St." />
+
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="@color/gray_500"
+                              android:id="@+id/txtSubdivision"
+                              android:text="Some Village Name" />
+
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:paddingTop="3dp"
+                    >
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="@color/gray_500"
+                              android:id="@+id/txtBarangay"
+                              android:paddingRight="10dp"
+                              android:text="Pungo" />
+
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="@color/gray_500"
+                              android:id="@+id/txtCity"
+                              android:paddingRight="10dp"
+                              android:text="Calumpit" />
+
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="@color/gray_500"
+                              android:id="@+id/txtProvince"
+                              android:text="Bulacan" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:padding="10dp"
+                          android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="18dp"
+                          android:textColor="@color/gray_900"
+                          android:text="Farm ID" />
+
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:paddingTop="3dp"
+                    >
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="vertical"
+                                  android:layout_weight="1">
+
+
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:textColor="@color/gray_500"
+                                  android:id="@+id/txtFarmid"
+                                  android:text="FF0001" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!--<LinearLayout android:layout_width="fill_parent"-->
+                  <!--android:layout_height="wrap_content"-->
+                  <!--android:orientation="horizontal"-->
+                  <!--android:id="@+id/ll_bottombutton"-->
+                  <!--android:layout_alignParentBottom="true"-->
+                  <!--android:gravity="center"-->
+        <!-->-->
+
+        <!--<ImageButton android:layout_width="wrap_content"-->
+                <!--android:layout_height="fill_parent"-->
+                <!--android:id="@+id/btn_back"-->
+                <!--android:layout_weight="1"-->
+                <!--android:textColor="@color/deepteal_500"-->
+                     <!--android:padding="5dp"-->
+                <!--android:background="@drawable/bg_material_transparent"-->
+                <!--android:src="@drawable/ic_keyboard_arrow_left_darkteal_24dp"-->
+            <!--/>-->
+
+        <!--<ImageButton android:layout_width="wrap_content"-->
+                     <!--android:layout_height="fill_parent"-->
+                     <!--android:id="@+id/btn_next"-->
+                     <!--android:layout_weight="1"-->
+                     <!--android:padding="5dp"-->
+                     <!--android:textColor="@color/deepteal_500"-->
+                     <!--android:background="@drawable/bg_material_transparent"-->
+                     <!--android:src="@drawable/ic_check_black_24dp"-->
+            <!--/>-->
+    <!--</LinearLayout>-->
+</RelativeLayout>
