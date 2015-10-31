@@ -110,6 +110,7 @@ public class Helper {
         public static String URL_SELECT_ALL_PONDINFO_BETWEEN_DATES          = sourceAddress_goDaddy + "selectAllPondBetweenDate.php";
         public static String URL_SELECT_ALL_PONDINFO_LEFTJOIN_CUSTINFO      = sourceAddress_goDaddy + "selectAllPondInfoLeftJoinCustInfo.php";
         public static String URL_SELECT_FARM_BY_FARMID                      = sourceAddress_goDaddy + "selectFarmByFarmID.php";
+        public static String URL_SELECT_CUSTOMERINFO_BY_ID                  = sourceAddress_goDaddy + "selectCustomerDetailsByID.php";
         public static String URL_SELECT_FARMINFO_LF_POND_AND_MCI_BY_FARMID  = sourceAddress_goDaddy + "selectCustomerInfoLeftJoinPondInfoLeftJoinMciByFarmID.php";
         public static String URL_SELECT_CUST_LOCATION_BY_ASSIGNED_AREA      = sourceAddress_goDaddy + "selectCustomerLocationByAssingedUser.php";
         public static String URL_SELECT_ALL_POND_WEEKLYUPDATES_INNERJOIN_PONDINFO_GROUPBY_FARMNAME
@@ -773,6 +774,26 @@ public class Helper {
         txttitle.setBackground(activity.getResources().getDrawable(resIdColor));
         btn1.setText(strButton1);
         btn2.setText(strButton2);
+        return d;
+    }
+
+    public static Dialog createCustomDialogThemedYesNO_WithEditText(Activity activity, String prompt, String edtEntry, String title, String strButton1, String strButton2, int resIdColor){
+        final Dialog d = new Dialog(activity);//
+        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        d.setContentView(R.layout.dialog_material_themed_yesno_with_edittext);//Set the xml view of the dialog
+        Button btn1 = (Button) d.findViewById(R.id.btn_dialog_yesno_opt1);
+        Button btn2 = (Button) d.findViewById(R.id.btn_dialog_yesno_opt2);
+        EditText edt = (EditText) d.findViewById(R.id.dialog_edttext);
+        TextView txttitle = (TextView) d.findViewById(R.id.dialog_yesno_title);
+        TextView txtprompt = (TextView) d.findViewById(R.id.dialog_yesno_prompt);
+
+        txtprompt.setText(prompt);
+        edt.setText(edtEntry);
+        txttitle.setText(title);
+        txttitle.setBackground(activity.getResources().getDrawable(resIdColor));
+        btn1.setText(strButton1);
+        btn2.setText(strButton2);
+        d.show();
         return d;
     }
 

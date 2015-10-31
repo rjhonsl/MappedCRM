@@ -63,6 +63,7 @@ public class CustInfoObject {
 
 	private int isVisited;
 	private int isactive;
+	private int isPosted;
 
 	private String customerID;
 	private String mainCustomerId;
@@ -706,5 +707,13 @@ public class CustInfoObject {
 
 	public void setDeviceId(String deviceid) {
 		this.deviceid = deviceid;
+	}
+
+	public int getIsPosted() {
+		return isPosted;
+	}
+
+	public void setIsPosted(int isPosted) {
+		this.isPosted = isPosted;
 	}
 }

@@ -16,8 +16,9 @@
         <ImageButton
             android:layout_weight="1"
             android:background="@drawable/bg_material_transparent"
-            android:src="@drawable/ic_filler24dp"
+            android:src="@drawable/ic_keyboard_arrow_left_white_24dp"
             android:layout_width="0dp"
+            android:id="@+id/btn_title_left"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -33,8 +34,9 @@
         <ImageButton
             android:layout_weight="1"
             android:background="@drawable/bg_material_transparent"
-            android:src="@drawable/ic_filler24dp"
+            android:src="@drawable/ic_edit_white_24dp"
             android:layout_width="0dp"
+            android:id="@+id/btn_title_right"
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
@@ -53,14 +55,21 @@
                       android:paddingRight="10dp">
 
 
+
+
+
+
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:padding="10dp"
+                          android:paddingLeft="20dp"
+                          android:paddingRight="20dp"
+                          android:paddingTop="10dp"
+                          android:paddingBottom="10dp"
                           android:orientation="vertical">
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:textSize="18dp"
+                          android:textSize="17dp"
                           android:textColor="@color/gray_900"
                           android:text="Farm ID" />
 
@@ -90,25 +99,35 @@
             </LinearLayout>
 
 
+
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:paddingTop="10dp"
                           android:paddingBottom="10dp"
                           android:orientation="vertical">
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="13dp"
+                          android:textStyle="bold"
+                          android:textColor="@color/gray_700"
+                          android:text="BASIC INFORMATION" />
                 <View android:layout_width="fill_parent" android:layout_height="1dp"
-                      android:background="@color/gray_500"
+                      android:background="@color/gray_300"
                     />
             </LinearLayout>
 
 
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:padding="10dp"
+                          android:paddingLeft="20dp"
+                          android:paddingRight="20dp"
+                          android:paddingTop="10dp"
+                          android:paddingBottom="10dp"
                 android:orientation="vertical">
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:textSize="18dp"
+                          android:textSize="17dp"
                           android:textColor="@color/gray_900"
                           android:text="Full Name" />
 
@@ -141,7 +160,7 @@
 
                         <TextView android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
-                                  android:textColor="@color/gray_700"
+                                  android:textColor="@color/gray_500"
                                   android:id="@+id/txtMiddleName"
                                   android:paddingRight="10dp"
                                   android:text="M." />
@@ -171,12 +190,15 @@
 
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:padding="10dp"
+                          android:paddingLeft="20dp"
+                          android:paddingRight="20dp"
+                          android:paddingTop="10dp"
+                          android:paddingBottom="10dp"
                           android:orientation="vertical">
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:textSize="18dp"
+                          android:textSize="17dp"
                           android:textColor="@color/gray_900"
                           android:text="Birthday/Birth Place" />
 
@@ -220,12 +242,15 @@
 
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:padding="10dp"
+                          android:paddingLeft="20dp"
+                          android:paddingRight="20dp"
+                          android:paddingTop="10dp"
+                          android:paddingBottom="10dp"
                           android:orientation="vertical">
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:textSize="18dp"
+                          android:textSize="17dp"
                           android:textColor="@color/gray_900"
                           android:text="Address" />
 
@@ -238,7 +263,7 @@
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:textColor="@color/gray_500"
-                              android:id="@+id/txtHouseNumber"
+                              android:id="@+id/txtHouseNumber2"
                               android:paddingRight="10dp"
                               android:text="123" />
 
@@ -292,12 +317,15 @@
 
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:padding="10dp"
+                          android:paddingLeft="20dp"
+                          android:paddingRight="20dp"
+                          android:paddingTop="10dp"
+                          android:paddingBottom="10dp"
                           android:orientation="vertical">
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:textSize="18dp"
+                          android:textSize="17dp"
                           android:textColor="@color/gray_900"
                           android:text="House Status" />
 
@@ -331,20 +359,29 @@
                           android:paddingTop="10dp"
                           android:paddingBottom="10dp"
                           android:orientation="vertical">
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="13dp"
+                          android:textStyle="bold"
+                          android:textColor="@color/gray_700"
+                          android:text="CONTACT INFORMATION" />
                 <View android:layout_width="fill_parent" android:layout_height="1dp"
-                        android:background="@color/gray_500"
+                      android:background="@color/gray_300"
                     />
             </LinearLayout>
 
 
             <LinearLayout android:layout_width="fill_parent"
-                                         android:layout_height="wrap_content"
-                                         android:padding="10dp"
-                                         android:orientation="vertical">
+                          android:layout_height="wrap_content"
+                          android:paddingLeft="20dp"
+                          android:paddingRight="20dp"
+                          android:paddingTop="10dp"
+                          android:paddingBottom="10dp"
+                          android:orientation="vertical">
 
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:textSize="18dp"
+                      android:textSize="17dp"
                       android:textColor="@color/gray_900"
                       android:text="Telephone" />
 
@@ -377,12 +414,15 @@
 
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:padding="10dp"
+                          android:paddingLeft="20dp"
+                          android:paddingRight="20dp"
+                          android:paddingTop="10dp"
+                          android:paddingBottom="10dp"
                           android:orientation="vertical">
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:textSize="18dp"
+                          android:textSize="17dp"
                           android:textColor="@color/gray_900"
                           android:text="Cellphone" />
 
@@ -419,9 +459,52 @@
                           android:paddingTop="10dp"
                           android:paddingBottom="10dp"
                           android:orientation="vertical">
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="13dp"
+                          android:textStyle="bold"
+                          android:textColor="@color/gray_700"
+                          android:text="SPOUSE INFORMATION" />
                 <View android:layout_width="fill_parent" android:layout_height="1dp"
-                      android:background="@color/gray_500"
+                      android:background="@color/gray_300"
                     />
+            </LinearLayout>
+
+
+
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:paddingLeft="20dp"
+                          android:paddingRight="20dp"
+                          android:paddingTop="10dp"
+                          android:paddingBottom="10dp"
+                          android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="17dp"
+                          android:textColor="@color/gray_900"
+                          android:text="Civil Status" />
+
+
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:paddingTop="3dp"
+                    >
+
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="@color/gray_500"
+                              android:id="@+id/txtCivilStatus"
+                              android:paddingRight="10dp"
+                              android:text="Married" />
+
+
+                </LinearLayout>
+
             </LinearLayout>
 
 
@@ -431,12 +514,15 @@
 
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:padding="10dp"
+                          android:paddingLeft="20dp"
+                          android:paddingRight="20dp"
+                          android:paddingTop="10dp"
+                          android:paddingBottom="10dp"
                           android:orientation="vertical">
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:textSize="18dp"
+                          android:textSize="17dp"
                           android:textColor="@color/gray_900"
                           android:text="Spouse Full Name" />
 
@@ -488,12 +574,15 @@
 
             <LinearLayout android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:padding="10dp"
+                          android:paddingLeft="20dp"
+                          android:paddingRight="20dp"
+                          android:paddingTop="10dp"
+                          android:paddingBottom="10dp"
                           android:orientation="vertical">
 
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:textSize="18dp"
+                          android:textSize="17dp"
                           android:textColor="@color/gray_900"
                           android:text="Spouse Birthday" />
 
@@ -515,6 +604,19 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+
+
+
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:paddingTop="10dp"
+                          android:paddingBottom="10dp"
+                          android:orientation="vertical">
+                    />
+            </LinearLayout>
+
 
 
 

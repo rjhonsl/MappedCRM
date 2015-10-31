@@ -246,11 +246,20 @@ public class GpsDB_Query {
 
 	public Cursor getCUST_LOCATION_BY_ASSIGNED_AREA(String userid){
 		String query =
-				"Select tblmaincustomerinfo.* from tblmaincustomerinfo\n" +
+				"Select tblmaincustomerinfo.* from tblmaincustomerinfo \n" +
 				"WHERE tblmaincustomerinfo.mci_addedby= ? ;";
 
 		String[] params =  new String[] {userid};
 		return db.rawQuery(query, params);
+	}
+
+
+	public Cursor getCUST_LOCATION_BY_indexID(String index){
+		String query = "Select tblmaincustomerinfo.* from tblmaincustomerinfo " +
+						"WHERE tblmaincustomerinfo.mci_id= "+index+";";
+
+		String[] params =  new String[] {index};
+		return db.rawQuery(query, null);
 	}
 
 
@@ -336,6 +345,7 @@ public class GpsDB_Query {
 
 		return 	db.update(GpsSQLiteHelper.TBLUSERS, newValues, where, null);
 	}
+
 
 
 }
